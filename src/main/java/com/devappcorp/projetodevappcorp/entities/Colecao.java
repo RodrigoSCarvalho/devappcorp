@@ -1,31 +1,44 @@
-package com.devappcorp.projetodevappcorp.persistencia;
+package com.devappcorp.projetodevappcorp.entities;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
-public class Colecao {
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Colecao implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    @ManyToMany
-    @JoinTable(name = "associacao_colecao_recurso",
-            joinColumns = @JoinColumn(name = "fk_colecao"),
-            inverseJoinColumns = @JoinColumn(name = "fk_recurso"))
-    @OrderBy("titulo asc")
-    private List<Recurso> recursos;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "colecao")
+    @OrderBy("titulo")
+    private Set<Recurso> recursos = new HashSet<Recurso>();;
     @Column(length = 1024)
     private String titulo;
     @Column(length = 4096)
     private String descricao;
     private String imagem;
 
-    public List<Recurso> getRecursos() {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Set<Recurso> getRecursos() {
         return recursos;
     }
 
-    public void setRecursos(List<Recurso> recursos) {
+    public void setRecursos(Set<Recurso> recursos) {
         this.recursos = recursos;
     }
 
@@ -53,21 +66,15 @@ public class Colecao {
         this.imagem = imagem;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     @Override
     public String toString() {
         return "Colecao{" +
-                "recursos=" + recursos +
+                "id=" + id +
+                ", recursos=" + recursos +
                 ", titulo='" + titulo + '\'' +
                 ", descricao='" + descricao + '\'' +
                 ", imagem='" + imagem + '\'' +
                 '}';
     }
+
 }

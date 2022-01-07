@@ -1,0 +1,18 @@
+package com.devappcorp.projetodevappcorp.repositories;
+
+import com.devappcorp.projetodevappcorp.entities.Colecao;
+import com.devappcorp.projetodevappcorp.entities.Curso;
+import com.devappcorp.projetodevappcorp.entities.Recurso;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
+
+public interface CursoRepository extends JpaRepository<Curso, Long> {
+    interface ColecaoRepository extends JpaRepository<Colecao, Long> {
+    }
+
+    @Query("SELECT c.recursos FROM Curso c WHERE c.id = :id")
+    List<Recurso> findCursoRecursos(@Param("id") Long id);
+}

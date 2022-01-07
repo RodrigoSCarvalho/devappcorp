@@ -1,13 +1,23 @@
-package com.devappcorp.projetodevappcorp.persistencia;
+package com.devappcorp.projetodevappcorp.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
-public class Author {
+public class Author implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     @Id
-    @Column(name = "orcid", nullable = false, length = 19)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
+    @Column(name = "orcid", unique = true, length = 19)
     private String orcid;
     private String email;
     @Column(length = 64)
@@ -16,6 +26,29 @@ public class Author {
     private String sobrenome;
     @Column(length = 256)
     private String afiliacao;
+    @ManyToMany (cascade = {CascadeType.REMOVE})
+    @JoinTable (name = "recurso_autores",
+            joinColumns = @JoinColumn(name = "author_id"),
+            inverseJoinColumns = @JoinColumn(name = "recurso_id"))
+    //@JsonIgnore
+    private Set<Recurso> recursos = new HashSet<Recurso>();
+
+
+    public Set<Recurso> getRecursos() {
+        return recursos;
+    }
+
+    public void setRecursos(Set<Recurso> recursos) {
+        this.recursos = recursos;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getEmail() {
         return email;
@@ -57,10 +90,14 @@ public class Author {
         this.orcid = orcid;
     }
 
+    public Author() {
+    }
+
     @Override
     public String toString() {
         return "Author{" +
-                "orcid='" + orcid + '\'' +
+                "id=" + id +
+                ", orcid='" + orcid + '\'' +
                 ", email='" + email + '\'' +
                 ", nome='" + nome + '\'' +
                 ", sobrenome='" + sobrenome + '\'' +

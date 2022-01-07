@@ -1,14 +1,22 @@
-package com.devappcorp.projetodevappcorp.persistencia;
+package com.devappcorp.projetodevappcorp.entities;
+
+import com.devappcorp.projetodevappcorp.entities.Colecao;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+import java.io.Serializable;
 
 
 @Entity
-public class Curso extends Colecao {
+@PrimaryKeyJoinColumn(name = "cursoId")
+public class Curso extends Colecao implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Column(length=10)
     private String data_registro;
+
 
     public String getData_registro() {
         return data_registro;
