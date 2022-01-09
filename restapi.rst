@@ -38,121 +38,126 @@ Retorna uma lista com todos os recursos
 .. code-block:: js
 
        
-[
-  {
-    "id": 1,
-    "palavras_chave": [
-      "Teste"
-    ],
-    "titulo": "TESTE",
-    "descricao": "Aulas de Java API - 2022",
-    "link": "uff.com.br",
-    "imagem": "2WFuIGlzIGRpc3Rpbmd1aXNoZWQsIG5vdCBvbmx5IGJ5IGhpcyByZWFzb24sIGJ1dCBieSB0aGlz",
-    "data_criacao": "2022-01-01",
-    "data_registro": "2022-01-10"
-  }
-]
+    [
+        {
+            "id": 1,
+            "palavras_chave": 
+            [
+                "Teste"
+            ],
+            "titulo": "TESTE",
+            "descricao": "Aulas de Java API - 2022",
+            "link": "uff.com.br",
+            "imagem": "imagem",
+            "data_criacao": "2022-01-01",
+            "data_registro": "2022-01-10"
+        }
+    ]
 
 
 POST 
 ++++++
 
-Creates a new service (or updates an existing service) and returns the new service object.
+Criar um novo recurso.
 
 ==============   ===============
-Param            Description
+Parâmetros       Descrição
 ==============   ===============
-name             Name of the service 
-description      Description of service 
+authorId         Identificador do autor do recurso 
 ==============   ===============
 
 .. code-block:: text
 
-   POST /admin/api/v1/services HTTP/1.1 name=New%20Service&description=A%20great%20service
-
+   POST http://localhost:8080/author/{authorId}/recurso
 .. code-block:: js
 
         {
-            "name": "New Service",
-            "id": "new-service",
-            "description": "A great service"
-            "url": "/api/v1/services/new-service",
-            "current-event": null,
+          "id": 0,
+          "palavras_chave": [
+            "string"
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "link": "string",
+          "imagem": "string",
+          "data_criacao": "string",
+          "data_registro": "string"
         }
    
 
-
-Instance Resource
-~~~~~~~~~~~~~~~~~~
-
-.. code-block:: text
-
-    /admin/api/v1/services/{service}
-
-The Service Instance resources represents an individual web service tracked by StashBoard
-
-GET
-++++
-
-.. code-block:: bash
-
-    GET /admin/api/v1/services/{service} HTTP/1.1
-
-.. code-block:: js
-
-        {
-            "name": "Example Service",
-            "id": "example-service",
-            "description": "An explanation of what this service represents"
-            "url": "/api/v1/services/example-service",
-            "current-event": null,
-        }
-
-POST
+PUT
 +++++
 
-Updates a service's description and returns the updated service object. All the listed parameters are optional.
+Atualiza um recurso sem alterar seu autor.
 
 ==============   ===============
-Param            Description
+Parâmetros        Descrição
 ==============   ===============
-name             Name of the service 
-description      Description of service 
+id               Identificador do recurso 
 ==============   ===============
 
 .. code-block:: text
   
-    POST /admin/api/v1/services/{service} description=System%20is%20now%20operational
+    PUT http://localhost:8080/recurso/{id}
 
 .. code-block:: js
 
         {
-            "name": "Example Service",
-            "id": "example-service",
-            "description": "System is now operational",
-            "url": "/api/v1/services/example-service",
-            "current-event": null,
+          "id": 0,
+          "palavras_chave": [
+            "string"
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "link": "string",
+          "imagem": "string",
+          "data_criacao": "string",
+          "data_registro": "string"
         }
 
+PUT
++++++
+
+Atualiza um recurso e associar a um novo autor.
+
+==============   ===============
+Parâmetros        Descrição
+==============   ===============
+authorId         Identificador do autor 
+recursoId        Identificador do recurso 
+==============   ===============
+
+.. code-block:: text
+  
+    PUT http://localhost:8080/author/{authorId}/recurso/{recursoId}
+
+.. code-block:: js
+
+        {
+          "id": 0,
+          "palavras_chave": [
+            "string"
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "link": "string",
+          "imagem": "string",
+          "data_criacao": "string",
+          "data_registro": "string"
+        }
 
 DELETE
 +++++++
 
-Deletes a service and returns the deleted service object
+Se houver mais de um autor associado ao recurso, desassocia o autor indicado, caso contrário, deleta o recurso   
 
 .. code-block:: text
 
-    DELETE /admin/api/v1/services/{service} HTTP/1.1
+    DELETE http://localhost:8080/author/{authorId}/recurso/{recursoId}
+
 
 .. code-block:: js
 
-        {
-            "name": "Example Service",
-            "id": "example-service",
-            "description": "System is now operational",
-            "url": "/api/v1/services/example-service",
-            "current-event": null,
-        }
 
 Service List
 -------------
