@@ -151,6 +151,14 @@ DELETE
 
 Se houver mais de um autor associado ao recurso, desassocia o autor indicado, caso contrário, deleta o recurso   
 
+==============   ===============
+Parâmetros        Descrição
+==============   ===============
+authorId         Identificador do autor 
+recursoId        Identificador do recurso 
+==============   ===============
+
+
 .. code-block:: text
 
     DELETE http://localhost:8080/author/{authorId}/recurso/{recursoId}
@@ -159,131 +167,217 @@ Se houver mais de um autor associado ao recurso, desassocia o autor indicado, ca
 .. code-block:: js
 
 
-Service List
+Author
 -------------
 
-The Service List resource represents all a collection of related services
+O Author é responsável por criar um recurso educacional
 
 ==============   ===============
-Property         Description
+Propriedade       Descrição
 ==============   ===============
-id	         The unique identifier by which to identify the service list
-name             The name of the service list, defined by the user
-description      The description of the service list
-url	         The URL of the specific service list resource
+id	             Identificador único do autor
+orcid	         Código identificado de cientistas e outros autores académicos e contribuidores.
+email	         Email do autor
+nome	         Nome do autor
+sobrenome        Sobrenome do autor
+afiliacao	     Instituição a qual o autor está vinculado
+recursos         Lista de recursos escritos pelo determinado autor
 ==============   ===============
 
-List Resource
+Endpoints
 ~~~~~~~~~~~~~~~
 
 .. code-block:: text
-
-    /admin/api/v1/service-lists
-
+   /author
+    
+    
 GET
 +++++
 
-Returns a list of all current service lists tracked by Stashboard
+Retorna uma lista com todos autores cadastrados
 
 .. code-block:: bash
 
-   GET /admin/api/v1/service-lists HTTP/1.1
+   GET http://localhost:8080/author
 
 .. code-block:: js
 
-        {
-            "lists": [
-                {
-                    "name": "Example Foo",
-                    "id": "example-foo",
-                    "description": "An explanation of this service"
-                    "url": "/api/v1/service-lists/example-foo",
-                },
-                {
-                    "name": "Example Bar",
-                    "id": "example-bar",
-                    "description": "An explanation of this service"
-                    "url": "/api/v1/service-lists/example-bar",
-                }
+        [
+          {
+            "id": 1,
+            "orcid": "0000-0000-0000-0001",
+            "email": "teste@mail.com",
+            "nome": "Teste",
+            "sobrenome": "Testado",
+            "afiliacao": "Universidade Federal do Teste",
+            "recursos": [
+                          {
+                            "id": 1,
+                            "palavras_chave": 
+                            [
+                                "Teste"
+                            ],
+                            "titulo": "TESTE",
+                            "descricao": "Aulas de Teste",
+                            "link": "teste.com.br",
+                            "imagem": "imagem",
+                            "data_criacao": "2022-01-01",
+                            "data_registro": "2022-01-10"
+                          }
+                        ]
+              }
+        ]
+        
+GET
+++++
+
+Retorna uma lista com todos recursos de um determinado autor
+
+==============   ===============
+Param            Description
+==============   ===============
+id               Identificador do autor
+==============   ===============
+
+
+.. code-block:: bash
+
+    GET http://localhost:8080/author/{id}/recursos
+.. code-block:: js
+
+        [
+            {
+                "id": 1,
+                "palavras_chave": 
+                [
+                    "Teste"
+                ],
+                "titulo": "TESTE",
+                "descricao": "Aulas de Teste",
+                "link": "teste.com.br",
+                "imagem": "imagem",
+                "data_criacao": "2022-01-01",
+                "data_registro": "2022-01-10"
+            }
+        ]
+        
+GET
+++++
+
+Retorna uma lista com todos autores com um determinado sobrenome
+
+==============   ===============
+Parâmetro        Descrição
+==============   ===============
+sobrenome        Sobrenome do autor desejado
+==============   ===============
+
+
+.. code-block:: bash
+
+    GET http://localhost:8080/author/sn
+
+.. code-block:: js
+
+        [
+          {
+            "id": 0,
+            "orcid": "string",
+            "email": "string",
+            "nome": "string",
+            "sobrenome": "string",
+            "afiliacao": "string",
+            "recursos": [
+              {
+                "id": 0,
+                "palavras_chave": [
+                  "string"
+                ],
+                "titulo": "string",
+                "descricao": "string",
+                "link": "string",
+                "imagem": "string",
+                "data_criacao": "string",
+                "data_registro": "string"
+              }
             ]
-        }
+          }
+        ]
 
 POST 
 ++++++
 
-Creates a new service list and returns the new service list object.
-
-==============   ===============
-Param            Description
-==============   ===============
-name             Name of the service list
-description      Description of service list
-==============   ===============
+Cria um novo autor
 
 .. code-block:: text
 
-   POST /admin/api/v1/service-lists HTTP/1.1 name=New%20Service&description=A%20great%20service
+   POST http://localhost:8080/author
 
 .. code-block:: js
 
-        {
-            "name": "New List",
-            "id": "new-list",
-            "description": "A great service"
-            "url": "/api/v1/service-list/new-list",
-        }
+            {
+              "id": 0,
+              "orcid": "string",
+              "email": "string",
+              "nome": "string",
+              "sobrenome": "string",
+              "afiliacao": "string",
+              "recursos": [
+                {
+                  "id": 0,
+                  "palavras_chave": [
+                    "string"
+                  ],
+                  "titulo": "string",
+                  "descricao": "string",
+                  "link": "string",
+                  "imagem": "string",
+                  "data_criacao": "string",
+                  "data_registro": "string"
+                }
+              ]
+            }
 
 
-Instance Resource
-~~~~~~~~~~~~~~~~~~
 
-.. code-block:: text
-
-    /admin/api/v1/service-lists/{service-list}
-
-The Service Instance resources represents an individual service list
-
-GET
-++++
-
-.. code-block:: bash
-
-    GET /admin/api/v1/service-lists/{service} HTTP/1.1
-
-.. code-block:: js
-
-        {
-            "name": "Example List",
-            "id": "example-list",
-            "description": "An explanation of what this list represents"
-            "url": "/api/v1/service-lists/example-list",
-        }
-
-POST
+PUT
 +++++
 
-Updates a service list's description and returns the updated service list. All the listed parameters are optional.
+Atualiza um autor
 
 ==============   ===============
-Param            Description
+Parâmetros       Descrição
 ==============   ===============
-name             Name of the service list
-description      Description of service list
+id               Identificador único do autor
 ==============   ===============
 
 .. code-block:: text
   
-    POST /admin/api/v1/service-lists/{service-list} description=System%20is%20now%20operational
+    PUT http://localhost:8080/author/{id}
 
 .. code-block:: js
 
         {
-            "name": "Example List",
-            "id": "example-list",
-            "description": "System is now operational",
-            "url": "/api/v1/service-lists/example-list",
+          "orcid": "string",
+          "email": "string",
+          "nome": "string",
+          "sobrenome": "string",
+          "afiliacao": "string",
+          "recursos": [
+            {
+              "id": 0,
+              "palavras_chave": [
+                "string"
+              ],
+              "titulo": "string",
+              "descricao": "string",
+              "link": "string",
+              "imagem": "string",
+              "data_criacao": "string",
+              "data_registro": "string"
+            }
+          ]
         }
-
 
 DELETE
 +++++++
