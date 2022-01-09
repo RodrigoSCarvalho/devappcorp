@@ -3,6 +3,9 @@ package com.devappcorp.projetodevappcorp.controller;
 import com.devappcorp.projetodevappcorp.entities.Curso;
 import com.devappcorp.projetodevappcorp.entities.Recurso;
 import com.devappcorp.projetodevappcorp.services.CursoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +19,22 @@ public class CursoController {
     @Autowired
     CursoService cursoService;
 
+    @Operation(summary = "Recuperar todos cursos")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "400", description = "Erro de validação.")
+    })
     @GetMapping("/curso")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody Iterable<Curso> getAllCurso(){
         return this.cursoService.getAllCurso();
     }
 
+
+    @Operation(summary = "Salvar um curso")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "201", description = "Curso cadastrado com sucesso."),
+            @ApiResponse(responseCode = "400", description = "Erro de validação.")
+    })
     @PostMapping("/curso")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity addCurso(@RequestBody Curso curso){
@@ -29,6 +42,11 @@ public class CursoController {
         return new ResponseEntity<>(curso, HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Salvar um curso associando a um recurso existente")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "201", description = "Curso cadastrado com sucesso."),
+            @ApiResponse(responseCode = "400", description = "Erro de validação.")
+    })
     @PostMapping("/recurso/{recursoId}/curso")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity addNewCurso(@RequestBody Curso curso, @PathVariable Long recursoId){
@@ -36,6 +54,11 @@ public class CursoController {
         return new ResponseEntity<>(curso, HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Atualizar um curso")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "Curso atualizado com sucesso."),
+            @ApiResponse(responseCode = "400", description = "Erro de validação.")
+    })
     @PutMapping("/curso/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity updateCurso(@RequestBody Curso curso, @PathVariable Long id){
@@ -43,6 +66,11 @@ public class CursoController {
         return new ResponseEntity<>(curso, HttpStatus.OK);
     }
 
+    @Operation(summary = "Atualizar um curso e associar a um recurso")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "Curso atualizado com sucesso."),
+            @ApiResponse(responseCode = "400", description = "Erro de validação.")
+    })
     @PutMapping("/recurso/{recursoId}/curso/{cursoId}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity updateCursoRecurso(@RequestBody Curso curso, @PathVariable Long recursoId, @PathVariable Long cursoId){
@@ -50,6 +78,11 @@ public class CursoController {
         return new ResponseEntity<>(curso, HttpStatus.OK);
     }
 
+    @Operation(summary = "Deletar um curso")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "Curso deletado com sucesso."),
+            @ApiResponse(responseCode = "400", description = "Erro de validação.")
+    })
     @DeleteMapping("/curso/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity deleteCurso(@PathVariable Long id){
@@ -57,6 +90,11 @@ public class CursoController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @Operation(summary = "Deletar um curso e desassociar um recurso")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "Curso desassociado com sucesso."),
+            @ApiResponse(responseCode = "400", description = "Erro de validação.")
+    })
     @DeleteMapping("/recurso/{recursoId}/curso/{cursoId}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity deleteCursoRecurso(@PathVariable Long recursoId, @PathVariable Long cursoId){
@@ -64,7 +102,10 @@ public class CursoController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-
+    @Operation(summary = "Recuperar todos recursos de um curso")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "400", description = "Erro de validação.")
+    })
     @GetMapping("/curso/{id}/recursos")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public List<Recurso> findCursoRecusos(@PathVariable Long id){

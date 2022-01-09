@@ -2,6 +2,9 @@ package com.devappcorp.projetodevappcorp.controller;
 
 import com.devappcorp.projetodevappcorp.entities.Recurso;
 import com.devappcorp.projetodevappcorp.services.RecursoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -16,6 +19,10 @@ public class RecursoController {
     @Autowired
     private RecursoService recursoService;
 
+    @Operation(summary = "Recuperar todos recursos")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "400", description = "Erro de validação.")
+    })
     @GetMapping("/recurso")
     public ResponseEntity getAllRecursos() {
         // This returns a JSON or XML with the users
@@ -33,6 +40,11 @@ public class RecursoController {
      */
 
 
+    @Operation(summary = "Salvar um recurso")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "201", description = "Recurso cadastrado com sucesso."),
+            @ApiResponse(responseCode = "400", description = "Erro de validação.")
+    })
     @PostMapping("/author/{authorId}/recurso")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity addNewRecurso(@PathVariable(value= "authorId") Long authorId, @RequestBody Recurso recurso){
@@ -40,6 +52,11 @@ public class RecursoController {
         return new ResponseEntity<> (recurso, HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Atualizar um recurso")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "Recurso atualizado com sucesso."),
+            @ApiResponse(responseCode = "400", description = "Erro de validação.")
+    })
     @PutMapping("/recurso/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public ResponseEntity updateRecurso(@RequestBody Recurso recurso, @PathVariable Long id){
@@ -47,6 +64,11 @@ public class RecursoController {
         return new ResponseEntity(recurso, HttpStatus.OK);
     }
 
+    @Operation(summary = "Atualizar um recurso associando um autor")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "Recurso atualizado com sucesso."),
+            @ApiResponse(responseCode = "400", description = "Erro de validação.")
+    })
     @PutMapping("/author/{authorId}/recurso/{recursoId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public ResponseEntity updateAutorRecurso(@RequestBody Recurso recurso, @PathVariable Long authorId, @PathVariable Long recursoId){
@@ -54,6 +76,11 @@ public class RecursoController {
         return new ResponseEntity(recurso, HttpStatus.OK);
     }
 
+    @Operation(summary = "Deletar um recurso desassociando o autor")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "Recurso dessassociado/deletado com sucesso."),
+            @ApiResponse(responseCode = "400", description = "Erro de validação.")
+    })
     @DeleteMapping("/author/{authorId}/recurso/{recursoId}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity deleteRecurso(@PathVariable Long recursoId, @PathVariable Long authorId ){
