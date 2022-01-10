@@ -5,7 +5,7 @@ REST API Documentation
 Recursos
 ----------
 
-O recurso Recurso representa os recursos educacionais.
+O resource Recurso representa os recursos educacionais.
 
 ==============   ===============
 Propriedade       Descrição
