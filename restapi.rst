@@ -149,19 +149,18 @@ recursoId        Identificador do recurso
 DELETE
 +++++++
 
-Se houver mais de um autor associado ao recurso, desassocia o autor indicado, caso contrário, deleta o recurso   
+Deletar o recurso  
 
 ==============   ===============
 Parâmetros        Descrição
 ==============   ===============
-authorId         Identificador do autor 
-recursoId        Identificador do recurso 
+id               Identificador do recurso 
 ==============   ===============
 
 
 .. code-block:: text
 
-    DELETE http://localhost:8080/author/{authorId}/recurso/{recursoId}
+    DELETE http://localhost:8080/recurso/{id}
 
 
 .. code-block:: js
