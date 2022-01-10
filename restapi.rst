@@ -5,7 +5,7 @@ REST API Documentation
 Recursos
 ----------
 
-O recurso Recurso representa os recursos educacionais.
+O resource Recurso representa os recursos educacionais.
 
 ==============   ===============
 Propriedade       Descrição
@@ -19,7 +19,7 @@ data_criacao     Data de criacao do recurso
 data_registro    Data de registro do recurso
 ==============   ===============
 
-List Resource
+Resource
 ~~~~~~~~~~~~~~~
 
 .. code-block:: text
@@ -38,722 +38,1145 @@ Retorna uma lista com todos os recursos
 .. code-block:: js
 
        
-[
-  {
-    "id": 1,
-    "palavras_chave": [
-      "Teste"
-    ],
-    "titulo": "TESTE",
-    "descricao": "Aulas de Java API - 2022",
-    "link": "uff.com.br",
-    "imagem": "2WFuIGlzIGRpc3Rpbmd1aXNoZWQsIG5vdCBvbmx5IGJ5IGhpcyByZWFzb24sIGJ1dCBieSB0aGlz",
-    "data_criacao": "2022-01-01",
-    "data_registro": "2022-01-10"
-  }
-]
+    [
+        {
+            "id": 1,
+            "palavras_chave": 
+            [
+                "Teste"
+            ],
+            "titulo": "TESTE",
+            "descricao": "Aulas de Java API - 2022",
+            "link": "uff.com.br",
+            "imagem": "imagem",
+            "data_criacao": "2022-01-01",
+            "data_registro": "2022-01-10"
+        }
+    ]
 
 
 POST 
 ++++++
 
-Creates a new service (or updates an existing service) and returns the new service object.
+Criar um novo recurso.
 
 ==============   ===============
-Param            Description
+Parâmetros       Descrição
 ==============   ===============
-name             Name of the service 
-description      Description of service 
+authorId         Identificador do autor do recurso 
 ==============   ===============
 
 .. code-block:: text
 
-   POST /admin/api/v1/services HTTP/1.1 name=New%20Service&description=A%20great%20service
-
+   POST http://localhost:8080/author/{authorId}/recurso
 .. code-block:: js
 
         {
-            "name": "New Service",
-            "id": "new-service",
-            "description": "A great service"
-            "url": "/api/v1/services/new-service",
-            "current-event": null,
+          "id": 0,
+          "palavras_chave": [
+            "string"
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "link": "string",
+          "imagem": "string",
+          "data_criacao": "string",
+          "data_registro": "string"
         }
    
 
-
-Instance Resource
-~~~~~~~~~~~~~~~~~~
-
-.. code-block:: text
-
-    /admin/api/v1/services/{service}
-
-The Service Instance resources represents an individual web service tracked by StashBoard
-
-GET
-++++
-
-.. code-block:: bash
-
-    GET /admin/api/v1/services/{service} HTTP/1.1
-
-.. code-block:: js
-
-        {
-            "name": "Example Service",
-            "id": "example-service",
-            "description": "An explanation of what this service represents"
-            "url": "/api/v1/services/example-service",
-            "current-event": null,
-        }
-
-POST
+PUT
 +++++
 
-Updates a service's description and returns the updated service object. All the listed parameters are optional.
+Atualiza um recurso sem alterar seu autor.
 
 ==============   ===============
-Param            Description
+Parâmetros        Descrição
 ==============   ===============
-name             Name of the service 
-description      Description of service 
+id               Identificador do recurso 
 ==============   ===============
 
 .. code-block:: text
   
-    POST /admin/api/v1/services/{service} description=System%20is%20now%20operational
+    PUT http://localhost:8080/recurso/{id}
 
 .. code-block:: js
 
         {
-            "name": "Example Service",
-            "id": "example-service",
-            "description": "System is now operational",
-            "url": "/api/v1/services/example-service",
-            "current-event": null,
+          "palavras_chave": [
+            "string"
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "link": "string",
+          "imagem": "string",
+          "data_criacao": "string",
+          "data_registro": "string"
         }
 
+PUT
++++++
+
+Atualiza um recurso e associar a um novo autor.
+
+==============   ===============
+Parâmetros        Descrição
+==============   ===============
+authorId         Identificador do autor 
+recursoId        Identificador do recurso 
+==============   ===============
+
+.. code-block:: text
+  
+    PUT http://localhost:8080/author/{authorId}/recurso/{recursoId}
+
+.. code-block:: js
+
+        {
+          "id": 0,
+          "palavras_chave": [
+            "string"
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "link": "string",
+          "imagem": "string",
+          "data_criacao": "string",
+          "data_registro": "string"
+        }
 
 DELETE
 +++++++
 
-Deletes a service and returns the deleted service object
+Deletar o recurso  
+
+==============   ===============
+Parâmetros        Descrição
+==============   ===============
+id               Identificador do recurso 
+==============   ===============
+
 
 .. code-block:: text
 
-    DELETE /admin/api/v1/services/{service} HTTP/1.1
+    DELETE http://localhost:8080/recurso/{id}
+
 
 .. code-block:: js
 
-        {
-            "name": "Example Service",
-            "id": "example-service",
-            "description": "System is now operational",
-            "url": "/api/v1/services/example-service",
-            "current-event": null,
-        }
 
-Service List
+Author
 -------------
 
-The Service List resource represents all a collection of related services
+O Author é responsável por criar um recurso educacional
 
 ==============   ===============
-Property         Description
+Propriedade       Descrição
 ==============   ===============
-id	         The unique identifier by which to identify the service list
-name             The name of the service list, defined by the user
-description      The description of the service list
-url	         The URL of the specific service list resource
+id	             Identificador único do autor
+orcid	         Código identificado de cientistas e outros autores académicos e contribuidores.
+email	         Email do autor
+nome	         Nome do autor
+sobrenome        Sobrenome do autor
+afiliacao	     Instituição a qual o autor está vinculado
+recursos         Lista de recursos escritos pelo determinado autor
 ==============   ===============
 
-List Resource
+Resource
 ~~~~~~~~~~~~~~~
 
 .. code-block:: text
-
-    /admin/api/v1/service-lists
-
+   /author
+    
+    
 GET
 +++++
 
-Returns a list of all current service lists tracked by Stashboard
+Retorna uma lista com todos autores cadastrados
 
 .. code-block:: bash
 
-   GET /admin/api/v1/service-lists HTTP/1.1
+   GET http://localhost:8080/author
 
 .. code-block:: js
 
-        {
-            "lists": [
-                {
-                    "name": "Example Foo",
-                    "id": "example-foo",
-                    "description": "An explanation of this service"
-                    "url": "/api/v1/service-lists/example-foo",
-                },
-                {
-                    "name": "Example Bar",
-                    "id": "example-bar",
-                    "description": "An explanation of this service"
-                    "url": "/api/v1/service-lists/example-bar",
-                }
+        [
+          {
+            "id": 1,
+            "orcid": "0000-0000-0000-0001",
+            "email": "teste@mail.com",
+            "nome": "Teste",
+            "sobrenome": "Testado",
+            "afiliacao": "Universidade Federal do Teste",
+            "recursos": [
+                          {
+                            "id": 1,
+                            "palavras_chave": 
+                            [
+                                "Teste"
+                            ],
+                            "titulo": "TESTE",
+                            "descricao": "Aulas de Teste",
+                            "link": "teste.com.br",
+                            "imagem": "imagem",
+                            "data_criacao": "2022-01-01",
+                            "data_registro": "2022-01-10"
+                          }
+                        ]
+              }
+        ]
+        
+GET
+++++
+
+Retorna uma lista com todos recursos de um determinado autor
+
+==============   ===============
+Param            Description
+==============   ===============
+id               Identificador do autor
+==============   ===============
+
+
+.. code-block:: bash
+
+    GET http://localhost:8080/author/{id}/recursos
+.. code-block:: js
+
+        [
+            {
+                "id": 1,
+                "palavras_chave": 
+                [
+                    "Teste"
+                ],
+                "titulo": "TESTE",
+                "descricao": "Aulas de Teste",
+                "link": "teste.com.br",
+                "imagem": "imagem",
+                "data_criacao": "2022-01-01",
+                "data_registro": "2022-01-10"
+            }
+        ]
+        
+GET
+++++
+
+Retorna uma lista com todos autores com um determinado sobrenome
+
+==============   ===============
+Parâmetro        Descrição
+==============   ===============
+sobrenome        Sobrenome do autor desejado
+==============   ===============
+
+
+.. code-block:: bash
+
+    GET http://localhost:8080/author/sn
+
+.. code-block:: js
+
+        [
+          {
+            "id": 0,
+            "orcid": "string",
+            "email": "string",
+            "nome": "string",
+            "sobrenome": "string",
+            "afiliacao": "string",
+            "recursos": [
+              {
+                "id": 0,
+                "palavras_chave": [
+                  "string"
+                ],
+                "titulo": "string",
+                "descricao": "string",
+                "link": "string",
+                "imagem": "string",
+                "data_criacao": "string",
+                "data_registro": "string"
+              }
             ]
-        }
+          }
+        ]
 
 POST 
 ++++++
 
-Creates a new service list and returns the new service list object.
-
-==============   ===============
-Param            Description
-==============   ===============
-name             Name of the service list
-description      Description of service list
-==============   ===============
+Cria um novo autor
 
 .. code-block:: text
 
-   POST /admin/api/v1/service-lists HTTP/1.1 name=New%20Service&description=A%20great%20service
+   POST http://localhost:8080/author
 
 .. code-block:: js
 
-        {
-            "name": "New List",
-            "id": "new-list",
-            "description": "A great service"
-            "url": "/api/v1/service-list/new-list",
-        }
+            {
+              "id": 0,
+              "orcid": "string",
+              "email": "string",
+              "nome": "string",
+              "sobrenome": "string",
+              "afiliacao": "string",
+              "recursos": [
+                {
+                  "id": 0,
+                  "palavras_chave": [
+                    "string"
+                  ],
+                  "titulo": "string",
+                  "descricao": "string",
+                  "link": "string",
+                  "imagem": "string",
+                  "data_criacao": "string",
+                  "data_registro": "string"
+                }
+              ]
+            }
 
 
-Instance Resource
-~~~~~~~~~~~~~~~~~~
 
-.. code-block:: text
-
-    /admin/api/v1/service-lists/{service-list}
-
-The Service Instance resources represents an individual service list
-
-GET
-++++
-
-.. code-block:: bash
-
-    GET /admin/api/v1/service-lists/{service} HTTP/1.1
-
-.. code-block:: js
-
-        {
-            "name": "Example List",
-            "id": "example-list",
-            "description": "An explanation of what this list represents"
-            "url": "/api/v1/service-lists/example-list",
-        }
-
-POST
+PUT
 +++++
 
-Updates a service list's description and returns the updated service list. All the listed parameters are optional.
+Atualiza um autor
 
 ==============   ===============
-Param            Description
+Parâmetros       Descrição
 ==============   ===============
-name             Name of the service list
-description      Description of service list
+id               Identificador único do autor
 ==============   ===============
 
 .. code-block:: text
   
-    POST /admin/api/v1/service-lists/{service-list} description=System%20is%20now%20operational
+    PUT http://localhost:8080/author/{id}
 
 .. code-block:: js
 
         {
-            "name": "Example List",
-            "id": "example-list",
-            "description": "System is now operational",
-            "url": "/api/v1/service-lists/example-list",
+          "orcid": "string",
+          "email": "string",
+          "nome": "string",
+          "sobrenome": "string",
+          "afiliacao": "string",
+          "recursos": [
+            {
+              "id": 0,
+              "palavras_chave": [
+                "string"
+              ],
+              "titulo": "string",
+              "descricao": "string",
+              "link": "string",
+              "imagem": "string",
+              "data_criacao": "string",
+              "data_registro": "string"
+            }
+          ]
         }
-
 
 DELETE
 +++++++
 
-Deletes a service list and returns the deleted service object
+Deletar um autor  
+
+==============   ===============
+Parâmetros        Descrição
+==============   ===============
+id               Identificador do author 
+==============   ===============
 
 .. code-block:: text
 
-    DELETE /admin/api/v1/service-lists/{service-list} HTTP/1.1
+    DELETE http://localhost:8080/author/{id}
 
 .. code-block:: js
 
-        {
-            "name": "Example List",
-            "id": "example-list",
-            "description": "System is now operational",
-            "url": "/api/v1/service-lists/example-list",
-        }
 
-Events
+Eventos
 -----------
 
-The Events List resource represents all event associated with a given service
+Os eventos são tipos de coleção representam uma coleção de eventos de recursos educacionais
 
 
 ==============   ===============
-Property         Description
+Propriedade         Descrição
 ==============   ===============
-sid	         The unique identifier by which to identify the event
-message	         The message associated with this event
-timestamp	 The time at which this event occurred, given in RFC 1132 format.
-url	         The URL of the specific event resource
-status	         The status of this event, as described by the Statuses resource
+id	             Identificador único do evento
+recursos	     Lista de recursos representações pelos eventos
+titulo	         Título da coleção de eventos
+descricao	     Descrição da coleção de eventos
+imagem	         Imagem representativa
+data_criacao	 Data da criação da coleção de eventos
+data_fim	     Data de fim da coleção de eventos
 ==============   ===============
 
 
-List Resource
+Resource
 ~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: text
 
-    /admin/api/v1/services/{service}/events
+    http://localhost:8080/eventos
 
 GET
 ++++
 
-Returns all events associated with a given service in reverse chronological order.
+Retorna uma lista com todos eventos
 
 .. code-block:: text
 
-    GET /admin/api/v1/services/{service}/events HTTP/1.1
+    GET http://localhost:8080/eventos
 
 .. code-block:: js
 
-        {
-            "events": [
-                {
-                    "timestamp": "Mon, 28 Jun 2010 22:17:06 GMT",
-                    "message": "Problem fixed", 
-                    "sid": "ahJpc215d2Vic2VydmljZWRvd25yCwsSBUV2ZW50GBAM",
-                    "url": "/api/v1/services/example-service/events/ahJpc215d2Vic2VydmljZWRvd2",
-                    "status": {
-                        "id": "down",
-                        "name": "Down",
-                        "description": "An explanation of what this status represents",
-                        "level": "ERROR",
-                        "image": "/images/status/cross-circle.png",
-                        "url": "/api/v1/statuses/down",
-                    },
-                }, 
-                {
-                    "timestamp": "Mon, 28 Jun 2010 22:18:06 GMT",
-                    "message": "Might be up", 
-                    "sid": "ahJpc215d2Vic2VydmljZWRvd25yCwsSBUV2ZW50GA8M",
-                    "url": "/api/v1/services/example-service/events/ahJpc215d2Vic..."
-                    "status": {
-                        "id": "down",
-                        "name": "Down",
-                        "description": "An explanation of what this status represents",
-                        "level": "ERROR",
-                        "image": "/images/status/cross-circle.png",
-                        "url": "/api/v1/statuses/down",
-                    },
-                }
-            ]
-        }
+        [
+          {
+            "id": 1,
+            "recursos": [],
+            "titulo": "Spring",
+            "descricao": "Evento exemplo",
+            "imagem": "imagem",
+            "data_criacao": "2022-01-01",
+            "data_fim": "2022-01-10"
+          }
+        ]
 
-The Events List resource also supports filtering events via dates. To filter events, place on of the following options into the query string for a GET request
+GET
+++++
 
-While the format of these parameters is very flexible, we suggested either the RFC 2822 or RFC 1123 format due to their support for encoding timezone information.
+Retorna uma lista com todos recursos de um determinado evento
 
-Events List URL Filtering Options
-
-======= ============
-Option	Description
-======= ============
-start	Only show events which started after this date, inclusive.
-end     Only show events which started before date, inclusive.
-======= ============
-
-.. code-block:: text
-
-    GET /admin/api/v1/services/{service}/events?start=2010-06-10 HTTP/1.1
-
-would return all events starting after June 6, 2010.
-
-Similarly, both "start" and "end" can be used to create date ranges
-
-.. code-block:: text
-
-    GET /admin/api/v1/services/{service}/events?end=2010-06-17&start=2010-06-01 HTTP/1.1
-
-would return all events between June 6, 2010 and June 17, 2010
+==============   ===============
+Param            Description
+==============   ===============
+id               Identificador do evento
+==============   ===============
 
 
+.. code-block:: bash
+
+    GET http://localhost:8080/evento/{id}/recursos
+    
+.. code-block:: js
+
+        [
+            {
+                "id": 1,
+                "palavras_chave": 
+                [
+                    "Teste"
+                ],
+                "titulo": "TESTE",
+                "descricao": "Aulas de Teste",
+                "link": "teste.com.br",
+                "imagem": "imagem",
+                "data_criacao": "2022-01-01",
+                "data_registro": "2022-01-10"
+            }
+        ]
+        
+GET
+++++
+
+Retorna uma lista com todos eventos dentro de um dado período de tempo
+
+==============   ===============
+Param            Description
+==============   ===============
+data_criacao     Data mínima do período
+data_fim         Data máxima do período
+==============   ===============
+
+
+.. code-block:: bash
+
+    GET http://localhost:8080/evento/{data_criacao}/{data_fim}
+    
+.. code-block:: js
+
+        [
+          {
+            "id": 0,
+            "recursos": [
+              {
+                "id": 0,
+                "palavras_chave": [
+                  "string"
+                ],
+                "titulo": "string",
+                "descricao": "string",
+                "link": "string",
+                "imagem": "string",
+                "data_criacao": "string",
+                "data_registro": "string"
+              }
+            ],
+            "titulo": "string",
+            "descricao": "string",
+            "imagem": "string",
+            "data_criacao": "string",
+            "data_fim": "string"
+          }
+        ]
 
 POST
 +++++
 
-Creates a new event for the given service and returns the newly created event object. All arguments are required.
+Cria um novo evento
 
-========  ==============
-Param	  Description
-========  ==============
-status	  The system status for the event. This must be a valid system status identifier found in the Statuses List resource
-message	  The message for the event
-========  ==============
 
 .. code-block:: text
 
-    POST /admin/api/v1/services/{service}/events HTTP/1.1 status=AVAILABLE&message=System%20is%20now%20operational
+    POST http://localhost:8080/evento
 
 .. code-block:: js
 
         {
-            "timestamp": "Mon, 28 Jun 2010 22:18:06 GMT"
-            "message": "Might be up", 
-            "sid": "ahJpc215d2Vic2VydmljZWRvd25yCwsSBUV2ZW50GA8M",
-            "url": "/api/v1/services/example-service/events/ahJpc215d2Vic2VydmljZWRvd25yCwsSBUV2ZW50GA8M",
-            "status": {
-                "id": "down",
-                "name": "Down",
-                "description": "An explanation of what this status represents",
-                "level": "ERROR",
-                "image": "/images/status/cross-circle.png",
-                "url": "/api/v1/statuses/down",
-            },
-        }
-
-Current Event
-~~~~~~~~~~~~~~~~~
-
-The Current Service Event resource simply returns the current event for a given service.
-
-.. code-block:: text
-
-    /admin/api/v1/services/{service}/events/current
-
-GET
-++++
-
-Returns the current event for a given service.
-
-.. code-block:: text
-
-    GET /admin/api/v1/services/{service}/events/current HTTP/1.1
-
-.. code-block:: js
-
-        {
-            "timestamp": "Mon, 28 Jun 2010 22:17:06 GMT",
-            "message": "Might be up", 
-            "sid": "ahJpc215d2Vic2VydmljZWRvd25yCwsSBUV2ZW50GA8M",
-            "url": "/api/v1/services/example-service/events/ahJpc215d2Vic2VydmljZWRvd25yCwsSBUV2ZW50GA8M",
-            "status": {
-                "id": "down",
-                "name": "Down",
-                "description": "An explanation of what this status represents",
-                "level": "ERROR",
-                "image": "/images/status/cross-circle.png",
-                "url": "/api/v1/statuses/down",
-            },
-        }
-
-Instance Resource
-~~~~~~~~~~~~~~~~~~~~
-
-The Event Instance resource represents an individual event for a given service.
-
-.. code-block:: text
- 
-    /admin/api/v1/services/{service}/events/{sid}
-
-GET
-++++
-
-Returns a service event with the given event sid. The event's status object is also returned as well.
-
-.. code-block:: text
-
-    GET /admin/api/v1/services/{service}/events/{sid} HTTP/1.1
-
-.. code-block:: js
-
-        {
-            "timestamp": "Mon, 28 Jun 2010 22:17:06 GMT",
-            "message": "Might be up", 
-            "sid": "ahJpc215d2Vic2VydmljZWRvd25yCwsSBUV2ZW50GA8M",
-            "url": "/api/v1/services/example-service/events/ahJpc215d2Vic2VydmljZWRvd25yCwsSBUV2ZW50GA8M",
-            "status": {
-                "id": "down",
-                "name": "Down",
-                "description": "An explanation of what this status represents",
-                "level": "ERROR",
-                "image": "/images/status/cross-circle.png",
-                "url": "/api/v1/statuses/down",
+          "id": 0,
+          "recursos": [
+            {
+              "id": 0,
+              "palavras_chave": [
+                "string"
+              ],
+              "titulo": "string",
+              "descricao": "string",
+              "link": "string",
+              "imagem": "string",
+              "data_criacao": "string",
+              "data_registro": "string"
             }
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "imagem": "string",
+          "data_criacao": "string",
+          "data_fim": "string"
+        }
+
+POST
+++++
+
+Cria um evento associando a um recurso existente 
+
+==============   ===============
+Parâmetro            Descrição
+==============   ===============
+recursoId        Identificador único do recurso
+==============   ===============
+
+.. code-block:: text
+
+    POST http://localhost:8080/evento/{recursoId}
+
+.. code-block:: js
+
+        {
+          "id": 0,
+          "recursos": [
+            {
+              "id": 0,
+              "palavras_chave": [
+                "string"
+              ],
+              "titulo": "string",
+              "descricao": "string",
+              "link": "string",
+              "imagem": "string",
+              "data_criacao": "string",
+              "data_registro": "string"
+            }
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "imagem": "string",
+          "data_criacao": "string",
+          "data_fim": "string"
+        }
+
+PUT
+++++
+
+Atualiza um evento sem alterar seu recurso
+
+==============   ===============
+Parâmetro            Descrição
+==============   ===============
+id               Identificador único do evento
+==============   ===============
+
+.. code-block:: text
+
+    PUT http://localhost:8080/evento/{id}
+
+.. code-block:: js
+
+        {
+          "recursos": [
+            {
+              "id": 0,
+              "palavras_chave": [
+                "string"
+              ],
+              "titulo": "string",
+              "descricao": "string",
+              "link": "string",
+              "imagem": "string",
+              "data_criacao": "string",
+              "data_registro": "string"
+            }
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "imagem": "string",
+          "data_criacao": "string",
+          "data_fim": "string"
+        }
+
+PUT
+++++
+
+Atualiza um evento associando a um recurso existente
+
+==============   ===============
+Parâmetro            Descrição
+==============   ===============
+recursoId        Identificador único do recurso
+eventoId         Identificador único do evento
+==============   ===============
+
+.. code-block:: text
+
+    PUT http://localhost:8080/recurso/{recursoId}/evento/{eventoId}/
+
+.. code-block:: js
+
+        {
+          "recursos": [
+            {
+              "id": 0,
+              "palavras_chave": [
+                "string"
+              ],
+              "titulo": "string",
+              "descricao": "string",
+              "link": "string",
+              "imagem": "string",
+              "data_criacao": "string",
+              "data_registro": "string"
+            }
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "imagem": "string",
+          "data_criacao": "string",
+          "data_fim": "string"
         }
 
 
 DELETE
 ++++++++
 
-Deletes the given event and returns the deleted event
+Deleta o evento
+
+==============   ===============
+Parâmetro            Descrição
+==============   ===============
+id               Identificador único do evento
+==============   ===============
 
 .. code-block:: text
 
-    DELETE /admin/api/v1/services/{service}/events/{sid} HTTP/1.1
+    DELETE http://localhost:8080/evento/{id}
 
-.. code-block:: js
-
-        {
-            "timestamp": "Mon, 28 Jun 2010 22:17:06 GMT",
-            "message": "Might be up", 
-            "sid": "ahJpc215d2Vic2VydmljZWRvd25yCwsSBUV2ZW50GA8M",
-            "url": "/api/v1/services/example-service/events/ahJpc215d2Vic2VydmljZWRvd25yCwsSBUV2ZW50GA8M",
-            "status": {
-                "id": "down",
-                "name": "Down",
-                "description": "An explanation of what this status represents",
-                "level": "ERROR",
-                "image": "/images/status/cross-circle.png",
-                "url": "/statuses/down",
-            },    
-        }
-
-Statuses
+cursos
 -----------
-The Status resource represents a possible status for a service.
+
+Os cursos são tipos de coleção representam uma coleção de cursos de recursos educacionais
+
 
 ==============   ===============
-Property         Description
+Propriedade         Descrição
 ==============   ===============
-id	         The unique identifier by which to identify the status
-name	         The name of the status, defined by the user
-description	 The description of the status
-url	         The URL of the specific status resource
-level	         The level of this status. Can be any value listed in the Levels List resource
-image	         The URL of the image for this status
+id	             Identificador único do curso
+recursos	     Lista de recursos representações pelos cursos
+titulo	         Título da coleção de cursos
+descricao	     Descrição da coleção de cursos
+imagem	         Imagem representativa
+data_registro	 Data da registro da coleção de cursos
 ==============   ===============
 
-List Resource
-~~~~~~~~~~~~~~~~
+
+Resource
+~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: text
 
-    /admin/api/v1/statuses
-
-
-The Status List resource represents all possible systems statuses.
-
+    http://localhost:8080/curso
 
 GET
-+++++
+++++
 
-Returns all service statuses
+Retorna uma lista com todos cursos
 
 .. code-block:: text
 
-    GET /admin/api/v1/statuses HTTP/1.1
+    GET http://localhost:8080/curso
+
+.. code-block:: js
+
+        [
+          {
+            "id": 1,
+            "recursos": [],
+            "titulo": "Spring",
+            "descricao": "Curso exemplo",
+            "imagem": "imagem",
+            "data_registro": "2022-01-01",
+          }
+        ]
+
+GET
+++++
+
+Retorna uma lista com todos recursos de um determinado curso
+
+==============   ===============
+Param            Description
+==============   ===============
+id               Identificador do curso
+==============   ===============
+
+
+.. code-block:: bash
+
+    GET http://localhost:8080/curso/{id}/recursos
+    
+.. code-block:: js
+
+        [
+            {
+                "id": 1,
+                "palavras_chave": 
+                [
+                    "Teste"
+                ],
+                "titulo": "TESTE",
+                "descricao": "Aulas de Teste",
+                "link": "teste.com.br",
+                "imagem": "imagem",
+                "data_registro": "2022-01-01",
+            }
+        ]
+        
+
+POST
++++++
+
+Cria um novo curso
+
+
+.. code-block:: text
+
+    POST http://localhost:8080/curso
 
 .. code-block:: js
 
         {
-            "statuses": [
-                {
-                    "name": "Available",
-                    "id": "available",
-                    "description": "An explanation of what this status represents",
-                    "level": "NORMAL",
-                    "image": "/images/status/tick-circle.png",
-                    "url": "api/v1/statuses/up",
-                },
-                {
-                    "name": "Down",
-                    "id": "down",
-                    "description": "An explanation of what this status represents",
-                    "level": "ERROR",
-                    "image": "/images/status/cross-circle.png",
-                    "url": "api/v1/statuses/down",
-                },
-            ]
+          "id": 0,
+          "recursos": [
+            {
+              "id": 0,
+              "palavras_chave": [
+                "string"
+              ],
+              "titulo": "string",
+              "descricao": "string",
+              "link": "string",
+              "imagem": "string",
+              "data_criacao": "string",
+              "data_registro": "string"
+            }
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "imagem": "string",
+          "data_registro": "string",
         }
 
 POST
-++++++
+++++
 
-Creates a new status and returns this newly created status. All parameters are required.
+Cria um curso associando a um recurso existente 
 
-============  ==============
-Param	      Description
-============  ==============
-name	      The name of the status
-description   The description of the status
-level	      The level of the status. lues listed in the rce
-image	      The filename of the image, with no extension. See the status-images resource
-============  ==============
+==============   ===============
+Parâmetro            Descrição
+==============   ===============
+recursoId        Identificador único do recurso
+==============   ===============
 
 .. code-block:: text
 
-    POST /admin/api/v1/statuses HTTP/1.1 name=Down&description=A%20new%20status&severity=1000&image=cross-circle.png
+    POST http://localhost:8080/recurso/{recursoId}/curso
 
 .. code-block:: js
 
         {
-            "name": "Down",
-            "id": "down"
-            "description": "A new status",
-            "level": "ERROR",
-            "image": "cross-circle",
-            "url": "/api/v1/statuses/down",
+          "id": 0,
+          "recursos": [
+            {
+              "id": 0,
+              "palavras_chave": [
+                "string"
+              ],
+              "titulo": "string",
+              "descricao": "string",
+              "link": "string",
+              "imagem": "string",
+              "data_criacao": "string",
+              "data_registro": "string"
+            }
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "imagem": "string",
+          "data_registro": "string",
         }
 
-Instance Resource
-~~~~~~~~~~~~~~~~~~~~~
+PUT
+++++
 
-The Status Instance resource represents a single service status
+Atualiza um curso sem alterar seu recurso
 
-.. code-block:: text
-
-    /admin/api/v1/statuses/{name}
-
-
-GET
-+++++
-
-Returns a status object
+==============   ===============
+Parâmetro            Descrição
+==============   ===============
+id               Identificador único do curso
+==============   ===============
 
 .. code-block:: text
 
-   GET /admin/api/v1/services HTTP/1.1
+    PUT http://localhost:8080/curso/{id}
 
 .. code-block:: js
 
         {
-            "name": "Down",
-            "id": "down",
-            "description": "A new status",
-            "level": "ERROR",
-            "image": "/images/status/cross-circle.png",
-            "url": "/api/v1/statuses/down",
+          "recursos": [
+            {
+              "id": 0,
+              "palavras_chave": [
+                "string"
+              ],
+              "titulo": "string",
+              "descricao": "string",
+              "link": "string",
+              "imagem": "string",
+              "data_criacao": "string",
+              "data_registro": "string"
+            }
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "imagem": "string",
+          "data_registro": "string",
         }
 
-POST
-++++++
+PUT
+++++
 
-Update the given status. All the following parameters are optional.
+Atualiza um curso associando a um recurso existente
 
-============  ==============
-Param	      Description
-============  ==============
-name	      The name of the status
-description   The description of the status
-level	      The level of the status. lues listed in the rce
-image	      The filename of the image, with no extension. See the status-images resource
-============  ==============
+==============   ===============
+Parâmetro            Descrição
+==============   ===============
+recursoId        Identificador único do recurso
+cursoId          Identificador único do curso
+==============   ===============
 
 .. code-block:: text
 
-    POST /admin/api/v1/statuses HTTP/1.1 description=A%20new%20status&severity=1010&image=cross-circle.png
+    PUT http://localhost:8080/recurso/{recursoId}/curso/{cursoId}/
 
 .. code-block:: js
 
         {
-            "name": "Down",
-            "id": "down",
-            "description": "A new status",
-            "level": "ERROR",
-            "image": "/images/status/cross-circle.png",
-            "url": "/api/v1/statuses/down",
+          "recursos": [
+            {
+              "id": 0,
+              "palavras_chave": [
+                "string"
+              ],
+              "titulo": "string",
+              "descricao": "string",
+              "link": "string",
+              "imagem": "string",
+              "data_criacao": "string",
+              "data_registro": "string"
+            }
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "imagem": "string",
+          "data_registro": "string",
         }
+
 
 DELETE
-+++++++++
+++++++++
 
-Delete the given status and return the deleted status
+Deleta o curso
 
+==============   ===============
+Parâmetro            Descrição
+==============   ===============
+id               Identificador único do curso
+==============   ===============
 
 .. code-block:: text
 
-    DELETE /admin/api/v1/statuses/{name}
+    DELETE http://localhost:8080/curso/{id}
+
+Coleção
+-----------
+
+As colecões representam uma coleção de recursos educacionais
+
+
+==============   ===============
+Propriedade         Descrição
+==============   ===============
+id	             Identificador único da colecao
+recursos	     Lista de recursos representações pelas coleções
+titulo	         Título da coleção 
+descricao	     Descrição da coleção
+imagem	         Imagem representativa
+==============   ===============
+
+
+Resource
+~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: text
+
+    http://localhost:8080/colecao
+
+GET
+++++
+
+Retorna uma lista com todas coleções
+
+.. code-block:: text
+
+    GET http://localhost:8080/colecao
 
 .. code-block:: js
 
-        {
-            "name": "Down",
-            "id": "down",
-            "description": "A new status",
-            "level": "ERROR",
-            "image": "/images/status/cross-circle.png",
-            "url": "/api/v1/statuses/down",
-        }
-
-Status Levels
-----------------
-The Status Levels resource is a read-only resource which lists the possible levels for a status.
-
-List Resource
-~~~~~~~~~~~~~~~~~
-
-.. code-block:: text
-
-    /admin/api/v1/levels
+        [
+          {
+            "id": 1,
+            "recursos": [],
+            "titulo": "Spring",
+            "descricao": "colecao exemplo",
+            "imagem": "imagem",
+          }
+        ]
 
 GET
+++++
+
+Retorna uma lista com todos recursos de uma determinada colecao
+
+==============   ===============
+Parâmetro         Descrição
+==============   ===============
+id               Identificador da coleção
+==============   ===============
+
+
+.. code-block:: bash
+
+    GET http://localhost:8080/colecao/{id}/recursos
+    
+.. code-block:: js
+
+        [
+            {
+                "id": 1,
+                "palavras_chave": 
+                [
+                    "Teste"
+                ],
+                "titulo": "TESTE",
+                "descricao": "Aulas de Teste",
+                "link": "teste.com.br",
+                "imagem": "imagem",
+                "data_criacao": "2022-01-01",
+                "data_registro": "2022-01-10"
+            }
+        ]
+        
+
+POST
 +++++
-Returns a list of possible status levels in increasing severity
+
+Cria um novo colecao
+
 
 .. code-block:: text
 
-    GET /admin/api/v1/levels
+    POST http://localhost:8080/colecao
 
 .. code-block:: js
 
         {
-            "levels": [
-                "NORMAL", 
-                "WARNING", 
-                "ERROR", 
-                "CRITICAL",
-            ]
+          "id": 0,
+          "recursos": [
+            {
+              "id": 0,
+              "palavras_chave": [
+                "string"
+              ],
+              "titulo": "string",
+              "descricao": "string",
+              "link": "string",
+              "imagem": "string",
+              "data_criacao": "string",
+              "data_registro": "string"
+            }
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "imagem": "string",
         }
 
+POST
+++++
 
-Status Images
-----------------
-The Status Images resource is a read-only resource which lists the icons available to use for statuses
+Cria um coleção associando a um recurso existente 
 
-List Resource
-~~~~~~~~~~~~~~~
-
-.. code-block:: text
-
-    /admin/api/v1/status-images
-
-GET
-++++++
-
-Returns a list of status images.
+==============   ===============
+Parâmetro            Descrição
+==============   ===============
+recursoId        Identificador único do recurso
+==============   ===============
 
 .. code-block:: text
 
-    GET /admin/api/v1/status-images
+    POST http://localhost:8080/colecao/{recursoId}
 
 .. code-block:: js
 
         {
-            "images": [
-                {
-                    "name": "sample-image",
-                    "url": "/status-images/sample-image.png",
-                },
-                {
-                    "name": "sample-image",
-                    "url": "/status-images/sample-image.png",
-                },
-            ]
+          "id": 0,
+          "recursos": [
+            {
+              "id": 0,
+              "palavras_chave": [
+                "string"
+              ],
+              "titulo": "string",
+              "descricao": "string",
+              "link": "string",
+              "imagem": "string",
+              "data_criacao": "string",
+              "data_registro": "string"
+            }
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "imagem": "string",
         }
+
+PUT
+++++
+
+Atualiza um colecao sem alterar seu recurso
+
+==============   ===============
+Parâmetro            Descrição
+==============   ===============
+id               Identificador único da coleção
+==============   ===============
+
+.. code-block:: text
+
+    PUT http://localhost:8080/colecao/{id}
+
+.. code-block:: js
+
+        {
+          "recursos": [
+            {
+              "id": 0,
+              "palavras_chave": [
+                "string"
+              ],
+              "titulo": "string",
+              "descricao": "string",
+              "link": "string",
+              "imagem": "string",
+              "data_criacao": "string",
+              "data_registro": "string"
+            }
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "imagem": "string",
+        }
+
+PUT
+++++
+
+Atualiza um colecao associando a um recurso existente
+
+==============   ===============
+Parâmetro            Descrição
+==============   ===============
+recursoId        Identificador único do recurso
+colecaoId         Identificador único da coleção
+==============   ===============
+
+.. code-block:: text
+
+    PUT http://localhost:8080/recurso/{recursoId}/colecao/{colecaoId}/
+
+.. code-block:: js
+
+        {
+          "recursos": [
+            {
+              "id": 0,
+              "palavras_chave": [
+                "string"
+              ],
+              "titulo": "string",
+              "descricao": "string",
+              "link": "string",
+              "imagem": "string",
+              "data_criacao": "string",
+              "data_registro": "string"
+            }
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "imagem": "string",
+        }
+
+
+DELETE
+++++++++
+
+Deleta a coleção
+
+==============   ===============
+Parâmetro            Descrição
+==============   ===============
+id               Identificador único da coleção
+==============   ===============
+
+.. code-block:: text
+
+    DELETE http://localhost:8080/colecao/{id}
