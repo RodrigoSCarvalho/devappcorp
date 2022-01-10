@@ -381,22 +381,22 @@ id               Identificador único do autor
 DELETE
 +++++++
 
-Deletes a service list and returns the deleted service object
+Deletar um autor  
+
+==============   ===============
+Parâmetros        Descrição
+==============   ===============
+id               Identificador do author 
+==============   ===============
 
 .. code-block:: text
 
-    DELETE /admin/api/v1/service-lists/{service-list} HTTP/1.1
+    DELETE /author/{id}
 
 .. code-block:: js
 
-        {
-            "name": "Example List",
-            "id": "example-list",
-            "description": "System is now operational",
-            "url": "/api/v1/service-lists/example-list",
-        }
 
-Events
+Eventos
 -----------
 
 The Events List resource represents all event associated with a given service
