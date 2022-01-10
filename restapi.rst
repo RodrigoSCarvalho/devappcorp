@@ -19,7 +19,7 @@ data_criacao     Data de criacao do recurso
 data_registro    Data de registro do recurso
 ==============   ===============
 
-List Resource
+Resource
 ~~~~~~~~~~~~~~~
 
 .. code-block:: text
@@ -183,7 +183,7 @@ afiliacao	     Instituição a qual o autor está vinculado
 recursos         Lista de recursos escritos pelo determinado autor
 ==============   ===============
 
-Endpoints
+Resource
 ~~~~~~~~~~~~~~~
 
 .. code-block:: text
@@ -391,7 +391,7 @@ id               Identificador do author
 
 .. code-block:: text
 
-    DELETE /author/{id}
+    DELETE http://localhost:8080/author/{id}
 
 .. code-block:: js
 
@@ -420,7 +420,7 @@ Resource
 
 .. code-block:: text
 
-    /eventos
+    http://localhost:8080/eventos
 
 GET
 ++++
@@ -429,7 +429,7 @@ Retorna uma lista com todos eventos
 
 .. code-block:: text
 
-    GET /eventos
+    GET http://localhost:8080/eventos
 
 .. code-block:: js
 
@@ -531,7 +531,7 @@ Cria um novo evento
 
 .. code-block:: text
 
-    POST /evento
+    POST http://localhost:8080/evento
 
 .. code-block:: js
 
@@ -571,7 +571,7 @@ recursoId        Identificador único do recurso
 
 .. code-block:: text
 
-    POST /evento/{recursoId}
+    POST http://localhost:8080/evento/{recursoId}
 
 .. code-block:: js
 
@@ -611,12 +611,11 @@ id               Identificador único do evento
 
 .. code-block:: text
 
-    PUT /evento/{id}
+    PUT http://localhost:8080/evento/{id}
 
 .. code-block:: js
 
         {
-          "id": 0,
           "recursos": [
             {
               "id": 0,
@@ -652,12 +651,11 @@ eventoId         Identificador único do evento
 
 .. code-block:: text
 
-    PUT /recurso/{recursoId}/evento/{eventoId}/
+    PUT http://localhost:8080/recurso/{recursoId}/evento/{eventoId}/
 
 .. code-block:: js
 
         {
-          "id": 0,
           "recursos": [
             {
               "id": 0,
@@ -693,237 +691,493 @@ id               Identificador único do evento
 
 .. code-block:: text
 
-    DELETE /evento/{id}
+    DELETE http://localhost:8080/evento/{id}
 
-Statuses
+cursos
 -----------
-The Status resource represents a possible status for a service.
+
+Os cursos são tipos de coleção representam uma coleção de cursos de recursos educacionais
+
 
 ==============   ===============
-Property         Description
+Propriedade         Descrição
 ==============   ===============
-id	         The unique identifier by which to identify the status
-name	         The name of the status, defined by the user
-description	 The description of the status
-url	         The URL of the specific status resource
-level	         The level of this status. Can be any value listed in the Levels List resource
-image	         The URL of the image for this status
+id	             Identificador único do curso
+recursos	     Lista de recursos representações pelos cursos
+titulo	         Título da coleção de cursos
+descricao	     Descrição da coleção de cursos
+imagem	         Imagem representativa
+data_registro	 Data da registro da coleção de cursos
 ==============   ===============
 
-List Resource
-~~~~~~~~~~~~~~~~
+
+Resource
+~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: text
 
-    /admin/api/v1/statuses
-
-
-The Status List resource represents all possible systems statuses.
-
+    http://localhost:8080/curso
 
 GET
-+++++
+++++
 
-Returns all service statuses
+Retorna uma lista com todos cursos
 
 .. code-block:: text
 
-    GET /admin/api/v1/statuses HTTP/1.1
+    GET http://localhost:8080/curso
+
+.. code-block:: js
+
+        [
+          {
+            "id": 1,
+            "recursos": [],
+            "titulo": "Spring",
+            "descricao": "Curso exemplo",
+            "imagem": "imagem",
+            "data_registro": "2022-01-01",
+          }
+        ]
+
+GET
+++++
+
+Retorna uma lista com todos recursos de um determinado curso
+
+==============   ===============
+Param            Description
+==============   ===============
+id               Identificador do curso
+==============   ===============
+
+
+.. code-block:: bash
+
+    GET http://localhost:8080/curso/{id}/recursos
+    
+.. code-block:: js
+
+        [
+            {
+                "id": 1,
+                "palavras_chave": 
+                [
+                    "Teste"
+                ],
+                "titulo": "TESTE",
+                "descricao": "Aulas de Teste",
+                "link": "teste.com.br",
+                "imagem": "imagem",
+                "data_registro": "2022-01-01",
+            }
+        ]
+        
+
+POST
++++++
+
+Cria um novo curso
+
+
+.. code-block:: text
+
+    POST http://localhost:8080/curso
 
 .. code-block:: js
 
         {
-            "statuses": [
-                {
-                    "name": "Available",
-                    "id": "available",
-                    "description": "An explanation of what this status represents",
-                    "level": "NORMAL",
-                    "image": "/images/status/tick-circle.png",
-                    "url": "api/v1/statuses/up",
-                },
-                {
-                    "name": "Down",
-                    "id": "down",
-                    "description": "An explanation of what this status represents",
-                    "level": "ERROR",
-                    "image": "/images/status/cross-circle.png",
-                    "url": "api/v1/statuses/down",
-                },
-            ]
+          "id": 0,
+          "recursos": [
+            {
+              "id": 0,
+              "palavras_chave": [
+                "string"
+              ],
+              "titulo": "string",
+              "descricao": "string",
+              "link": "string",
+              "imagem": "string",
+              "data_criacao": "string",
+              "data_registro": "string"
+            }
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "imagem": "string",
+          "data_registro": "string",
         }
 
 POST
-++++++
+++++
 
-Creates a new status and returns this newly created status. All parameters are required.
+Cria um curso associando a um recurso existente 
 
-============  ==============
-Param	      Description
-============  ==============
-name	      The name of the status
-description   The description of the status
-level	      The level of the status. lues listed in the rce
-image	      The filename of the image, with no extension. See the status-images resource
-============  ==============
+==============   ===============
+Parâmetro            Descrição
+==============   ===============
+recursoId        Identificador único do recurso
+==============   ===============
 
 .. code-block:: text
 
-    POST /admin/api/v1/statuses HTTP/1.1 name=Down&description=A%20new%20status&severity=1000&image=cross-circle.png
+    POST http://localhost:8080/recurso/{recursoId}/curso
 
 .. code-block:: js
 
         {
-            "name": "Down",
-            "id": "down"
-            "description": "A new status",
-            "level": "ERROR",
-            "image": "cross-circle",
-            "url": "/api/v1/statuses/down",
+          "id": 0,
+          "recursos": [
+            {
+              "id": 0,
+              "palavras_chave": [
+                "string"
+              ],
+              "titulo": "string",
+              "descricao": "string",
+              "link": "string",
+              "imagem": "string",
+              "data_criacao": "string",
+              "data_registro": "string"
+            }
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "imagem": "string",
+          "data_registro": "string",
         }
 
-Instance Resource
-~~~~~~~~~~~~~~~~~~~~~
+PUT
+++++
 
-The Status Instance resource represents a single service status
+Atualiza um curso sem alterar seu recurso
 
-.. code-block:: text
-
-    /admin/api/v1/statuses/{name}
-
-
-GET
-+++++
-
-Returns a status object
+==============   ===============
+Parâmetro            Descrição
+==============   ===============
+id               Identificador único do curso
+==============   ===============
 
 .. code-block:: text
 
-   GET /admin/api/v1/services HTTP/1.1
+    PUT http://localhost:8080/curso/{id}
 
 .. code-block:: js
 
         {
-            "name": "Down",
-            "id": "down",
-            "description": "A new status",
-            "level": "ERROR",
-            "image": "/images/status/cross-circle.png",
-            "url": "/api/v1/statuses/down",
+          "recursos": [
+            {
+              "id": 0,
+              "palavras_chave": [
+                "string"
+              ],
+              "titulo": "string",
+              "descricao": "string",
+              "link": "string",
+              "imagem": "string",
+              "data_criacao": "string",
+              "data_registro": "string"
+            }
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "imagem": "string",
+          "data_registro": "string",
         }
 
-POST
-++++++
+PUT
+++++
 
-Update the given status. All the following parameters are optional.
+Atualiza um curso associando a um recurso existente
 
-============  ==============
-Param	      Description
-============  ==============
-name	      The name of the status
-description   The description of the status
-level	      The level of the status. lues listed in the rce
-image	      The filename of the image, with no extension. See the status-images resource
-============  ==============
+==============   ===============
+Parâmetro            Descrição
+==============   ===============
+recursoId        Identificador único do recurso
+cursoId          Identificador único do curso
+==============   ===============
 
 .. code-block:: text
 
-    POST /admin/api/v1/statuses HTTP/1.1 description=A%20new%20status&severity=1010&image=cross-circle.png
+    PUT http://localhost:8080/recurso/{recursoId}/curso/{cursoId}/
 
 .. code-block:: js
 
         {
-            "name": "Down",
-            "id": "down",
-            "description": "A new status",
-            "level": "ERROR",
-            "image": "/images/status/cross-circle.png",
-            "url": "/api/v1/statuses/down",
+          "recursos": [
+            {
+              "id": 0,
+              "palavras_chave": [
+                "string"
+              ],
+              "titulo": "string",
+              "descricao": "string",
+              "link": "string",
+              "imagem": "string",
+              "data_criacao": "string",
+              "data_registro": "string"
+            }
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "imagem": "string",
+          "data_registro": "string",
         }
+
 
 DELETE
-+++++++++
+++++++++
 
-Delete the given status and return the deleted status
+Deleta o curso
 
+==============   ===============
+Parâmetro            Descrição
+==============   ===============
+id               Identificador único do curso
+==============   ===============
 
 .. code-block:: text
 
-    DELETE /admin/api/v1/statuses/{name}
+    DELETE http://localhost:8080/curso/{id}
+
+Coleção
+-----------
+
+As colecões representam uma coleção de recursos educacionais
+
+
+==============   ===============
+Propriedade         Descrição
+==============   ===============
+id	             Identificador único da colecao
+recursos	     Lista de recursos representações pelas coleções
+titulo	         Título da coleção 
+descricao	     Descrição da coleção
+imagem	         Imagem representativa
+==============   ===============
+
+
+Resource
+~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: text
+
+    http://localhost:8080/colecao
+
+GET
+++++
+
+Retorna uma lista com todas coleções
+
+.. code-block:: text
+
+    GET http://localhost:8080/colecao
 
 .. code-block:: js
 
-        {
-            "name": "Down",
-            "id": "down",
-            "description": "A new status",
-            "level": "ERROR",
-            "image": "/images/status/cross-circle.png",
-            "url": "/api/v1/statuses/down",
-        }
-
-Status Levels
-----------------
-The Status Levels resource is a read-only resource which lists the possible levels for a status.
-
-List Resource
-~~~~~~~~~~~~~~~~~
-
-.. code-block:: text
-
-    /admin/api/v1/levels
+        [
+          {
+            "id": 1,
+            "recursos": [],
+            "titulo": "Spring",
+            "descricao": "colecao exemplo",
+            "imagem": "imagem",
+          }
+        ]
 
 GET
+++++
+
+Retorna uma lista com todos recursos de uma determinada colecao
+
+==============   ===============
+Parâmetro         Descrição
+==============   ===============
+id               Identificador da coleção
+==============   ===============
+
+
+.. code-block:: bash
+
+    GET http://localhost:8080/colecao/{id}/recursos
+    
+.. code-block:: js
+
+        [
+            {
+                "id": 1,
+                "palavras_chave": 
+                [
+                    "Teste"
+                ],
+                "titulo": "TESTE",
+                "descricao": "Aulas de Teste",
+                "link": "teste.com.br",
+                "imagem": "imagem",
+                "data_criacao": "2022-01-01",
+                "data_registro": "2022-01-10"
+            }
+        ]
+        
+
+POST
 +++++
-Returns a list of possible status levels in increasing severity
+
+Cria um novo colecao
+
 
 .. code-block:: text
 
-    GET /admin/api/v1/levels
+    POST http://localhost:8080/colecao
 
 .. code-block:: js
 
         {
-            "levels": [
-                "NORMAL", 
-                "WARNING", 
-                "ERROR", 
-                "CRITICAL",
-            ]
+          "id": 0,
+          "recursos": [
+            {
+              "id": 0,
+              "palavras_chave": [
+                "string"
+              ],
+              "titulo": "string",
+              "descricao": "string",
+              "link": "string",
+              "imagem": "string",
+              "data_criacao": "string",
+              "data_registro": "string"
+            }
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "imagem": "string",
         }
 
+POST
+++++
 
-Status Images
-----------------
-The Status Images resource is a read-only resource which lists the icons available to use for statuses
+Cria um coleção associando a um recurso existente 
 
-List Resource
-~~~~~~~~~~~~~~~
-
-.. code-block:: text
-
-    /admin/api/v1/status-images
-
-GET
-++++++
-
-Returns a list of status images.
+==============   ===============
+Parâmetro            Descrição
+==============   ===============
+recursoId        Identificador único do recurso
+==============   ===============
 
 .. code-block:: text
 
-    GET /admin/api/v1/status-images
+    POST http://localhost:8080/colecao/{recursoId}
 
 .. code-block:: js
 
         {
-            "images": [
-                {
-                    "name": "sample-image",
-                    "url": "/status-images/sample-image.png",
-                },
-                {
-                    "name": "sample-image",
-                    "url": "/status-images/sample-image.png",
-                },
-            ]
+          "id": 0,
+          "recursos": [
+            {
+              "id": 0,
+              "palavras_chave": [
+                "string"
+              ],
+              "titulo": "string",
+              "descricao": "string",
+              "link": "string",
+              "imagem": "string",
+              "data_criacao": "string",
+              "data_registro": "string"
+            }
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "imagem": "string",
         }
+
+PUT
+++++
+
+Atualiza um colecao sem alterar seu recurso
+
+==============   ===============
+Parâmetro            Descrição
+==============   ===============
+id               Identificador único da coleção
+==============   ===============
+
+.. code-block:: text
+
+    PUT http://localhost:8080/colecao/{id}
+
+.. code-block:: js
+
+        {
+          "recursos": [
+            {
+              "id": 0,
+              "palavras_chave": [
+                "string"
+              ],
+              "titulo": "string",
+              "descricao": "string",
+              "link": "string",
+              "imagem": "string",
+              "data_criacao": "string",
+              "data_registro": "string"
+            }
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "imagem": "string",
+        }
+
+PUT
+++++
+
+Atualiza um colecao associando a um recurso existente
+
+==============   ===============
+Parâmetro            Descrição
+==============   ===============
+recursoId        Identificador único do recurso
+colecaoId         Identificador único da coleção
+==============   ===============
+
+.. code-block:: text
+
+    PUT http://localhost:8080/recurso/{recursoId}/colecao/{colecaoId}/
+
+.. code-block:: js
+
+        {
+          "recursos": [
+            {
+              "id": 0,
+              "palavras_chave": [
+                "string"
+              ],
+              "titulo": "string",
+              "descricao": "string",
+              "link": "string",
+              "imagem": "string",
+              "data_criacao": "string",
+              "data_registro": "string"
+            }
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "imagem": "string",
+        }
+
+
+DELETE
+++++++++
+
+Deleta a coleção
+
+==============   ===============
+Parâmetro            Descrição
+==============   ===============
+id               Identificador único da coleção
+==============   ===============
+
+.. code-block:: text
+
+    DELETE http://localhost:8080/colecao/{id}
