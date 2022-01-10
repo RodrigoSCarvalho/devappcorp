@@ -103,7 +103,6 @@ id               Identificador do recurso
 .. code-block:: js
 
         {
-          "id": 0,
           "palavras_chave": [
             "string"
           ],
