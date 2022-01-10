@@ -399,229 +399,301 @@ id               Identificador do author
 Eventos
 -----------
 
-The Events List resource represents all event associated with a given service
+Os eventos são tipos de coleção representam uma coleção de eventos de recursos educacionais
 
 
 ==============   ===============
-Property         Description
+Propriedade         Descrição
 ==============   ===============
-sid	         The unique identifier by which to identify the event
-message	         The message associated with this event
-timestamp	 The time at which this event occurred, given in RFC 1132 format.
-url	         The URL of the specific event resource
-status	         The status of this event, as described by the Statuses resource
+id	             Identificador único do evento
+recursos	     Lista de recursos representações pelos eventos
+titulo	         Título da coleção de eventos
+descricao	     Descrição da coleção de eventos
+imagem	         Imagem representativa
+data_criacao	 Data da criação da coleção de eventos
+data_fim	     Data de fim da coleção de eventos
 ==============   ===============
 
 
-List Resource
+Resource
 ~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: text
 
-    /admin/api/v1/services/{service}/events
+    /eventos
 
 GET
 ++++
 
-Returns all events associated with a given service in reverse chronological order.
+Retorna uma lista com todos eventos
 
 .. code-block:: text
 
-    GET /admin/api/v1/services/{service}/events HTTP/1.1
+    GET /eventos
 
 .. code-block:: js
 
-        {
-            "events": [
-                {
-                    "timestamp": "Mon, 28 Jun 2010 22:17:06 GMT",
-                    "message": "Problem fixed", 
-                    "sid": "ahJpc215d2Vic2VydmljZWRvd25yCwsSBUV2ZW50GBAM",
-                    "url": "/api/v1/services/example-service/events/ahJpc215d2Vic2VydmljZWRvd2",
-                    "status": {
-                        "id": "down",
-                        "name": "Down",
-                        "description": "An explanation of what this status represents",
-                        "level": "ERROR",
-                        "image": "/images/status/cross-circle.png",
-                        "url": "/api/v1/statuses/down",
-                    },
-                }, 
-                {
-                    "timestamp": "Mon, 28 Jun 2010 22:18:06 GMT",
-                    "message": "Might be up", 
-                    "sid": "ahJpc215d2Vic2VydmljZWRvd25yCwsSBUV2ZW50GA8M",
-                    "url": "/api/v1/services/example-service/events/ahJpc215d2Vic..."
-                    "status": {
-                        "id": "down",
-                        "name": "Down",
-                        "description": "An explanation of what this status represents",
-                        "level": "ERROR",
-                        "image": "/images/status/cross-circle.png",
-                        "url": "/api/v1/statuses/down",
-                    },
-                }
-            ]
-        }
+        [
+          {
+            "id": 1,
+            "recursos": [],
+            "titulo": "Spring",
+            "descricao": "Evento exemplo",
+            "imagem": "imagem",
+            "data_criacao": "2022-01-01",
+            "data_fim": "2022-01-10"
+          }
+        ]
 
-The Events List resource also supports filtering events via dates. To filter events, place on of the following options into the query string for a GET request
+GET
+++++
 
-While the format of these parameters is very flexible, we suggested either the RFC 2822 or RFC 1123 format due to their support for encoding timezone information.
+Retorna uma lista com todos recursos de um determinado evento
 
-Events List URL Filtering Options
-
-======= ============
-Option	Description
-======= ============
-start	Only show events which started after this date, inclusive.
-end     Only show events which started before date, inclusive.
-======= ============
-
-.. code-block:: text
-
-    GET /admin/api/v1/services/{service}/events?start=2010-06-10 HTTP/1.1
-
-would return all events starting after June 6, 2010.
-
-Similarly, both "start" and "end" can be used to create date ranges
-
-.. code-block:: text
-
-    GET /admin/api/v1/services/{service}/events?end=2010-06-17&start=2010-06-01 HTTP/1.1
-
-would return all events between June 6, 2010 and June 17, 2010
+==============   ===============
+Param            Description
+==============   ===============
+id               Identificador do evento
+==============   ===============
 
 
+.. code-block:: bash
+
+    GET http://localhost:8080/evento/{id}/recursos
+    
+.. code-block:: js
+
+        [
+            {
+                "id": 1,
+                "palavras_chave": 
+                [
+                    "Teste"
+                ],
+                "titulo": "TESTE",
+                "descricao": "Aulas de Teste",
+                "link": "teste.com.br",
+                "imagem": "imagem",
+                "data_criacao": "2022-01-01",
+                "data_registro": "2022-01-10"
+            }
+        ]
+        
+GET
+++++
+
+Retorna uma lista com todos eventos dentro de um dado período de tempo
+
+==============   ===============
+Param            Description
+==============   ===============
+data_criacao     Data mínima do período
+data_fim         Data máxima do período
+==============   ===============
+
+
+.. code-block:: bash
+
+    GET http://localhost:8080/evento/{data_criacao}/{data_fim}
+    
+.. code-block:: js
+
+        [
+          {
+            "id": 0,
+            "recursos": [
+              {
+                "id": 0,
+                "palavras_chave": [
+                  "string"
+                ],
+                "titulo": "string",
+                "descricao": "string",
+                "link": "string",
+                "imagem": "string",
+                "data_criacao": "string",
+                "data_registro": "string"
+              }
+            ],
+            "titulo": "string",
+            "descricao": "string",
+            "imagem": "string",
+            "data_criacao": "string",
+            "data_fim": "string"
+          }
+        ]
 
 POST
 +++++
 
-Creates a new event for the given service and returns the newly created event object. All arguments are required.
+Cria um novo evento
 
-========  ==============
-Param	  Description
-========  ==============
-status	  The system status for the event. This must be a valid system status identifier found in the Statuses List resource
-message	  The message for the event
-========  ==============
 
 .. code-block:: text
 
-    POST /admin/api/v1/services/{service}/events HTTP/1.1 status=AVAILABLE&message=System%20is%20now%20operational
+    POST /evento
 
 .. code-block:: js
 
         {
-            "timestamp": "Mon, 28 Jun 2010 22:18:06 GMT"
-            "message": "Might be up", 
-            "sid": "ahJpc215d2Vic2VydmljZWRvd25yCwsSBUV2ZW50GA8M",
-            "url": "/api/v1/services/example-service/events/ahJpc215d2Vic2VydmljZWRvd25yCwsSBUV2ZW50GA8M",
-            "status": {
-                "id": "down",
-                "name": "Down",
-                "description": "An explanation of what this status represents",
-                "level": "ERROR",
-                "image": "/images/status/cross-circle.png",
-                "url": "/api/v1/statuses/down",
-            },
-        }
-
-Current Event
-~~~~~~~~~~~~~~~~~
-
-The Current Service Event resource simply returns the current event for a given service.
-
-.. code-block:: text
-
-    /admin/api/v1/services/{service}/events/current
-
-GET
-++++
-
-Returns the current event for a given service.
-
-.. code-block:: text
-
-    GET /admin/api/v1/services/{service}/events/current HTTP/1.1
-
-.. code-block:: js
-
-        {
-            "timestamp": "Mon, 28 Jun 2010 22:17:06 GMT",
-            "message": "Might be up", 
-            "sid": "ahJpc215d2Vic2VydmljZWRvd25yCwsSBUV2ZW50GA8M",
-            "url": "/api/v1/services/example-service/events/ahJpc215d2Vic2VydmljZWRvd25yCwsSBUV2ZW50GA8M",
-            "status": {
-                "id": "down",
-                "name": "Down",
-                "description": "An explanation of what this status represents",
-                "level": "ERROR",
-                "image": "/images/status/cross-circle.png",
-                "url": "/api/v1/statuses/down",
-            },
-        }
-
-Instance Resource
-~~~~~~~~~~~~~~~~~~~~
-
-The Event Instance resource represents an individual event for a given service.
-
-.. code-block:: text
- 
-    /admin/api/v1/services/{service}/events/{sid}
-
-GET
-++++
-
-Returns a service event with the given event sid. The event's status object is also returned as well.
-
-.. code-block:: text
-
-    GET /admin/api/v1/services/{service}/events/{sid} HTTP/1.1
-
-.. code-block:: js
-
-        {
-            "timestamp": "Mon, 28 Jun 2010 22:17:06 GMT",
-            "message": "Might be up", 
-            "sid": "ahJpc215d2Vic2VydmljZWRvd25yCwsSBUV2ZW50GA8M",
-            "url": "/api/v1/services/example-service/events/ahJpc215d2Vic2VydmljZWRvd25yCwsSBUV2ZW50GA8M",
-            "status": {
-                "id": "down",
-                "name": "Down",
-                "description": "An explanation of what this status represents",
-                "level": "ERROR",
-                "image": "/images/status/cross-circle.png",
-                "url": "/api/v1/statuses/down",
+          "id": 0,
+          "recursos": [
+            {
+              "id": 0,
+              "palavras_chave": [
+                "string"
+              ],
+              "titulo": "string",
+              "descricao": "string",
+              "link": "string",
+              "imagem": "string",
+              "data_criacao": "string",
+              "data_registro": "string"
             }
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "imagem": "string",
+          "data_criacao": "string",
+          "data_fim": "string"
+        }
+
+POST
+++++
+
+Cria um evento associando a um recurso existente 
+
+==============   ===============
+Parâmetro            Descrição
+==============   ===============
+recursoId        Identificador único do recurso
+==============   ===============
+
+.. code-block:: text
+
+    POST /evento/{recursoId}
+
+.. code-block:: js
+
+        {
+          "id": 0,
+          "recursos": [
+            {
+              "id": 0,
+              "palavras_chave": [
+                "string"
+              ],
+              "titulo": "string",
+              "descricao": "string",
+              "link": "string",
+              "imagem": "string",
+              "data_criacao": "string",
+              "data_registro": "string"
+            }
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "imagem": "string",
+          "data_criacao": "string",
+          "data_fim": "string"
+        }
+
+PUT
+++++
+
+Atualiza um evento sem alterar seu recurso
+
+==============   ===============
+Parâmetro            Descrição
+==============   ===============
+id               Identificador único do evento
+==============   ===============
+
+.. code-block:: text
+
+    PUT /evento/{id}
+
+.. code-block:: js
+
+        {
+          "id": 0,
+          "recursos": [
+            {
+              "id": 0,
+              "palavras_chave": [
+                "string"
+              ],
+              "titulo": "string",
+              "descricao": "string",
+              "link": "string",
+              "imagem": "string",
+              "data_criacao": "string",
+              "data_registro": "string"
+            }
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "imagem": "string",
+          "data_criacao": "string",
+          "data_fim": "string"
+        }
+
+PUT
+++++
+
+Atualiza um evento associando a um recurso existente
+
+==============   ===============
+Parâmetro            Descrição
+==============   ===============
+recursoId        Identificador único do recurso
+eventoId         Identificador único do evento
+==============   ===============
+
+.. code-block:: text
+
+    PUT /recurso/{recursoId}/evento/{eventoId}/
+
+.. code-block:: js
+
+        {
+          "id": 0,
+          "recursos": [
+            {
+              "id": 0,
+              "palavras_chave": [
+                "string"
+              ],
+              "titulo": "string",
+              "descricao": "string",
+              "link": "string",
+              "imagem": "string",
+              "data_criacao": "string",
+              "data_registro": "string"
+            }
+          ],
+          "titulo": "string",
+          "descricao": "string",
+          "imagem": "string",
+          "data_criacao": "string",
+          "data_fim": "string"
         }
 
 
 DELETE
 ++++++++
 
-Deletes the given event and returns the deleted event
+Deleta o evento
+
+==============   ===============
+Parâmetro            Descrição
+==============   ===============
+id               Identificador único do evento
+==============   ===============
 
 .. code-block:: text
 
-    DELETE /admin/api/v1/services/{service}/events/{sid} HTTP/1.1
-
-.. code-block:: js
-
-        {
-            "timestamp": "Mon, 28 Jun 2010 22:17:06 GMT",
-            "message": "Might be up", 
-            "sid": "ahJpc215d2Vic2VydmljZWRvd25yCwsSBUV2ZW50GA8M",
-            "url": "/api/v1/services/example-service/events/ahJpc215d2Vic2VydmljZWRvd25yCwsSBUV2ZW50GA8M",
-            "status": {
-                "id": "down",
-                "name": "Down",
-                "description": "An explanation of what this status represents",
-                "level": "ERROR",
-                "image": "/images/status/cross-circle.png",
-                "url": "/statuses/down",
-            },    
-        }
+    DELETE /evento/{id}
 
 Statuses
 -----------
