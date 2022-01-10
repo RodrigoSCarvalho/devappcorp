@@ -12,7 +12,6 @@ public interface RecursoService {
 
     void updateAutorRecurso(Long authorId, Long recursoId, Recurso recurso);
 
-    void deleteRecursoAuthor(Long authorId, Long recursoId);
 
     void deleteRecurso(Long id);
 

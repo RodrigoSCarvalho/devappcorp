@@ -66,25 +66,6 @@ public class RecursoServiceImpl implements RecursoService {
     }
 
     @Override
-    public void deleteRecursoAuthor(Long authorId, Long recursoId) {
-
-
-
-        recursoRepository.findById(recursoId).map(recursoExistente -> {
-            authorRepository.findById(authorId).map(author -> {
-                author.getRecursos().remove(recursoExistente);
-                return authorRepository.save(author);
-            });
-            if (recursoExistente.getAutores().size() >= 1) {
-                return recursoExistente;
-            }else {
-                recursoRepository.delete(recursoExistente);
-                return recursoExistente;
-            }
-        });
-    }
-
-    @Override
     public void deleteRecurso(Long id) {
 
 
