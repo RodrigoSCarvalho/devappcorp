@@ -19,43 +19,15 @@ public class AuthorServiceImpl implements AuthorService {
     @Autowired
     private RecursoRepository recursoRepository;
 
+
     @Override
-    public String addNewAuthor(Author author) {
-
-        /*
-        System.out.println("===="+author.getRecursos().get(0).getId());
-        List<Recurso> r = author.getRecursos();
-
-        for (Recurso recurso : r){
-            recursoRepository.findById(recurso.getId()).map(recursoExistente ->{
-                recursoExistente.setId(recurso.getId());
-
-                return recursoRepository.save(recursoExistente);
-            });
-
-        }
-        author.setRecursos(r);
-
-
-        Author a = new Author();
-
-        a.setId(author.getId());
-        a.setOrcid(author.getOrcid());
-        a.setRecursos(author.getRecursos());
-        a.setAfiliacao(author.getAfiliacao());
-        a.setNome(author.getNome());
-        a.setSobrenome(author.getSobrenome());
-
-         */
-
-
+    public void addNewAuthor(Author author) {
         authorRepository.save(author);
-        return "Salvo!";
     }
 
 
     @Override
-    public String updateAuthor(Long id, Author author) {
+    public void updateAuthor(Long id, Author author) {
         authorRepository.findById(id).map(authorExistente -> {
             authorExistente.setOrcid(author.getOrcid());
             authorExistente.setAfiliacao(author.getAfiliacao());
@@ -67,18 +39,28 @@ public class AuthorServiceImpl implements AuthorService {
             return authorRepository.save(authorExistente);
 
         });
-
-        return "Salvo!";
     }
 
     @Override
-    public String deleteAuthor(Long id) {
+    public void deleteAuthor(Long id) {
         authorRepository.findById(id).map(authorExistente -> {
+            List<Integer> recursos = authorRepository.findRecursoIds(id);
+            if (recursos.size() > 0) {
+                for (int i = 0; i < recursos.size(); i++) {
+                    recursoRepository.findById(Long.valueOf(recursos.get(i))).map(recursoExistente -> {
+                        for (Author author : recursoExistente.getAutores()) {
+                            author.getRecursos().remove(recursoExistente);
+                            authorRepository.save(author);
+                        }
+                        recursoRepository.delete(recursoExistente);
+                        return recursoExistente;
+                    });
+                }
+            }
+
             authorRepository.delete(authorExistente);
             return authorExistente;
         });
-
-        return "Excluído!";
     }
 
     @Override

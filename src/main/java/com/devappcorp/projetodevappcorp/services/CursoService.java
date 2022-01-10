@@ -17,8 +17,6 @@ public interface CursoService {
 
     void updateCursoRecurso(Long recursoId, Long cursoId, Curso curso);
 
-    void deleteCursoRecurso(Long recursoId, Long cursoId);
-
     List<Recurso> findCursoRecursos(Long id);
 
     List<Curso> getAllCurso();

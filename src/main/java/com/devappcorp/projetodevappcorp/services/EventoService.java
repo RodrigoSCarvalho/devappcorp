@@ -19,8 +19,6 @@ public interface EventoService {
 
     void updateEventoRecurso(Long recursoId, Long eventoId, Evento evento);
 
-    void deleteEventoRecurso(Long recursoId, Long eventoId);
-
     List<Recurso> findEventoRecursos(Long id);
 
     List<Evento> findEventoByDatas(String data_criacao, String data_fim);

@@ -17,7 +17,6 @@ public class Curso extends Colecao implements Serializable {
     @Column(length=10)
     private String data_registro;
 
-
     public String getData_registro() {
         return data_registro;
     }

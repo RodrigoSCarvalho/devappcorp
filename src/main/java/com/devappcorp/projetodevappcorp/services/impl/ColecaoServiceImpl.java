@@ -74,28 +74,14 @@ public class ColecaoServiceImpl implements ColecaoService {
     @Override
     public void deleteColecao(Long id) {
         colecaoRepository.findById(id).map(colecao -> {
-
-            colecaoRepository.delete(colecao);
-            return colecao;
-        });
-    }
-
-
-
-    @Override
-    public void deleteColecaoRecurso(Long recursoId, Long colecaoId) {
-        colecaoRepository.findById(colecaoId).map(colecao -> {
-            recursoRepository.findById(recursoId).map(recurso -> {
-                colecao.getRecursos().remove(recurso);
+            for (Recurso recurso : colecao.getRecursos()){
                 recurso.setColecao(null);
+                recursoRepository.save(recurso);
+            }
 
-
-                return recursoRepository.save(recurso);
-            });
             colecaoRepository.delete(colecao);
             return colecao;
         });
-
     }
 
     @Override

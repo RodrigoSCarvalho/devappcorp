@@ -73,22 +73,10 @@ public class EventoServiceImpl implements EventoService {
     @Override
     public void deleteEvento(Long id) {
         eventoRepository.findById(id).map(evento -> {
-            eventoRepository.delete(evento);
-            return evento;
-        });
-    }
-
-    @Override
-    public void deleteEventoRecurso(Long recursoId, Long eventoId) {
-        eventoRepository.findById(eventoId).map(evento -> {
-            recursoRepository.findById(recursoId).map(recurso -> {
-                evento.getRecursos().remove(recurso);
+            for (Recurso recurso : evento.getRecursos()){
                 recurso.setColecao(null);
-
-
-                return recursoRepository.save(recurso);
-            });
-            if (evento.getRecursos().size() >= 1) return evento;
+                recursoRepository.save(recurso);
+            }
             eventoRepository.delete(evento);
             return evento;
         });

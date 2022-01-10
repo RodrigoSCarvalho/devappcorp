@@ -49,7 +49,7 @@ public class RecursoController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity addNewRecurso(@PathVariable(value= "authorId") Long authorId, @RequestBody Recurso recurso){
         this.recursoService.addNewRecurso(recurso, authorId);
-        return new ResponseEntity<> (recurso, HttpStatus.CREATED);
+        return new ResponseEntity(recurso, HttpStatus.CREATED);
     }
 
     @Operation(summary = "Atualizar um recurso")
@@ -76,15 +76,15 @@ public class RecursoController {
         return new ResponseEntity(recurso, HttpStatus.OK);
     }
 
-    @Operation(summary = "Deletar um recurso desassociando o autor")
+    @Operation(summary = "Deletar um recurso")
     @ApiResponses(value ={
             @ApiResponse(responseCode = "200", description = "Recurso dessassociado/deletado com sucesso."),
             @ApiResponse(responseCode = "400", description = "Erro de validação.")
     })
-    @DeleteMapping("/author/{authorId}/recurso/{recursoId}")
+    @DeleteMapping("/recurso/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity deleteRecurso(@PathVariable Long recursoId, @PathVariable Long authorId ){
-        this.recursoService.deleteRecurso(authorId, recursoId);
+    public ResponseEntity deleteRecurso(@PathVariable Long id ){
+        this.recursoService.deleteRecurso(id);
         return new ResponseEntity(HttpStatus.OK);
     }
 }

@@ -26,7 +26,7 @@ public class Author implements Serializable {
     private String sobrenome;
     @Column(length = 256)
     private String afiliacao;
-    @ManyToMany (cascade = {CascadeType.REMOVE})
+    @ManyToMany (cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable (name = "recurso_autores",
             joinColumns = @JoinColumn(name = "author_id"),
             inverseJoinColumns = @JoinColumn(name = "recurso_id"))

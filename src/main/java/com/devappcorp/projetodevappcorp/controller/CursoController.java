@@ -90,18 +90,6 @@ public class CursoController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @Operation(summary = "Deletar um curso e desassociar um recurso")
-    @ApiResponses(value ={
-            @ApiResponse(responseCode = "200", description = "Curso desassociado com sucesso."),
-            @ApiResponse(responseCode = "400", description = "Erro de validação.")
-    })
-    @DeleteMapping("/recurso/{recursoId}/curso/{cursoId}")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity deleteCursoRecurso(@PathVariable Long recursoId, @PathVariable Long cursoId){
-        this.cursoService.deleteCursoRecurso(recursoId, cursoId);
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
     @Operation(summary = "Recuperar todos recursos de um curso")
     @ApiResponses(value ={
             @ApiResponse(responseCode = "400", description = "Erro de validação.")

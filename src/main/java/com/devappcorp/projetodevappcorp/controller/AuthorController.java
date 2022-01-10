@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,9 +27,10 @@ public class AuthorController {
     })
     @PostMapping // Map ONLY POST Requests
     @ResponseStatus(HttpStatus.CREATED)
-    public @ResponseBody String addNewAuthor(@RequestBody Author author ) {
+    public ResponseEntity addNewAuthor(@RequestBody Author author ) {
 
-        return this.authorService.addNewAuthor(author);
+        this.authorService.addNewAuthor(author);
+        return new ResponseEntity<>(author, HttpStatus.CREATED);
 
     }
 
@@ -40,9 +42,10 @@ public class AuthorController {
     })
     @PutMapping("{id}") // Map ONLY POST Requests
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody String updateAuthor(@PathVariable Long id, @RequestBody Author author){
+    public ResponseEntity updateAuthor(@PathVariable Long id, @RequestBody Author author){
 
-        return this.authorService.updateAuthor(id, author);
+        this.authorService.updateAuthor(id, author);
+        return new ResponseEntity<>(author, HttpStatus.OK);
 
     }
 
@@ -53,9 +56,9 @@ public class AuthorController {
     })
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody String deleteAuthor(@PathVariable Long id){
-        return this.authorService.deleteAuthor(id);
-
+    public ResponseEntity deleteAuthor(@PathVariable Long id){
+        this.authorService.deleteAuthor(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Operation(summary = "Buscar todos autores")

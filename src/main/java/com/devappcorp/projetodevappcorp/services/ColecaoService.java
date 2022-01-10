@@ -17,8 +17,6 @@ public interface ColecaoService {
 
     void updateColecaoRecurso(Long recursoId, Long colecaoId, Colecao colecao);
 
-    void deleteColecaoRecurso(Long recursoId, Long colecaoId);
-
     Iterable<Colecao> getAllColecao();
 
     List<Colecao> getAllColecaoPeloTitulo(String titulo);

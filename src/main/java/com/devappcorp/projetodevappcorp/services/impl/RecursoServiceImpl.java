@@ -1,5 +1,6 @@
 package com.devappcorp.projetodevappcorp.services.impl;
 
+import com.devappcorp.projetodevappcorp.entities.Author;
 import com.devappcorp.projetodevappcorp.entities.Recurso;
 import com.devappcorp.projetodevappcorp.repositories.AuthorRepository;
 import com.devappcorp.projetodevappcorp.repositories.RecursoRepository;
@@ -8,6 +9,7 @@ import com.devappcorp.projetodevappcorp.services.RecursoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -64,7 +66,7 @@ public class RecursoServiceImpl implements RecursoService {
     }
 
     @Override
-    public void deleteRecurso(Long authorId, Long recursoId) {
+    public void deleteRecursoAuthor(Long authorId, Long recursoId) {
 
 
 
@@ -83,10 +85,24 @@ public class RecursoServiceImpl implements RecursoService {
     }
 
     @Override
+    public void deleteRecurso(Long id) {
+
+
+
+        recursoRepository.findById(id).map(recursoExistente -> {
+                for (Author author : recursoExistente.getAutores()) {
+                    author.getRecursos().remove(recursoExistente);
+                    authorRepository.save(author);
+                }
+                recursoRepository.delete(recursoExistente);
+                return recursoExistente;
+        });
+    }
+
+    @Override
     public void addNewRecurso(Recurso recurso, Long authorId) {
         authorRepository.findById(authorId).map(authorExistente -> {
             recurso.getAutores().add(authorExistente);
-            recursoRepository.save(recurso);
             authorExistente.getRecursos().add(recurso);
 
             return authorRepository.save(authorExistente);

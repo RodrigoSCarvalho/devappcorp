@@ -99,17 +99,4 @@ public class ColecaoController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @Operation(summary = "Desassociar colecao de recurso e deleta-la")
-    @ApiResponses(value ={
-            @ApiResponse(responseCode = "200", description = "Associacao removida com sucesso."),
-            @ApiResponse(responseCode = "400", description = "Erro de validação.")
-    })
-    @DeleteMapping("recurso/{recursoId}/colecao/{colecaoId}")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity deleteColecaoRecurso(@PathVariable Long recursoId, @PathVariable Long colecaoId){
-        this.colecaoService.deleteColecaoRecurso(recursoId, colecaoId);
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
-
 }

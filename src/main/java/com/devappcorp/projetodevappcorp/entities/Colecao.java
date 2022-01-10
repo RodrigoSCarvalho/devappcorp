@@ -17,7 +17,7 @@ public class Colecao implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "colecao")
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "colecao")
     @OrderBy("titulo")
     private Set<Recurso> recursos = new HashSet<Recurso>();;
     @Column(length = 1024)

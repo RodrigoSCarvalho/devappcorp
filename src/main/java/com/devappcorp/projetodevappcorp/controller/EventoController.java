@@ -91,18 +91,6 @@ public class EventoController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @Operation(summary = "Deletar um evento e desassociar do recurso")
-    @ApiResponses(value ={
-            @ApiResponse(responseCode = "200", description = "Evento deletado com sucesso."),
-            @ApiResponse(responseCode = "400", description = "Erro de validação.")
-    })
-    @DeleteMapping("recurso/{recursoId}/evento/{eventoId}")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity deleteEventoRecurso(@PathVariable Long recursoId, @PathVariable Long eventoId){
-        this.eventoService.deleteEventoRecurso(recursoId, eventoId);
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
     @Operation(summary = "Recuperar todos recursos de um dado evento")
     @ApiResponses(value ={
             @ApiResponse(responseCode = "400", description = "Erro de validação.")

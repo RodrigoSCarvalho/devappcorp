@@ -71,22 +71,10 @@ public class CursoServiceImpl implements CursoService {
     @Override
     public void deleteCurso(Long id) {
         cursoRepository.findById(id).map(curso -> {
-            cursoRepository.delete(curso);
-            return curso;
-        });
-    }
-
-    @Override
-    public void deleteCursoRecurso(Long recursoId, Long cursoId) {
-        cursoRepository.findById(cursoId).map(curso -> {
-            recursoRepository.findById(recursoId).map(recurso -> {
-                curso.getRecursos().remove(recurso);
+            for (Recurso recurso : curso.getRecursos()){
                 recurso.setColecao(null);
-
-
-                return recursoRepository.save(recurso);
-            });
-            if (curso.getRecursos().size() >= 1) return curso;
+                recursoRepository.save(recurso);
+            }
             cursoRepository.delete(curso);
             return curso;
         });
