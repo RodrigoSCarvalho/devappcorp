@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CursoServiceImpl implements CursoService {
@@ -85,10 +86,25 @@ public class CursoServiceImpl implements CursoService {
         return cursoRepository.findCursoRecursos(id);
     }
 
+    @Override
+    public List<Curso> findTop5Recursos() {
+        return cursoRepository.findTop5ByOrderByIdDesc();
+    }
+
 
     @Override
     public List<Curso> getAllCurso() {
         return cursoRepository.findAll();
+    }
+
+    @Override
+    public List<Recurso> findRecursoSemColecao() {
+        return recursoRepository.findRecursoSemColecao();
+    }
+
+    @Override
+    public Optional<Curso> findCursoById(Long id) {
+        return cursoRepository.findById(id);
     }
 
 

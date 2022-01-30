@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -77,5 +78,10 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public List<Recurso> findAuthorRecusos(Long id) {
         return (List<Recurso>) authorRepository.findAuthorRecursos(id);
+    }
+
+    @Override
+    public Optional<Author> findAuthorById(Long id) {
+        return authorRepository.findById(id);
     }
 }

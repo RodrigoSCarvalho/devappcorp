@@ -13,7 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/author")
 public class AuthorController {
@@ -91,4 +93,15 @@ public class AuthorController {
     return this.authorService.findAuthorRecusos(id);
 
     }
+    @Operation(summary = "Recuperar autor pelo id")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "400", description = "Erro de validação.")
+    })
+    @GetMapping("/author/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Optional<Author> findAuthorById(@PathVariable Long id){
+        return this.authorService.findAuthorById(id);
+
+    }
+
 }

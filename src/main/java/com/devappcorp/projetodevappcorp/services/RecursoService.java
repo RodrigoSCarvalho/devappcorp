@@ -1,8 +1,10 @@
 package com.devappcorp.projetodevappcorp.services;
 
+import com.devappcorp.projetodevappcorp.entities.Author;
 import com.devappcorp.projetodevappcorp.entities.Recurso;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface RecursoService {
@@ -17,5 +19,13 @@ public interface RecursoService {
 
     List<Recurso> getAllRecurso();
 
+    List<Recurso> findTop5Recursos();
+
     List<Recurso> getAllRecursoPeloTitulo(String titulo);
+
+    Optional<Recurso> findRecursoById(Long id);
+
+    List<String> findPalavrasChaveById(Long id);
+
+    List<Author> findAutoresDoRecurso(Long id);
 }

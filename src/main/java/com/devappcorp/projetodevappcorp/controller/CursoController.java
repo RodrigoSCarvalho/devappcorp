@@ -12,7 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
+@CrossOrigin
 @RestController
 public class CursoController {
 
@@ -29,6 +31,25 @@ public class CursoController {
         return this.cursoService.getAllCurso();
     }
 
+    @Operation(summary = "Recuperar cursos recentes")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "400", description = "Erro de validação.")
+    })
+    @GetMapping("/curso/recentes")
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody Iterable<Curso> getCursoRecentes(){
+        return this.cursoService.findTop5Recursos();
+    }
+    @Operation(summary = "Recuperar curso pelo id")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "400", description = "Erro de validação.")
+    })
+    @GetMapping("/curso/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Optional<Curso> findCursoById(@PathVariable Long id){
+        return this.cursoService.findCursoById(id);
+
+    }
 
     @Operation(summary = "Salvar um curso")
     @ApiResponses(value ={
@@ -99,5 +120,15 @@ public class CursoController {
     public List<Recurso> findCursoRecusos(@PathVariable Long id){
         return this.cursoService.findCursoRecursos(id);
 
+    }
+
+    @Operation(summary = "Recuperar todos recursos não associados a uma coleção")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "400", description = "Erro de validação.")
+    })
+    @GetMapping("/curso/recursos")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public List<Recurso> findRecursoSemAssociacao(){
+        return this.cursoService.findRecursoSemColecao();
     }
 }

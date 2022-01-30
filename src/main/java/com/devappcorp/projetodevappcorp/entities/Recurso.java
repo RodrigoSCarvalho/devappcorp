@@ -30,6 +30,7 @@ public class Recurso implements Serializable {
     private Set<Author> autores = new HashSet<Author>();
 
 
+    public Recurso() {}
 
 
     @Column (length=1024)

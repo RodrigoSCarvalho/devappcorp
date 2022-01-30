@@ -9,8 +9,8 @@ import com.devappcorp.projetodevappcorp.services.RecursoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -96,9 +96,29 @@ public class RecursoServiceImpl implements RecursoService {
         return recursoRepository.findAll();
     }
 
+    @Override
+    public List<Recurso> findTop5Recursos() {
+        return recursoRepository.findTop5ByOrderByIdDesc();
+    }
+
 
     @Override
     public List<Recurso> getAllRecursoPeloTitulo(String titulo) {
         return (List<Recurso>) recursoRepository.findAllByTitulo(titulo);
+    }
+
+    @Override
+    public Optional<Recurso> findRecursoById(Long id) {
+        return recursoRepository.findById(id);
+    }
+
+    @Override
+    public List<String> findPalavrasChaveById(Long id) {
+        return recursoRepository.findPalavrasChaveById(id);
+    }
+
+    @Override
+    public List<Author> findAutoresDoRecurso(Long id) {
+        return authorRepository.findAutoresDoRecurso(id);
     }
 }

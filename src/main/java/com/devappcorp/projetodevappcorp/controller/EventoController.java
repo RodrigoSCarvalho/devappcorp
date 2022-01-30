@@ -12,7 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
+@CrossOrigin
 @RestController
 public class EventoController {
 
@@ -30,6 +32,16 @@ public class EventoController {
         return this.eventoService.getAllEvento();
     }
 
+    @Operation(summary = "Recuperar eventos recentes")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "400", description = "Erro de validação.")
+    })
+    @GetMapping("/evento/recentes")
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody
+    Iterable<Evento> getEventoRecentes(){
+        return this.eventoService.findTop5Recursos();
+    }
 
     @Operation(summary = "Salvar um evento e associar a um recurso existente")
     @ApiResponses(value ={
@@ -102,6 +114,16 @@ public class EventoController {
 
     }
 
+    @Operation(summary = "Recuperar todos recursos não associados a uma coleção")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "400", description = "Erro de validação.")
+    })
+    @GetMapping("/evento/recursos")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public List<Recurso> findRecursoSemAssociacao(){
+        return this.eventoService.findRecursoSemColecao();
+    }
+
     @Operation(summary = "Recuperar todos eventos dentro de um dado período de tempo")
     @ApiResponses(value ={
             @ApiResponse(responseCode = "400", description = "Erro de validação.")
@@ -111,5 +133,15 @@ public class EventoController {
     public List<Evento> findEventoRecusos(@PathVariable String data_criacao, @PathVariable String data_fim){
         return this.eventoService.findEventoByDatas(data_criacao, data_fim);
 
+    }
+
+    @Operation(summary = "Recuperar evento pelo id")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "400", description = "Erro de validação.")
+    })
+    @GetMapping("/evento/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Optional<Evento> findEventoById(@PathVariable Long id){
+        return this.eventoService.findEventoById(id);
     }
 }

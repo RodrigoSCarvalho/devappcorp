@@ -4,6 +4,7 @@ import com.devappcorp.projetodevappcorp.entities.Curso;
 import com.devappcorp.projetodevappcorp.entities.Recurso;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CursoService {
 
@@ -19,6 +20,12 @@ public interface CursoService {
 
     List<Recurso> findCursoRecursos(Long id);
 
+    List<Curso> findTop5Recursos();
+
     List<Curso> getAllCurso();
+
+    List<Recurso> findRecursoSemColecao();
+
+    Optional<Curso> findCursoById(Long id);
 }
 

@@ -4,6 +4,7 @@ import com.devappcorp.projetodevappcorp.entities.Author;
 import com.devappcorp.projetodevappcorp.entities.Recurso;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface AuthorService {
@@ -18,4 +19,6 @@ public interface AuthorService {
     List<Author> findSobrenome(String sobrenome);
 
     List<Recurso> findAuthorRecusos(Long id);
+
+    Optional<Author> findAuthorById(Long id);
 }

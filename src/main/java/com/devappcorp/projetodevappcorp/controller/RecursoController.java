@@ -1,19 +1,20 @@
 package com.devappcorp.projetodevappcorp.controller;
 
+import com.devappcorp.projetodevappcorp.entities.Author;
 import com.devappcorp.projetodevappcorp.entities.Recurso;
 import com.devappcorp.projetodevappcorp.services.RecursoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
-
+@CrossOrigin
 @RestController
 public class RecursoController {
     @Autowired
@@ -28,6 +29,49 @@ public class RecursoController {
         // This returns a JSON or XML with the users
         List<Recurso> recursos = recursoService.getAllRecurso();
         return new ResponseEntity<>(recursos, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Recuperar recurso pelo id")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "400", description = "Erro de validação.")
+    })
+    @GetMapping("/recurso/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Optional<Recurso> findRecursoById(@PathVariable Long id){
+        return this.recursoService.findRecursoById(id);
+
+    }
+
+    @Operation(summary = "Recuperar palavras-chave pelo id do recurso")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "400", description = "Erro de validação.")
+    })
+    @GetMapping("/recurso/{id}/palavraschave")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public List<String> findPalavrasChave(@PathVariable Long id){
+        return this.recursoService.findPalavrasChaveById(id);
+
+    }
+
+    @Operation(summary = "Recuperar os 5 recursos recentes")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "400", description = "Erro de validação.")
+    })
+    @GetMapping("/recurso/recentes")
+    public ResponseEntity getRecentesRecursos() {
+        // This returns a JSON or XML with the users
+        List<Recurso> recursos = recursoService.findTop5Recursos();
+        return new ResponseEntity<>(recursos, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Recuperar os autores que não estejam associados ao recurso")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "400", description = "Erro de validação.")
+    })
+    @GetMapping("/recurso/{id}/autores")
+    public List<Author> findAutoresNotInRecurso(@PathVariable Long id) {
+        // This returns a JSON or XML with the users
+        return this.recursoService.findAutoresDoRecurso(id);
     }
 
     /*

@@ -1,11 +1,11 @@
 package com.devappcorp.projetodevappcorp.services;
 
 
-import com.devappcorp.projetodevappcorp.entities.Colecao;
 import com.devappcorp.projetodevappcorp.entities.Evento;
 import com.devappcorp.projetodevappcorp.entities.Recurso;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface EventoService {
 
@@ -23,5 +23,11 @@ public interface EventoService {
 
     List<Evento> findEventoByDatas(String data_criacao, String data_fim);
 
+    List<Evento> findTop5Recursos();
+
     List<Evento> getAllEvento();
+
+    List<Recurso> findRecursoSemColecao();
+
+    Optional<Evento> findEventoById(Long id);
 }

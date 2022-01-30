@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EventoServiceImpl implements EventoService {
@@ -93,7 +94,22 @@ public class EventoServiceImpl implements EventoService {
     }
 
     @Override
+    public List<Evento> findTop5Recursos() {
+        return eventoRepository.findTop5ByOrderByIdDesc();
+    }
+
+    @Override
     public List<Evento> getAllEvento() {
         return eventoRepository.findAll();
+    }
+
+    @Override
+    public List<Recurso> findRecursoSemColecao() {
+        return recursoRepository.findRecursoSemColecao();
+    }
+
+    @Override
+    public Optional<Evento> findEventoById(Long id) {
+        return eventoRepository.findById(id);
     }
 }
