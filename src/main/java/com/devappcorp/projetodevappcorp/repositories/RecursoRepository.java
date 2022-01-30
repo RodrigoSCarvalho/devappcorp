@@ -19,7 +19,7 @@ public interface RecursoRepository extends JpaRepository<Recurso, Long> {
     @Query( value = "SELECT palavras_chave FROM recurso_palavras_chave WHERE recurso_id = :id", nativeQuery = true)
     List<String> findPalavrasChaveById(@Param("id") Long id);
 
-    @Query( value = "SELECT * FROM recurso WHERE colecao_id = null;", nativeQuery = true)
+    @Query( value = "SELECT * FROM recurso WHERE colecao_id is null;", nativeQuery = true)
     List<Recurso> findRecursoSemColecao();
 
 }
