@@ -21,4 +21,7 @@ public interface EventoRepository extends JpaRepository<Evento, Long> {
     List<Evento> findTop5ByOrderByIdDesc();
 
     Optional<Evento> findById(Long id);
+
+    @Query(value = "SELECT evento_id FROM evento WHERE evento_id NOT IN (SELECT e.evento_id FROM evento e, recurso r WHERE e.evento_id = r.colecao_id AND r.id = :id)", nativeQuery = true)
+    List<Evento> findEventoLivre(@Param("id") Long id);
 }

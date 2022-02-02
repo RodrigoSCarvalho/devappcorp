@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/author")
+@RequestMapping("/author") // endpoint direto
 public class AuthorController {
     @Autowired
     private AuthorService authorService;
@@ -97,7 +97,7 @@ public class AuthorController {
     @ApiResponses(value ={
             @ApiResponse(responseCode = "400", description = "Erro de validação.")
     })
-    @GetMapping("/author/{id}")
+    @GetMapping("{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Optional<Author> findAuthorById(@PathVariable Long id){
         return this.authorService.findAuthorById(id);

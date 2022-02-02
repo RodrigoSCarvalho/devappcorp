@@ -40,6 +40,8 @@ public class CursoController {
     public @ResponseBody Iterable<Curso> getCursoRecentes(){
         return this.cursoService.findTop5Recursos();
     }
+
+
     @Operation(summary = "Recuperar curso pelo id")
     @ApiResponses(value ={
             @ApiResponse(responseCode = "400", description = "Erro de validação.")

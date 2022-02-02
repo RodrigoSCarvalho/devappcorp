@@ -1,14 +1,13 @@
 package com.devappcorp.projetodevappcorp.services.impl;
 
-import com.devappcorp.projetodevappcorp.entities.Author;
-import com.devappcorp.projetodevappcorp.entities.Recurso;
-import com.devappcorp.projetodevappcorp.repositories.AuthorRepository;
-import com.devappcorp.projetodevappcorp.repositories.RecursoRepository;
+import com.devappcorp.projetodevappcorp.entities.*;
+import com.devappcorp.projetodevappcorp.repositories.*;
 import com.devappcorp.projetodevappcorp.services.AuthorService;
 import com.devappcorp.projetodevappcorp.services.RecursoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +23,12 @@ public class RecursoServiceImpl implements RecursoService {
 
     @Autowired
     private AuthorService authorService;
+
+    @Autowired
+    private CursoRepository cursoRepository;
+
+    @Autowired
+    private EventoRepository eventoRepository;
 
     @Override
     public void updateRecurso(Long id, Recurso recurso) {
@@ -120,5 +125,21 @@ public class RecursoServiceImpl implements RecursoService {
     @Override
     public List<Author> findAutoresDoRecurso(Long id) {
         return authorRepository.findAutoresDoRecurso(id);
+    }
+
+    @Override
+    @Transactional
+    public void disassociateRecurso(Long colecaoId, Long recursoId) {
+        recursoRepository.disassociateRecurso(colecaoId, recursoId);
+    }
+
+    @Override
+    public List<Curso> findCursoLivre(Long id) {
+        return cursoRepository.findCursoLivre(id);
+    }
+
+    @Override
+    public List<Evento> findEventoLivre(Long id) {
+        return eventoRepository.findEventoLivre(id);
     }
 }

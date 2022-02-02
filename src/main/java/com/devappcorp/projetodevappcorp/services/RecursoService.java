@@ -1,7 +1,6 @@
 package com.devappcorp.projetodevappcorp.services;
 
-import com.devappcorp.projetodevappcorp.entities.Author;
-import com.devappcorp.projetodevappcorp.entities.Recurso;
+import com.devappcorp.projetodevappcorp.entities.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,4 +27,10 @@ public interface RecursoService {
     List<String> findPalavrasChaveById(Long id);
 
     List<Author> findAutoresDoRecurso(Long id);
+
+    void disassociateRecurso(Long colecaoId, Long recursoId);
+
+    List<Curso> findCursoLivre(Long id);
+
+    List<Evento> findEventoLivre(Long id);
 }

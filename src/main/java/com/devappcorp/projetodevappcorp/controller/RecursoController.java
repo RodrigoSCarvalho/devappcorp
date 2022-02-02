@@ -1,7 +1,6 @@
 package com.devappcorp.projetodevappcorp.controller;
 
-import com.devappcorp.projetodevappcorp.entities.Author;
-import com.devappcorp.projetodevappcorp.entities.Recurso;
+import com.devappcorp.projetodevappcorp.entities.*;
 import com.devappcorp.projetodevappcorp.services.RecursoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -74,6 +73,26 @@ public class RecursoController {
         return this.recursoService.findAutoresDoRecurso(id);
     }
 
+    @Operation(summary = "Recuperar os cursos que não estejam associadas ao recurso")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "400", description = "Erro de validação.")
+    })
+    @GetMapping("/recurso/{id}/cursos")
+    public List<Curso> finCursosNotInRecurso(@PathVariable Long id) {
+        // This returns a JSON or XML with the users
+        return this.recursoService.findCursoLivre(id);
+    }
+
+    @Operation(summary = "Recuperar os eventos que não estejam associadas ao recurso")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "400", description = "Erro de validação.")
+    })
+    @GetMapping("/recurso/{id}/eventos")
+    public List<Evento> findEventosNotInRecurso(@PathVariable Long id) {
+        // This returns a JSON or XML with the users
+        return this.recursoService.findEventoLivre(id);
+    }
+
     /*
     @GetMapping("{titulo}")
     @ResponseStatus(HttpStatus.ACCEPTED)
@@ -106,6 +125,17 @@ public class RecursoController {
     public ResponseEntity updateRecurso(@RequestBody Recurso recurso, @PathVariable Long id){
         this.recursoService.updateRecurso(id, recurso);
         return new ResponseEntity(recurso, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Desassociar um recurso de uma coleção")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "Recurso atualizado com sucesso."),
+            @ApiResponse(responseCode = "400", description = "Erro de validação.")
+    })
+    @GetMapping("/colecao/{colecaoId}/recurso/{recursoId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void dessassociarRecurso(@PathVariable Long colecaoId, @PathVariable Long recursoId){
+        this.recursoService.disassociateRecurso(colecaoId, recursoId);
     }
 
     @Operation(summary = "Atualizar um recurso associando um autor")

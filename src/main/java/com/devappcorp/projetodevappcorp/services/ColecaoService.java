@@ -2,6 +2,8 @@ package com.devappcorp.projetodevappcorp.services;
 
 import com.devappcorp.projetodevappcorp.entities.Colecao;
 import com.devappcorp.projetodevappcorp.entities.Recurso;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -22,5 +24,4 @@ public interface ColecaoService {
     List<Colecao> getAllColecaoPeloTitulo(String titulo);
 
     List<Recurso> findColecaoRecusos(Long id);
-
 }
