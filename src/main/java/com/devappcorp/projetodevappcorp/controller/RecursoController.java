@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,20 +78,20 @@ public class RecursoController {
     @ApiResponses(value ={
             @ApiResponse(responseCode = "400", description = "Erro de validação.")
     })
-    @GetMapping("/recurso/{id}/cursos")
-    public List<Curso> finCursosNotInRecurso(@PathVariable Long id) {
+    @GetMapping("/recurso/cursos")
+    public List<Integer> finCursosNotInRecurso() {
         // This returns a JSON or XML with the users
-        return this.recursoService.findCursoLivre(id);
+        return this.recursoService.findCursoLivre();
     }
 
     @Operation(summary = "Recuperar os eventos que não estejam associadas ao recurso")
     @ApiResponses(value ={
             @ApiResponse(responseCode = "400", description = "Erro de validação.")
     })
-    @GetMapping("/recurso/{id}/eventos")
-    public List<Evento> findEventosNotInRecurso(@PathVariable Long id) {
+    @GetMapping("/recurso/eventos")
+    public List<Integer> findEventosNotInRecurso() {
         // This returns a JSON or XML with the users
-        return this.recursoService.findEventoLivre(id);
+        return this.recursoService.findEventoLivre();
     }
 
     /*
@@ -132,10 +133,21 @@ public class RecursoController {
             @ApiResponse(responseCode = "200", description = "Recurso atualizado com sucesso."),
             @ApiResponse(responseCode = "400", description = "Erro de validação.")
     })
-    @GetMapping("/colecao/{colecaoId}/recurso/{recursoId}")
+    @GetMapping("/desassociar/{colecaoId}/recurso/{recursoId}")
     @ResponseStatus(HttpStatus.OK)
     public void dessassociarRecurso(@PathVariable Long colecaoId, @PathVariable Long recursoId){
         this.recursoService.disassociateRecurso(colecaoId, recursoId);
+    }
+
+    @Operation(summary = "Associar um recurso a uma coleção")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "Recurso atualizado com sucesso."),
+            @ApiResponse(responseCode = "400", description = "Erro de validação.")
+    })
+    @GetMapping("/associar/{colecaoId}/recurso/{recursoId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void AssociarRecurso(@PathVariable Long colecaoId, @PathVariable Long recursoId){
+        this.recursoService.associarRecurso(colecaoId, recursoId);
     }
 
     @Operation(summary = "Atualizar um recurso associando um autor")

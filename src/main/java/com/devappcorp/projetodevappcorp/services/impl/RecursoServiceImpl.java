@@ -134,12 +134,20 @@ public class RecursoServiceImpl implements RecursoService {
     }
 
     @Override
-    public List<Curso> findCursoLivre(Long id) {
-        return cursoRepository.findCursoLivre(id);
+    @Transactional
+    public void associarRecurso(Long colecaoId, Long recursoId) {
+        recursoRepository.associarRecurso(colecaoId, recursoId);
     }
 
     @Override
-    public List<Evento> findEventoLivre(Long id) {
-        return eventoRepository.findEventoLivre(id);
+    @Transactional
+    public List<Integer> findCursoLivre() {
+        return cursoRepository.findCursoLivre();
+    }
+
+    @Override
+    @Transactional
+    public List<Integer> findEventoLivre() {
+        return eventoRepository.findEventoLivre();
     }
 }

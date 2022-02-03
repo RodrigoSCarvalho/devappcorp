@@ -21,6 +21,6 @@ public interface CursoRepository extends JpaRepository<Curso, Long> {
 
     Optional<Curso> findById(Long id);
 
-    @Query(value = "SELECT c.curso_id FROM curso c WHERE c.curso_id NOT IN ( SELECT c.curso_id FROM curso c, recurso r WHERE c.curso_id = r.colecao_id AND r.id = :id)", nativeQuery = true)
-    List<Curso> findCursoLivre(@Param("id") Long id);
+    @Query(value = "SELECT c.curso_id FROM curso c WHERE c.curso_id NOT IN ( SELECT c.curso_id FROM curso c, recurso r WHERE c.curso_id = r.colecao_id)", nativeQuery = true)
+    List<Integer> findCursoLivre();
 }

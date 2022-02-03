@@ -30,7 +30,11 @@ public interface RecursoService {
 
     void disassociateRecurso(Long colecaoId, Long recursoId);
 
-    List<Curso> findCursoLivre(Long id);
+    void associarRecurso(Long colecaoId, Long recursoId);
 
-    List<Evento> findEventoLivre(Long id);
+    List<Integer> findCursoLivre();
+
+    List<Integer> findEventoLivre();
+
+
 }
