@@ -4,8 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import com.devappcorp.projetodevappcorp.entities.Author;
+import com.devappcorp.projetodevappcorp.entities.Recurso;
 import com.devappcorp.projetodevappcorp.services.AuthorService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -21,11 +24,17 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@TestMethodOrder(OrderAnnotation.class)
 public class AuthorControllerTest {
 	
 	@Autowired
@@ -44,12 +53,33 @@ public class AuthorControllerTest {
     public void addNewAuthorTest() throws Exception {
 		
 		Author author1 = new Author();
+		Recurso resource1 = new Recurso();
 		
 		author1.setNome("Author name");
 		author1.setSobrenome("Author lastname");
 		author1.setEmail("author@email.com");
 		author1.setAfiliacao("Universidade Federal Fluminense");
 		author1.setOrcid("0000-0000-0000-0000");
+		
+		resource1.setTitulo("Resource title");
+		resource1.setDescricao("Resource description");
+		resource1.setData_criacao("2022-06-15");
+		resource1.setData_registro("2022-06-16");
+		resource1.setImagem("https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg");
+		resource1.setLink("https://getbootstrap.com/docs/5.0/getting-started/introduction/");
+		
+		List<String> keyWords = new ArrayList<String>();
+		
+		keyWords.add("frontend");
+		keyWords.add("html");
+		keyWords.add("css");
+		
+		resource1.setPalavras_chave(keyWords);
+		
+		Set<Recurso> resources = new HashSet<Recurso>();
+		resources.add(resource1);
+		
+		author1.setRecursos(resources);
 		
 		MvcResult newAuthor = mockMvc.perform(post("/author")
 				.contentType("application/json")
@@ -68,11 +98,26 @@ public class AuthorControllerTest {
 		assertEquals("Universidade Federal Fluminense", newAuthorJson.get("afiliacao"));
 		assertEquals("0000-0000-0000-0000", newAuthorJson.get("orcid"));
 		
+		JSONArray authorResources = new JSONArray(newAuthorJson.get("recursos").toString());
+		
+		assertTrue(authorResources.length() == 1);
+
+		for (int i = 0; i < authorResources.length(); i++) {
+			JSONObject authorResourceJson = authorResources.getJSONObject(i);
+			
+			assertEquals("2022-06-15", authorResourceJson.get("data_criacao"));
+			assertEquals("2022-06-16", authorResourceJson.get("data_registro"));
+			assertEquals("Resource title", authorResourceJson.get("titulo"));
+			assertEquals("Resource description", authorResourceJson.get("descricao"));
+			assertEquals("https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg", authorResourceJson.get("imagem"));
+			assertEquals("https://getbootstrap.com/docs/5.0/getting-started/introduction/", authorResourceJson.get("link"));
+		}
+		
     }
 	
 	@Test
 	@Order(2)
-	public void testUpdateAuthor() throws Exception {
+	public void updateAuthorTest() throws Exception {
 		
 		Author authorToUpdate = new Author();
 		
@@ -135,6 +180,19 @@ public class AuthorControllerTest {
 			assertEquals("lastname", authorJson.get("sobrenome"));	
 		}
 		
+	}
+	
+	@Test
+	@Order(5)
+	public void getAllAuthorTest() throws Exception {
+		MvcResult author = mockMvc.perform(get("/author")
+				.contentType("application/json"))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		JSONArray authorsJsonArray = new JSONArray(author.getResponse().getContentAsString());
+		
+		assertTrue(authorsJsonArray.length() > 0);
 	}
 	
 }
