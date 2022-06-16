@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.json.JSONObject;
@@ -39,6 +39,7 @@ public class AuthorControllerTest {
 		
 		Author author1 = new Author();
 		
+		author1.setId((long) 1);
 		author1.setNome("Author name");
 		author1.setSobrenome("Author lastname");
 		author1.setEmail("author@email.com");
@@ -53,7 +54,7 @@ public class AuthorControllerTest {
 		
 		JSONObject newAuthorJson = new JSONObject(newAuthor.getResponse().getContentAsString());
 		
-		assertNotNull(newAuthorJson.get("id"));
+		assertEquals(newAuthorJson.get("id"), 1);
 		assertEquals(newAuthorJson.get("nome"), "Author name");
 		assertEquals(newAuthorJson.get("sobrenome"), "Author lastname");
 		assertEquals(newAuthorJson.get("email"), "author@email.com");
@@ -61,5 +62,32 @@ public class AuthorControllerTest {
 		assertEquals(newAuthorJson.get("orcid"), "0000-0000-0000-0000");
 		
     }
+	
+	@Test
+	public void testUpdateAuthor() throws Exception {
+		
+		Author authorToUpdate = new Author();
+		
+		authorToUpdate.setNome("New author name");
+		authorToUpdate.setSobrenome("New author lastname");
+		authorToUpdate.setEmail("newauthor@email.com");
+		authorToUpdate.setAfiliacao("UFF");
+		authorToUpdate.setOrcid("0000-0000-0000-0001");
+		
+		MvcResult updatedAuthor = mockMvc.perform(put("/author/1")
+				.contentType("application/json")
+				.content(objectMapper.writeValueAsString(authorToUpdate)))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		JSONObject updatedAuthorJson = new JSONObject(updatedAuthor.getResponse().getContentAsString());
+		
+		assertEquals(updatedAuthorJson.get("nome"), "New author name");
+		assertEquals(updatedAuthorJson.get("sobrenome"), "New author lastname");
+		assertEquals(updatedAuthorJson.get("email"), "newauthor@email.com");
+		assertEquals(updatedAuthorJson.get("afiliacao"), "UFF");
+		assertEquals(updatedAuthorJson.get("orcid"), "0000-0000-0000-0001");
+		
+	}
 	
 }
