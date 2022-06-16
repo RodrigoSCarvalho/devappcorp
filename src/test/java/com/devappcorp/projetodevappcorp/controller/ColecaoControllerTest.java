@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -45,6 +46,7 @@ public class ColecaoControllerTest {
 	
 	@Test
 	@Order(1)
+	@DisplayName("Testar a criação de uma coleção")
 	public void addNewCollectionTest() throws Exception {
 		
 		Colecao collection1 = new Colecao();
@@ -86,6 +88,7 @@ public class ColecaoControllerTest {
 	
 	@Test
 	@Order(2)
+	@DisplayName("Testar a atualização de uma coleção")
 	public void updateCollectionTest() throws Exception {
 		
 		Colecao collectionToUpdate = new Colecao();
@@ -110,6 +113,7 @@ public class ColecaoControllerTest {
 	
 	@Test
 	@Order(3)
+	@DisplayName("Testar a busca por todas as coleções")
 	public void getAllCollectionsTest() throws Exception {
 		
 		MvcResult collection = mockMvc.perform(get("/colecao")
@@ -125,6 +129,7 @@ public class ColecaoControllerTest {
 	
 	@Test
 	@Order(4)
+	@DisplayName("Testar a adição de uma coleção em um recurso existente")
 	public void addNewCollectionWithExistingResource() throws Exception {
 		
 		Colecao collection2 = new Colecao();
@@ -166,6 +171,7 @@ public class ColecaoControllerTest {
 	
 	@Test
 	@Order(5)
+	@DisplayName("Testar a buscar de recursos por coleção")
 	public void findResourcesByCollection() throws Exception {		
 
 		MvcResult resources = mockMvc.perform(get("/colecao/" + collectionId + "/recursos")
@@ -190,8 +196,21 @@ public class ColecaoControllerTest {
 		
 	}
 	
+//	@Test
+//	@Order(6)
+//	@DisplayName("Testar a atualização de uma coleção existente adicionando um recurso existente")
+//	public void updateCollectionWithExistingResource() throws Exception {
+//		
+//		MvcResult updatedCollection = mockMvc.perform(put("/recurso/1/colecao/" + collectionId)
+//				.contentType("application/json"))
+//		.andExpect(status().isOk())
+//		.andReturn();
+//		
+//	}
+	
 	@Test
 	@Order(6)
+	@DisplayName("Testar a exclusão de uma coleção")
 	public void deleteCollectionTest() throws Exception {
 		
 		mockMvc.perform(delete("/colecao/" + collectionId)
