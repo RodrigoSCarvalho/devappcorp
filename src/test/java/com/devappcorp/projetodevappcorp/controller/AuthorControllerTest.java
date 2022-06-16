@@ -195,4 +195,18 @@ public class AuthorControllerTest {
 		assertTrue(authorsJsonArray.length() > 0);
 	}
 	
+//	O RECURSO DO AUTOR ESTÁ SENDO EXCLUÍDO NA ATUALIZAÇÃO - CORRIGIR ATUALIZAÇÃO DE CAMPOS SEPARADADOS
+//	@Test
+//	@Order(6)
+//	public void findAuthorResourcesTest() throws Exception {
+//		MvcResult author = mockMvc.perform(get("/author/" + authorId + "/recursos")
+//				.contentType("application/json"))
+//		.andExpect(status().isAccepted())
+//		.andReturn();
+//		
+//		JSONArray authorResourcesJsonArray = new JSONArray(author.getResponse().getContentAsString());
+//		
+//		assertTrue(authorResourcesJsonArray.length() > 0);
+//	}
+	
 }
