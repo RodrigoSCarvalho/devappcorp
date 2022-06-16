@@ -116,5 +116,25 @@ public class AuthorControllerTest {
 		assertEquals("0000-0000-0000-0001", authorJson.get("orcid"));
 		
 	}
-
+	
+	@Test
+	@Order(4)
+	public void findAuthorByLastNameTest() throws Exception {
+		
+		MvcResult author = mockMvc.perform(get("/author?sn=lastname")
+				.contentType("application/json"))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		JSONArray authorsJsonArray = new JSONArray(author.getResponse().getContentAsString());
+		
+		assertTrue(authorsJsonArray.length() > 0);
+		
+		for (int i = 0; i < authorsJsonArray.length(); i++) {
+			JSONObject authorJson = authorsJsonArray.getJSONObject(i);
+			assertEquals("lastname", authorJson.get("sobrenome"));	
+		}
+		
+	}
+	
 }
