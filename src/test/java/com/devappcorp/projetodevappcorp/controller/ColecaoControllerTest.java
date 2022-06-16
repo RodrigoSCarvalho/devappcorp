@@ -2,6 +2,8 @@ package com.devappcorp.projetodevappcorp.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -11,6 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -36,6 +39,8 @@ public class ColecaoControllerTest {
 	
 	@Autowired
 	private ObjectMapper objectMapper;
+
+	private static String collectionId;
 	
 	@Test
 	@Order(1)
@@ -66,13 +71,15 @@ public class ColecaoControllerTest {
 		Set<Recurso> resources = new HashSet<Recurso>();
 		resources.add(resource1);
 		
+		collection1.setRecursos(resources);
+		
 		mockMvc.perform(post("/colecao")
 				.contentType("application/json")
 				.content(objectMapper.writeValueAsString(collection1)))
 		.andExpect(status().isCreated())
 		.andReturn();
 		
-		//ADICIONAR VERIFICAÇÃO DOS DADOS CRIADOS
+		//ADICIONAR VERIFICAÇÃO DOS DADOS CRIADOS - APARENTEMENTE NÃO ESTÁ ASSOCIANDO O RECURSO
 	
 	}
 	
@@ -100,6 +107,90 @@ public class ColecaoControllerTest {
 		
 	}
 	
-	//TESTE DE EXCLUSÃO PRECISA DO ID CRIADO
+	@Test
+	@Order(3)
+	public void getAllCollectionsTest() throws Exception {
+		
+		MvcResult collection = mockMvc.perform(get("/colecao")
+				.contentType("application/json"))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		JSONArray collectionJsonArray = new JSONArray(collection.getResponse().getContentAsString());
+		
+		assertTrue(collectionJsonArray.length() > 0);
+		
+	}
+	
+	@Test
+	@Order(4)
+	public void addNewCollectionWithExistingResource() throws Exception {
+		
+		Colecao collection2 = new Colecao();
+		
+		collection2.setTitulo("Collection title 2");
+		collection2.setDescricao("Collection description 2");
+		collection2.setImagem("https://miro.medium.com/max/460/1*ahIiDbsR6s9XgR45nJJ5DA.png");
+		
+		MvcResult newCollection = mockMvc.perform(post("/recurso/1/colecao")
+				.contentType("application/json")
+				.content(objectMapper.writeValueAsString(collection2)))
+		.andExpect(status().isCreated())
+		.andReturn();
+		
+		JSONObject newCollectionJson = new JSONObject(newCollection.getResponse().getContentAsString());
+		
+		collectionId = newCollectionJson.getString("id");
+		
+		assertEquals("Collection title 2", newCollectionJson.get("titulo"));
+		assertEquals("Collection description 2", newCollectionJson.get("descricao"));
+		assertEquals("https://miro.medium.com/max/460/1*ahIiDbsR6s9XgR45nJJ5DA.png", newCollectionJson.get("imagem"));
+		
+		JSONArray collectionResources = new JSONArray(newCollectionJson.get("recursos").toString());
+		
+		assertTrue(collectionResources.length() == 1);
+
+		for (int i = 0; i < collectionResources.length(); i++) {
+			JSONObject collectionResourceJson = collectionResources.getJSONObject(i);
+			
+			assertNotNull(collectionResourceJson.get("data_criacao"));
+			assertNotNull(collectionResourceJson.get("data_registro"));
+			assertNotNull(collectionResourceJson.get("titulo"));
+			assertNotNull(collectionResourceJson.get("descricao"));
+			assertNotNull(collectionResourceJson.get("imagem"));
+			assertNotNull(collectionResourceJson.get("link"));
+		}
+		
+	}
+	
+	@Test
+	@Order(5)
+	public void findResourcesByCollection() throws Exception {		
+		
+		MvcResult resources = mockMvc.perform(post("/colecao/" + collectionId + "/recursos")
+				.contentType("application/json"))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		JSONArray collectionResources = new JSONArray(resources.getResponse().getContentAsString());
+	
+		System.out.println(collectionResources);
+		
+		assertTrue(collectionResources.length() > 1);
+
+		for (int i = 0; i < collectionResources.length(); i++) {
+			JSONObject collectionResourceJson = collectionResources.getJSONObject(i);
+			
+			assertNotNull(collectionResourceJson.get("data_criacao"));
+			assertNotNull(collectionResourceJson.get("data_registro"));
+			assertNotNull(collectionResourceJson.get("titulo"));
+			assertNotNull(collectionResourceJson.get("descricao"));
+			assertNotNull(collectionResourceJson.get("imagem"));
+			assertNotNull(collectionResourceJson.get("link"));
+		}
+		
+	}
+	
+	//TESTE DE EXCLUSÃO PRECISA DO ID CRIADO - 2
 	
 }

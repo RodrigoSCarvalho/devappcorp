@@ -187,7 +187,7 @@ public class AuthorControllerTest {
 	@Test
 	@Order(5)
 	@DisplayName("Testar a busca por todos os autores")
-	public void getAllAuthorTest() throws Exception {
+	public void getAllAuthorsTest() throws Exception {
 		
 		MvcResult author = mockMvc.perform(get("/author")
 				.contentType("application/json"))
