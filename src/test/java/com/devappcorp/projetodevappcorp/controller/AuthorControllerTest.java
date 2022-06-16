@@ -16,12 +16,12 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import com.devappcorp.projetodevappcorp.entities.Author;
 import com.devappcorp.projetodevappcorp.entities.Recurso;
-import com.devappcorp.projetodevappcorp.services.AuthorService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -43,9 +43,6 @@ public class AuthorControllerTest {
 	@Autowired
 	private ObjectMapper objectMapper;
 	
-	@Autowired
-	private AuthorService service;
-
 	private static String authorId;
 	
 	@Test
@@ -185,6 +182,7 @@ public class AuthorControllerTest {
 	@Test
 	@Order(5)
 	public void getAllAuthorTest() throws Exception {
+		
 		MvcResult author = mockMvc.perform(get("/author")
 				.contentType("application/json"))
 		.andExpect(status().isOk())
@@ -193,6 +191,7 @@ public class AuthorControllerTest {
 		JSONArray authorsJsonArray = new JSONArray(author.getResponse().getContentAsString());
 		
 		assertTrue(authorsJsonArray.length() > 0);
+		
 	}
 	
 //	O RECURSO DO AUTOR ESTÁ SENDO EXCLUÍDO NA ATUALIZAÇÃO - CORRIGIR ATUALIZAÇÃO DE CAMPOS SEPARADADOS
@@ -208,5 +207,16 @@ public class AuthorControllerTest {
 //		
 //		assertTrue(authorResourcesJsonArray.length() > 0);
 //	}
+	
+	@Test
+	@Order(7)
+	public void deleteAuthorTest() throws Exception {
+		
+		mockMvc.perform(delete("/author/" + authorId)
+				.contentType("application/json"))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+	}
 	
 }
