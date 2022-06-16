@@ -2,7 +2,9 @@ package com.devappcorp.projetodevappcorp.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -13,12 +15,13 @@ import org.springframework.test.web.servlet.MvcResult;
 import com.devappcorp.projetodevappcorp.entities.Author;
 import com.devappcorp.projetodevappcorp.services.AuthorService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.JsonPath;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 @SpringBootTest
@@ -34,12 +37,14 @@ public class AuthorControllerTest {
 	@Autowired
 	private AuthorService service;
 
+	private static String authorId;
+	
 	@Test
-    void testAddNewAuthor() throws Exception {
+	@Order(1)
+    public void addNewAuthorTest() throws Exception {
 		
 		Author author1 = new Author();
 		
-		author1.setId((long) 1);
 		author1.setNome("Author name");
 		author1.setSobrenome("Author lastname");
 		author1.setEmail("author@email.com");
@@ -54,27 +59,30 @@ public class AuthorControllerTest {
 		
 		JSONObject newAuthorJson = new JSONObject(newAuthor.getResponse().getContentAsString());
 		
-		assertEquals(newAuthorJson.get("id"), 1);
-		assertEquals(newAuthorJson.get("nome"), "Author name");
-		assertEquals(newAuthorJson.get("sobrenome"), "Author lastname");
-		assertEquals(newAuthorJson.get("email"), "author@email.com");
-		assertEquals(newAuthorJson.get("afiliacao"), "Universidade Federal Fluminense");
-		assertEquals(newAuthorJson.get("orcid"), "0000-0000-0000-0000");
+		authorId = newAuthorJson.getString("id");
+		
+		assertNotNull(newAuthorJson.get("id"));
+		assertEquals("Author name", newAuthorJson.get("nome"));
+		assertEquals("Author lastname", newAuthorJson.get("sobrenome"));
+		assertEquals("author@email.com", newAuthorJson.get("email"));
+		assertEquals("Universidade Federal Fluminense", newAuthorJson.get("afiliacao"));
+		assertEquals("0000-0000-0000-0000", newAuthorJson.get("orcid"));
 		
     }
 	
 	@Test
+	@Order(2)
 	public void testUpdateAuthor() throws Exception {
 		
 		Author authorToUpdate = new Author();
 		
 		authorToUpdate.setNome("New author name");
-		authorToUpdate.setSobrenome("New author lastname");
+		authorToUpdate.setSobrenome("lastname");
 		authorToUpdate.setEmail("newauthor@email.com");
 		authorToUpdate.setAfiliacao("UFF");
 		authorToUpdate.setOrcid("0000-0000-0000-0001");
 		
-		MvcResult updatedAuthor = mockMvc.perform(put("/author/1")
+		MvcResult updatedAuthor = mockMvc.perform(put("/author/" + authorId)
 				.contentType("application/json")
 				.content(objectMapper.writeValueAsString(authorToUpdate)))
 		.andExpect(status().isOk())
@@ -82,12 +90,31 @@ public class AuthorControllerTest {
 		
 		JSONObject updatedAuthorJson = new JSONObject(updatedAuthor.getResponse().getContentAsString());
 		
-		assertEquals(updatedAuthorJson.get("nome"), "New author name");
-		assertEquals(updatedAuthorJson.get("sobrenome"), "New author lastname");
-		assertEquals(updatedAuthorJson.get("email"), "newauthor@email.com");
-		assertEquals(updatedAuthorJson.get("afiliacao"), "UFF");
-		assertEquals(updatedAuthorJson.get("orcid"), "0000-0000-0000-0001");
+		assertEquals("New author name", updatedAuthorJson.get("nome"));
+		assertEquals("lastname", updatedAuthorJson.get("sobrenome"));
+		assertEquals("newauthor@email.com", updatedAuthorJson.get("email"));
+		assertEquals("UFF", updatedAuthorJson.get("afiliacao"));
+		assertEquals("0000-0000-0000-0001", updatedAuthorJson.get("orcid"));
 		
 	}
-	
+		
+	@Test
+	@Order(3)
+	public void findAuthorByIdTest() throws Exception {
+		
+		MvcResult author = mockMvc.perform(get("/author/" + authorId)
+				.contentType("application/json"))
+		.andExpect(status().isAccepted())
+		.andReturn();
+		
+		JSONObject authorJson = new JSONObject(author.getResponse().getContentAsString());
+		
+		assertEquals("New author name", authorJson.get("nome"));
+		assertEquals("lastname", authorJson.get("sobrenome"));
+		assertEquals("newauthor@email.com", authorJson.get("email"));
+		assertEquals("UFF", authorJson.get("afiliacao"));
+		assertEquals("0000-0000-0000-0001", authorJson.get("orcid"));
+		
+	}
+
 }
