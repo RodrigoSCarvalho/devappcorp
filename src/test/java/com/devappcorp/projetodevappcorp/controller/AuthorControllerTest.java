@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -47,6 +48,7 @@ public class AuthorControllerTest {
 	
 	@Test
 	@Order(1)
+	@DisplayName("Testar a criação de um autor")
     public void addNewAuthorTest() throws Exception {
 		
 		Author author1 = new Author();
@@ -114,6 +116,7 @@ public class AuthorControllerTest {
 	
 	@Test
 	@Order(2)
+	@DisplayName("Testar a atualização de um autor")
 	public void updateAuthorTest() throws Exception {
 		
 		Author authorToUpdate = new Author();
@@ -142,6 +145,7 @@ public class AuthorControllerTest {
 		
 	@Test
 	@Order(3)
+	@DisplayName("Testar a busca por um autor pelo seu id")
 	public void findAuthorByIdTest() throws Exception {
 		
 		MvcResult author = mockMvc.perform(get("/author/" + authorId)
@@ -161,6 +165,7 @@ public class AuthorControllerTest {
 	
 	@Test
 	@Order(4)
+	@DisplayName("Testar a busca por autores pelo seu sobrenome")
 	public void findAuthorByLastNameTest() throws Exception {
 		
 		MvcResult author = mockMvc.perform(get("/author?sn=lastname")
@@ -181,6 +186,7 @@ public class AuthorControllerTest {
 	
 	@Test
 	@Order(5)
+	@DisplayName("Testar a busca por todos os autores")
 	public void getAllAuthorTest() throws Exception {
 		
 		MvcResult author = mockMvc.perform(get("/author")
@@ -197,6 +203,7 @@ public class AuthorControllerTest {
 //	O RECURSO DO AUTOR ESTÁ SENDO EXCLUÍDO NA ATUALIZAÇÃO - CORRIGIR ATUALIZAÇÃO DE CAMPOS SEPARADADOS
 //	@Test
 //	@Order(6)
+//	@DisplayName("Testar a busca pelos recursos de um autor")
 //	public void findAuthorResourcesTest() throws Exception {
 //		MvcResult author = mockMvc.perform(get("/author/" + authorId + "/recursos")
 //				.contentType("application/json"))
@@ -210,6 +217,7 @@ public class AuthorControllerTest {
 	
 	@Test
 	@Order(7)
+	@DisplayName("Testar a exclusão de um autor")
 	public void deleteAuthorTest() throws Exception {
 		
 		mockMvc.perform(delete("/author/" + authorId)
