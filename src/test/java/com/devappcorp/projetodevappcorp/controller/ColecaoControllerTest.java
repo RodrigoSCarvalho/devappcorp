@@ -3,6 +3,7 @@ package com.devappcorp.projetodevappcorp.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -11,7 +12,10 @@ import java.util.List;
 import java.util.Set;
 
 import org.json.JSONObject;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,6 +28,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@TestMethodOrder(OrderAnnotation.class)
 public class ColecaoControllerTest {
 
 	@Autowired
@@ -33,7 +38,8 @@ public class ColecaoControllerTest {
 	private ObjectMapper objectMapper;
 	
 	@Test
-	public void addNewColecaoTest() throws Exception {
+	@Order(1)
+	public void addNewCollectionTest() throws Exception {
 		
 		Colecao collection1 = new Colecao();
 		Recurso resource1 = new Recurso();
@@ -69,5 +75,31 @@ public class ColecaoControllerTest {
 		//ADICIONAR VERIFICAÇÃO DOS DADOS CRIADOS
 	
 	}
+	
+	@Test
+	@Order(2)
+	public void updateCollectionTest() throws Exception {
+		
+		Colecao collectionToUpdate = new Colecao();
+		
+		collectionToUpdate.setTitulo("New collection title");
+		collectionToUpdate.setDescricao("New collection description");
+		collectionToUpdate.setImagem("https://matriculas.estacio.br/blog/wp-content/uploads/2019/08/ciencia-da-computacao-o-que-se-aprende-faculdade-estacio.jpg");
+		
+		MvcResult updatedCollection = mockMvc.perform(put("/colecao/1")
+				.contentType("application/json")
+				.content(objectMapper.writeValueAsString(collectionToUpdate)))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		JSONObject updatedCollectionJson = new JSONObject(updatedCollection.getResponse().getContentAsString());
+		
+		assertEquals("New collection title", updatedCollectionJson.get("titulo"));
+		assertEquals("New collection description", updatedCollectionJson.get("descricao"));
+		assertEquals("https://matriculas.estacio.br/blog/wp-content/uploads/2019/08/ciencia-da-computacao-o-que-se-aprende-faculdade-estacio.jpg", updatedCollectionJson.get("imagem"));
+		
+	}
+	
+	//TESTE DE EXCLUSÃO PRECISA DO ID CRIADO
 	
 }
