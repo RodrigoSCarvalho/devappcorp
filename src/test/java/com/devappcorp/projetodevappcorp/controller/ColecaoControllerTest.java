@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -166,17 +167,15 @@ public class ColecaoControllerTest {
 	@Test
 	@Order(5)
 	public void findResourcesByCollection() throws Exception {		
-		
-		MvcResult resources = mockMvc.perform(post("/colecao/" + collectionId + "/recursos")
+
+		MvcResult resources = mockMvc.perform(get("/colecao/" + collectionId + "/recursos")
 				.contentType("application/json"))
-		.andExpect(status().isOk())
+		.andExpect(status().isAccepted())
 		.andReturn();
 		
 		JSONArray collectionResources = new JSONArray(resources.getResponse().getContentAsString());
 	
-		System.out.println(collectionResources);
-		
-		assertTrue(collectionResources.length() > 1);
+		assertTrue(collectionResources.length() > 0);
 
 		for (int i = 0; i < collectionResources.length(); i++) {
 			JSONObject collectionResourceJson = collectionResources.getJSONObject(i);
@@ -191,6 +190,15 @@ public class ColecaoControllerTest {
 		
 	}
 	
-	//TESTE DE EXCLUSÃO PRECISA DO ID CRIADO - 2
+	@Test
+	@Order(6)
+	public void deleteCollectionTest() throws Exception {
+		
+		mockMvc.perform(delete("/colecao/" + collectionId)
+				.contentType("application/json"))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+	}
 	
 }
