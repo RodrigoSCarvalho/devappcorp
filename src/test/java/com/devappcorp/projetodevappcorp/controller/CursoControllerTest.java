@@ -3,7 +3,9 @@ package com.devappcorp.projetodevappcorp.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -14,6 +16,9 @@ import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,6 +31,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@TestMethodOrder(OrderAnnotation.class)
 public class CursoControllerTest {
 	
 	@Autowired
@@ -33,8 +39,11 @@ public class CursoControllerTest {
 	
 	@Autowired
 	private ObjectMapper objectMapper;
+	
+	private static String courseId;
 
 	@Test
+	@Order(1)
 	public void addCourseTest() throws Exception {
 		
 		Curso course1 = new Curso();
@@ -73,6 +82,8 @@ public class CursoControllerTest {
 	
 		JSONObject newCourseJson = new JSONObject(newCourse.getResponse().getContentAsString());		
 		
+		courseId = newCourseJson.getString("id");
+		
 		assertNotNull(newCourseJson.get("id"));
 		assertEquals("Course title", newCourseJson.get("titulo"));
 		assertEquals("Course description", newCourseJson.get("descricao"));
@@ -97,6 +108,7 @@ public class CursoControllerTest {
 	}
 	
 	@Test
+	@Order(2)
 	public void addCourseWithExistingResourceTest() throws Exception {
 		
 		Curso course2 = new Curso();
@@ -135,6 +147,73 @@ public class CursoControllerTest {
 			assertNotNull(courseResourceJson.get("link"));
 		}
 
+	}
+	
+	@Test
+	@Order(3)
+	public void updateCourseTest() throws Exception {
+		
+		Curso courseToUpdate = new Curso();
+		
+		courseToUpdate.setTitulo("New course title");
+		courseToUpdate.setDescricao("New course description");
+		
+		MvcResult updatedCurso = mockMvc.perform(put("/curso/" + courseId)
+				.contentType("application/json")
+				.content(objectMapper.writeValueAsString(courseToUpdate)))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		JSONObject updatedCourseJson = new JSONObject(updatedCurso.getResponse().getContentAsString());
+
+		System.out.println(updatedCourseJson);
+		
+		assertEquals("New course title", updatedCourseJson.get("titulo"));
+		assertEquals("New course description", updatedCourseJson.get("descricao"));
+		
+	}
+	
+//	@Test
+//	@Order(4)
+//	@DisplayName("Testar a atualização de uma curso existente adicionando um recurso existente")
+//	public void updateCollectionWithExistingResource() throws Exception {
+//		
+//		MvcResult updatedCollection = mockMvc.perform(put("/recurso/1/curso/" + courseId)
+//				.contentType("application/json"))
+//		.andExpect(status().isOk())
+//		.andReturn();
+//		
+//	}
+	
+	@Test
+	@Order(4)
+	public void getAllCoursesTest() throws Exception {
+		
+		MvcResult courses = mockMvc.perform(get("/curso")
+				.contentType("application/json"))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		JSONArray coursesJsonArray = new JSONArray(courses.getResponse().getContentAsString());
+		
+		assertTrue(coursesJsonArray.length() > 0);
+		
+	}
+	
+	@Test
+	@Order(5)
+	public void getAllRecentsCoursesTest() throws Exception {
+		
+		MvcResult courses = mockMvc.perform(get("/curso/recentes")
+				.contentType("application/json"))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		JSONArray coursesJsonArray = new JSONArray(courses.getResponse().getContentAsString());
+		
+		assertTrue(coursesJsonArray.length() > 0);
+		assertTrue(coursesJsonArray.length() <= 5);
+		
 	}
 	
 }
