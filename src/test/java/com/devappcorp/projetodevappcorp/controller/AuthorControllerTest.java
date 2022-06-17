@@ -36,6 +36,7 @@ import org.json.JSONObject;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestMethodOrder(OrderAnnotation.class)
+@DisplayName("Testar AuthorController")
 public class AuthorControllerTest {
 	
 	@Autowired

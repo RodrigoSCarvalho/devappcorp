@@ -9,7 +9,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.nio.file.FileSystemNotFoundException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -20,6 +19,7 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -34,6 +34,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestMethodOrder(OrderAnnotation.class)
+@DisplayName("Testar EventoController")
 public class EventoControllerTest {
 	
 	@Autowired
@@ -46,6 +47,7 @@ public class EventoControllerTest {
 
 	@Test
 	@Order(1)
+	@DisplayName("Testar a criação de um evento")
 	public void addEventTest() throws Exception {
 		
 		Evento event1 = new Evento();
@@ -111,6 +113,7 @@ public class EventoControllerTest {
 	
 	@Test
 	@Order(2)
+	@DisplayName("Testar a criação de um evento com um recurso existente")
 	public void addEventWithExistingResourceTest() throws Exception {
 		
 		Evento event2 = new Evento();
@@ -157,6 +160,7 @@ public class EventoControllerTest {
 	
 	@Test
 	@Order(3)
+	@DisplayName("Testar a busca por recursos de um evento")
 	public void getResourcesByEvent() throws Exception {
 		
 		MvcResult resources = mockMvc.perform(get("/evento/" + eventId + "/recursos")
@@ -172,6 +176,7 @@ public class EventoControllerTest {
 
 	@Test
 	@Order(4)
+	@DisplayName("Testar a busca por eventos em período de tempo")
 	public void getEventByPeriod() throws Exception {
 	
 		MvcResult event = mockMvc.perform(get("/evento/20220616/20220626")
@@ -197,6 +202,7 @@ public class EventoControllerTest {
 	
 	@Test
 	@Order(5)
+	@DisplayName("Testar a atualização de um evento")
 	public void updateEventTest() throws Exception {
 		
 		Evento eventToUpdate = new Evento();
@@ -233,6 +239,7 @@ public class EventoControllerTest {
 
 	@Test
 	@Order(6)
+	@DisplayName("Testar a busca por todos os eventos")
 	public void getAllEventsTest() throws Exception {
 		
 		MvcResult events = mockMvc.perform(get("/evento")
@@ -248,6 +255,7 @@ public class EventoControllerTest {
 	
 	@Test
 	@Order(7)
+	@DisplayName("Testar a busca por eventos recentes (últimos 5)")
 	public void getRecentEventsTest() throws Exception {
 		
 		MvcResult events = mockMvc.perform(get("/evento/recentes")
@@ -264,6 +272,7 @@ public class EventoControllerTest {
 
 	@Test
 	@Order(8)
+	@DisplayName("Testar a busca por um evento")
 	public void getEventByIdTest() throws Exception {
 		
 		MvcResult event = mockMvc.perform(get("/evento/" + eventId)
@@ -282,6 +291,7 @@ public class EventoControllerTest {
 
 	@Test
 	@Order(9)
+	@DisplayName("Testar a exclusão de um evento")
 	public void deleteEventTest() throws Exception {
 		
 		mockMvc.perform(delete("/evento/" + eventId)

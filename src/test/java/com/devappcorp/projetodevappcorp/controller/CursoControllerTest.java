@@ -18,6 +18,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestMethodOrder(OrderAnnotation.class)
+@DisplayName("Testar CursoController")
 public class CursoControllerTest {
 	
 	@Autowired
@@ -45,6 +47,7 @@ public class CursoControllerTest {
 
 	@Test
 	@Order(1)
+	@DisplayName("Testar a criação de um curso")
 	public void addCourseTest() throws Exception {
 		
 		Curso course1 = new Curso();
@@ -108,6 +111,7 @@ public class CursoControllerTest {
 	
 	@Test
 	@Order(2)
+	@DisplayName("Testar a criação de um curso com um recurso existente")
 	public void addCourseWithExistingResourceTest() throws Exception {
 		
 		Curso course2 = new Curso();
@@ -152,6 +156,7 @@ public class CursoControllerTest {
 	
 	@Test
 	@Order(3)
+	@DisplayName("Testar a busca por recursos de um curso")
 	public void findResourcesByCourse() throws Exception {
 		
 		MvcResult resources = mockMvc.perform(get("/curso/" + courseId + "/recursos")
@@ -167,6 +172,7 @@ public class CursoControllerTest {
 	
 	@Test
 	@Order(4)
+	@DisplayName("Testar a atualização de um curso")
 	public void updateCourseTest() throws Exception {
 		
 		Curso courseToUpdate = new Curso();
@@ -201,6 +207,7 @@ public class CursoControllerTest {
 	
 	@Test
 	@Order(5)
+	@DisplayName("Testar a busca por todos os cursos")
 	public void getAllCoursesTest() throws Exception {
 		
 		MvcResult courses = mockMvc.perform(get("/curso")
@@ -216,6 +223,7 @@ public class CursoControllerTest {
 	
 	@Test
 	@Order(6)
+	@DisplayName("Testar a busca por cursos recentes (últimos 5)")
 	public void getRecentCoursesTest() throws Exception {
 		
 		MvcResult courses = mockMvc.perform(get("/curso/recentes")
@@ -232,6 +240,7 @@ public class CursoControllerTest {
 	
 	@Test
 	@Order(7)
+	@DisplayName("Testar a busca por um curso")
 	public void getCourseByIdTest() throws Exception {
 		
 		MvcResult course = mockMvc.perform(get("/curso/" + courseId)
@@ -250,6 +259,7 @@ public class CursoControllerTest {
 	
 	@Test
 	@Order(8)
+	@DisplayName("Testar a exclusão de um curso")
 	public void deleteCourseTest() throws Exception {
 		
 		mockMvc.perform(delete("/curso/" + courseId)
