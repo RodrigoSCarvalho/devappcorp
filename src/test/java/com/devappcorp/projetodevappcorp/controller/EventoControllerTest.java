@@ -222,21 +222,21 @@ public class EventoControllerTest {
 		
 	}
 	
-//	@Test
-//	@Order(6)
-//	public void getRecentCoursesTest() throws Exception {
-//		
-//		MvcResult courses = mockMvc.perform(get("/curso/recentes")
-//				.contentType("application/json"))
-//		.andExpect(status().isOk())
-//		.andReturn();
-//		
-//		JSONArray coursesJsonArray = new JSONArray(courses.getResponse().getContentAsString());
-//		
-//		assertTrue(coursesJsonArray.length() > 0);
-//		assertTrue(coursesJsonArray.length() <= 5);
-//		
-//	}
+	@Test
+	@Order(6)
+	public void getRecentEventsTest() throws Exception {
+		
+		MvcResult events = mockMvc.perform(get("/evento/recentes")
+				.contentType("application/json"))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		JSONArray eventsJsonArray = new JSONArray(events.getResponse().getContentAsString());
+		
+		assertTrue(eventsJsonArray.length() > 0);
+		assertTrue(eventsJsonArray.length() <= 5);
+		
+	}
 //	
 //	@Test
 //	@Order(7)
