@@ -194,34 +194,34 @@ public class EventoControllerTest {
 		assertEquals("New event description", updatedEventJson.get("descricao"));
 		
 	}
-////	
-////	@Test
-////	@Order(4)
-////	@DisplayName("Testar a atualização de uma curso existente adicionando um recurso existente")
-////	public void updateCollectionWithExistingResource() throws Exception {
-////		
-////		MvcResult updatedCollection = mockMvc.perform(put("/recurso/1/curso/" + courseId)
-////				.contentType("application/json"))
-////		.andExpect(status().isOk())
-////		.andReturn();
-////		
-////	}
-//	
+	
 //	@Test
 //	@Order(5)
-//	public void getAllCoursesTest() throws Exception {
+//	@DisplayName("Testar a atualização de uma curso existente adicionando um recurso existente")
+//	public void updateEventWithExistingResource() throws Exception {
 //		
-//		MvcResult courses = mockMvc.perform(get("/curso")
+//		MvcResult updatedCollection = mockMvc.perform(put("/recurso/1/curso/" + courseId)
 //				.contentType("application/json"))
 //		.andExpect(status().isOk())
 //		.andReturn();
 //		
-//		JSONArray coursesJsonArray = new JSONArray(courses.getResponse().getContentAsString());
-//		
-//		assertTrue(coursesJsonArray.length() > 0);
-//		
 //	}
-//	
+
+	@Test
+	@Order(5)
+	public void getAllEventsTest() throws Exception {
+		
+		MvcResult events = mockMvc.perform(get("/evento")
+				.contentType("application/json"))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		JSONArray eventsJsonArray = new JSONArray(events.getResponse().getContentAsString());
+		
+		assertTrue(eventsJsonArray.length() > 0);
+		
+	}
+	
 //	@Test
 //	@Order(6)
 //	public void getRecentCoursesTest() throws Exception {
