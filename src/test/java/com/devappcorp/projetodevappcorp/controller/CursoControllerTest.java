@@ -82,8 +82,6 @@ public class CursoControllerTest {
 	
 		JSONObject newCourseJson = new JSONObject(newCourse.getResponse().getContentAsString());		
 		
-		courseId = newCourseJson.getString("id");
-		
 		assertNotNull(newCourseJson.get("id"));
 		assertEquals("Course title", newCourseJson.get("titulo"));
 		assertEquals("Course description", newCourseJson.get("descricao"));
@@ -126,6 +124,8 @@ public class CursoControllerTest {
 	
 		JSONObject newCourseJson = new JSONObject(newCourse.getResponse().getContentAsString());
 		
+		courseId = newCourseJson.getString("id");
+		
 		assertNotNull(newCourseJson.get("id"));
 		assertEquals("Course title", newCourseJson.get("titulo"));
 		assertEquals("Course description", newCourseJson.get("descricao"));
@@ -151,6 +151,23 @@ public class CursoControllerTest {
 	
 	@Test
 	@Order(3)
+	public void findResourcesByCourse() throws Exception {
+		
+		System.out.println(courseId);
+		
+		MvcResult resources = mockMvc.perform(get("/curso/" + courseId + "/recursos")
+				.contentType("application/json"))
+		.andExpect(status().isAccepted())
+		.andReturn();
+		
+		JSONArray resourcesJson = new JSONArray(resources.getResponse().getContentAsString());
+		
+		assertTrue(resourcesJson.length() > 0);
+		
+	}
+	
+	@Test
+	@Order(4)
 	public void updateCourseTest() throws Exception {
 		
 		Curso courseToUpdate = new Curso();
@@ -166,13 +183,11 @@ public class CursoControllerTest {
 		
 		JSONObject updatedCourseJson = new JSONObject(updatedCurso.getResponse().getContentAsString());
 
-		System.out.println(updatedCourseJson);
-		
 		assertEquals("New course title", updatedCourseJson.get("titulo"));
 		assertEquals("New course description", updatedCourseJson.get("descricao"));
 		
 	}
-	
+//	
 //	@Test
 //	@Order(4)
 //	@DisplayName("Testar a atualização de uma curso existente adicionando um recurso existente")
@@ -186,7 +201,7 @@ public class CursoControllerTest {
 //	}
 	
 	@Test
-	@Order(4)
+	@Order(5)
 	public void getAllCoursesTest() throws Exception {
 		
 		MvcResult courses = mockMvc.perform(get("/curso")
@@ -201,8 +216,8 @@ public class CursoControllerTest {
 	}
 	
 	@Test
-	@Order(5)
-	public void getAllRecentsCoursesTest() throws Exception {
+	@Order(6)
+	public void getRecentCoursesTest() throws Exception {
 		
 		MvcResult courses = mockMvc.perform(get("/curso/recentes")
 				.contentType("application/json"))
@@ -213,6 +228,22 @@ public class CursoControllerTest {
 		
 		assertTrue(coursesJsonArray.length() > 0);
 		assertTrue(coursesJsonArray.length() <= 5);
+		
+	}
+	
+	@Test
+	@Order(7)
+	public void getCourseByIdTest() throws Exception {
+		
+		MvcResult course = mockMvc.perform(get("/curso/" + courseId)
+				.contentType("application/json"))
+		.andExpect(status().isAccepted())
+		.andReturn();
+		
+		JSONObject courseJson = new JSONObject(course.getResponse().getContentAsString());
+		
+		assertEquals("New course title", courseJson.get("titulo"));
+		assertEquals("New course description", courseJson.get("descricao"));
 		
 	}
 	
