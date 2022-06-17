@@ -156,11 +156,9 @@ public class EventoControllerTest {
 	
 	@Test
 	@Order(3)
-	public void findResourcesByCourse() throws Exception {
+	public void findResourcesByEvent() throws Exception {
 		
-		System.out.println(courseId);
-		
-		MvcResult resources = mockMvc.perform(get("/curso/" + courseId + "/recursos")
+		MvcResult resources = mockMvc.perform(get("/evento/" + eventId + "/recursos")
 				.contentType("application/json"))
 		.andExpect(status().isAccepted())
 		.andReturn();
@@ -170,99 +168,99 @@ public class EventoControllerTest {
 		assertTrue(resourcesJson.length() > 0);
 		
 	}
-	
-	@Test
-	@Order(4)
-	public void updateCourseTest() throws Exception {
-		
-		Curso courseToUpdate = new Curso();
-		
-		courseToUpdate.setTitulo("New course title");
-		courseToUpdate.setDescricao("New course description");
-		
-		MvcResult updatedCurso = mockMvc.perform(put("/curso/" + courseId)
-				.contentType("application/json")
-				.content(objectMapper.writeValueAsString(courseToUpdate)))
-		.andExpect(status().isOk())
-		.andReturn();
-		
-		JSONObject updatedCourseJson = new JSONObject(updatedCurso.getResponse().getContentAsString());
-
-		assertEquals("New course title", updatedCourseJson.get("titulo"));
-		assertEquals("New course description", updatedCourseJson.get("descricao"));
-		
-	}
 //	
 //	@Test
 //	@Order(4)
-//	@DisplayName("Testar a atualização de uma curso existente adicionando um recurso existente")
-//	public void updateCollectionWithExistingResource() throws Exception {
+//	public void updateCourseTest() throws Exception {
 //		
-//		MvcResult updatedCollection = mockMvc.perform(put("/recurso/1/curso/" + courseId)
+//		Curso courseToUpdate = new Curso();
+//		
+//		courseToUpdate.setTitulo("New course title");
+//		courseToUpdate.setDescricao("New course description");
+//		
+//		MvcResult updatedCurso = mockMvc.perform(put("/curso/" + courseId)
+//				.contentType("application/json")
+//				.content(objectMapper.writeValueAsString(courseToUpdate)))
+//		.andExpect(status().isOk())
+//		.andReturn();
+//		
+//		JSONObject updatedCourseJson = new JSONObject(updatedCurso.getResponse().getContentAsString());
+//
+//		assertEquals("New course title", updatedCourseJson.get("titulo"));
+//		assertEquals("New course description", updatedCourseJson.get("descricao"));
+//		
+//	}
+////	
+////	@Test
+////	@Order(4)
+////	@DisplayName("Testar a atualização de uma curso existente adicionando um recurso existente")
+////	public void updateCollectionWithExistingResource() throws Exception {
+////		
+////		MvcResult updatedCollection = mockMvc.perform(put("/recurso/1/curso/" + courseId)
+////				.contentType("application/json"))
+////		.andExpect(status().isOk())
+////		.andReturn();
+////		
+////	}
+//	
+//	@Test
+//	@Order(5)
+//	public void getAllCoursesTest() throws Exception {
+//		
+//		MvcResult courses = mockMvc.perform(get("/curso")
 //				.contentType("application/json"))
 //		.andExpect(status().isOk())
 //		.andReturn();
 //		
+//		JSONArray coursesJsonArray = new JSONArray(courses.getResponse().getContentAsString());
+//		
+//		assertTrue(coursesJsonArray.length() > 0);
+//		
 //	}
-	
-	@Test
-	@Order(5)
-	public void getAllCoursesTest() throws Exception {
-		
-		MvcResult courses = mockMvc.perform(get("/curso")
-				.contentType("application/json"))
-		.andExpect(status().isOk())
-		.andReturn();
-		
-		JSONArray coursesJsonArray = new JSONArray(courses.getResponse().getContentAsString());
-		
-		assertTrue(coursesJsonArray.length() > 0);
-		
-	}
-	
-	@Test
-	@Order(6)
-	public void getRecentCoursesTest() throws Exception {
-		
-		MvcResult courses = mockMvc.perform(get("/curso/recentes")
-				.contentType("application/json"))
-		.andExpect(status().isOk())
-		.andReturn();
-		
-		JSONArray coursesJsonArray = new JSONArray(courses.getResponse().getContentAsString());
-		
-		assertTrue(coursesJsonArray.length() > 0);
-		assertTrue(coursesJsonArray.length() <= 5);
-		
-	}
-	
-	@Test
-	@Order(7)
-	public void getCourseByIdTest() throws Exception {
-		
-		MvcResult course = mockMvc.perform(get("/curso/" + courseId)
-				.contentType("application/json"))
-		.andExpect(status().isAccepted())
-		.andReturn();
-		
-		JSONObject courseJson = new JSONObject(course.getResponse().getContentAsString());
-		
-		assertEquals("New course title", courseJson.get("titulo"));
-		assertEquals("New course description", courseJson.get("descricao"));
-		
-	}
-	
-	//ADICIONAR TESTE PARA RECURSO SEM ASSOCIAÇÃO
-	
-	@Test
-	@Order(8)
-	public void deleteCourseTest() throws Exception {
-		
-		mockMvc.perform(delete("/curso/" + courseId)
-				.contentType("application/json"))
-		.andExpect(status().isOk())
-		.andReturn();
-
-	}
+//	
+//	@Test
+//	@Order(6)
+//	public void getRecentCoursesTest() throws Exception {
+//		
+//		MvcResult courses = mockMvc.perform(get("/curso/recentes")
+//				.contentType("application/json"))
+//		.andExpect(status().isOk())
+//		.andReturn();
+//		
+//		JSONArray coursesJsonArray = new JSONArray(courses.getResponse().getContentAsString());
+//		
+//		assertTrue(coursesJsonArray.length() > 0);
+//		assertTrue(coursesJsonArray.length() <= 5);
+//		
+//	}
+//	
+//	@Test
+//	@Order(7)
+//	public void getCourseByIdTest() throws Exception {
+//		
+//		MvcResult course = mockMvc.perform(get("/curso/" + courseId)
+//				.contentType("application/json"))
+//		.andExpect(status().isAccepted())
+//		.andReturn();
+//		
+//		JSONObject courseJson = new JSONObject(course.getResponse().getContentAsString());
+//		
+//		assertEquals("New course title", courseJson.get("titulo"));
+//		assertEquals("New course description", courseJson.get("descricao"));
+//		
+//	}
+//	
+//	//ADICIONAR TESTE PARA RECURSO SEM ASSOCIAÇÃO
+//	
+//	@Test
+//	@Order(8)
+//	public void deleteCourseTest() throws Exception {
+//		
+//		mockMvc.perform(delete("/curso/" + courseId)
+//				.contentType("application/json"))
+//		.andExpect(status().isOk())
+//		.andReturn();
+//
+//	}
 	
 }

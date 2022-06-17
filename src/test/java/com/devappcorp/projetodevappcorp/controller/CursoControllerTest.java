@@ -154,8 +154,6 @@ public class CursoControllerTest {
 	@Order(3)
 	public void findResourcesByCourse() throws Exception {
 		
-		System.out.println(courseId);
-		
 		MvcResult resources = mockMvc.perform(get("/curso/" + courseId + "/recursos")
 				.contentType("application/json"))
 		.andExpect(status().isAccepted())
