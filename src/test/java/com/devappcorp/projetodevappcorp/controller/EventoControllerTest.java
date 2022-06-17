@@ -237,22 +237,22 @@ public class EventoControllerTest {
 		assertTrue(eventsJsonArray.length() <= 5);
 		
 	}
-//	
-//	@Test
-//	@Order(7)
-//	public void getCourseByIdTest() throws Exception {
-//		
-//		MvcResult course = mockMvc.perform(get("/curso/" + courseId)
-//				.contentType("application/json"))
-//		.andExpect(status().isAccepted())
-//		.andReturn();
-//		
-//		JSONObject courseJson = new JSONObject(course.getResponse().getContentAsString());
-//		
-//		assertEquals("New course title", courseJson.get("titulo"));
-//		assertEquals("New course description", courseJson.get("descricao"));
-//		
-//	}
+
+	@Test
+	@Order(7)
+	public void getEventByIdTest() throws Exception {
+		
+		MvcResult event = mockMvc.perform(get("/evento/" + eventId)
+				.contentType("application/json"))
+		.andExpect(status().isAccepted())
+		.andReturn();
+		
+		JSONObject eventJson = new JSONObject(event.getResponse().getContentAsString());
+		
+		assertEquals("New event title", eventJson.get("titulo"));
+		assertEquals("New event description", eventJson.get("descricao"));
+		
+	}
 //	
 //	//ADICIONAR TESTE PARA RECURSO SEM ASSOCIAÇÃO
 //	
