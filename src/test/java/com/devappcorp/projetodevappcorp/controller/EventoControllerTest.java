@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.nio.file.FileSystemNotFoundException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -52,8 +53,8 @@ public class EventoControllerTest {
 		
 		event1.setTitulo("Event title");
 		event1.setDescricao("Event description");
-		event1.setData_criacao("16-06-2022");
-		event1.setData_fim("26-06-2022");
+		event1.setData_criacao("2022-06-16");
+		event1.setData_fim("2022-06-26");
 		event1.setImagem("https://miro.medium.com/max/460/1*ahIiDbsR6s9XgR45nJJ5DA.png");
 
 		resource1.setTitulo("Resource title");
@@ -87,8 +88,8 @@ public class EventoControllerTest {
 		assertNotNull(newEventJson.get("id"));
 		assertEquals("Event title", newEventJson.get("titulo"));
 		assertEquals("Event description", newEventJson.get("descricao"));
-		assertEquals("16-06-2022", newEventJson.get("data_criacao"));
-		assertEquals("26-06-2022", newEventJson.get("data_fim"));
+		assertEquals("2022-06-16", newEventJson.get("data_criacao"));
+		assertEquals("2022-06-26", newEventJson.get("data_fim"));
 		assertEquals("https://miro.medium.com/max/460/1*ahIiDbsR6s9XgR45nJJ5DA.png", newEventJson.get("imagem"));
 		
 		JSONArray eventResource = new JSONArray(newEventJson.get("recursos").toString());
@@ -116,8 +117,8 @@ public class EventoControllerTest {
 		
 		event2.setTitulo("Event title");
 		event2.setDescricao("Event description");
-		event2.setData_criacao("16-06-2022");
-		event2.setData_fim("26-06-2022");
+		event2.setData_criacao("2022-06-16");
+		event2.setData_fim("2022-06-26");
 		event2.setImagem("https://miro.medium.com/max/460/1*ahIiDbsR6s9XgR45nJJ5DA.png");
 		
 		MvcResult newEvent = mockMvc.perform(post("/recurso/1/evento")
@@ -133,8 +134,8 @@ public class EventoControllerTest {
 		assertNotNull(newEventJson.get("id"));
 		assertEquals("Event title", newEventJson.get("titulo"));
 		assertEquals("Event description", newEventJson.get("descricao"));
-		assertEquals("16-06-2022", newEventJson.get("data_criacao"));
-		assertEquals("26-06-2022", newEventJson.get("data_fim"));
+		assertEquals("2022-06-16", newEventJson.get("data_criacao"));
+		assertEquals("2022-06-26", newEventJson.get("data_fim"));
 		assertEquals("https://miro.medium.com/max/460/1*ahIiDbsR6s9XgR45nJJ5DA.png", newEventJson.get("imagem"));
 		
 		JSONArray eventResource = new JSONArray(newEventJson.get("recursos").toString());
@@ -156,7 +157,7 @@ public class EventoControllerTest {
 	
 	@Test
 	@Order(3)
-	public void findResourcesByEvent() throws Exception {
+	public void getResourcesByEvent() throws Exception {
 		
 		MvcResult resources = mockMvc.perform(get("/evento/" + eventId + "/recursos")
 				.contentType("application/json"))
@@ -165,14 +166,37 @@ public class EventoControllerTest {
 		
 		JSONArray resourcesJson = new JSONArray(resources.getResponse().getContentAsString());
 		
-		System.out.println(resourcesJson);
-		
 		assertTrue(resourcesJson.length() > 0);
 		
 	}
 
 	@Test
 	@Order(4)
+	public void getEventByPeriod() throws Exception {
+	
+		MvcResult event = mockMvc.perform(get("/evento/20220616/20220626")
+				.contentType("application/json"))
+		.andExpect(status().isAccepted())
+		.andReturn();
+		
+		JSONArray eventResources = new JSONArray(event.getResponse().getContentAsString());
+		
+		assertTrue(eventResources.length() > 0);
+
+		for (int i = 0; i < eventResources.length(); i++) {
+			JSONObject eventResourceJson = eventResources.getJSONObject(i);
+			
+			assertNotNull(eventResourceJson.get("data_criacao"));
+			assertNotNull(eventResourceJson.get("data_fim"));
+			assertNotNull(eventResourceJson.get("titulo"));
+			assertNotNull(eventResourceJson.get("descricao"));
+			assertNotNull(eventResourceJson.get("imagem"));
+		}
+		
+	}
+	
+	@Test
+	@Order(5)
 	public void updateEventTest() throws Exception {
 		
 		Evento eventToUpdate = new Evento();
@@ -208,7 +232,7 @@ public class EventoControllerTest {
 //	}
 
 	@Test
-	@Order(5)
+	@Order(6)
 	public void getAllEventsTest() throws Exception {
 		
 		MvcResult events = mockMvc.perform(get("/evento")
@@ -223,7 +247,7 @@ public class EventoControllerTest {
 	}
 	
 	@Test
-	@Order(6)
+	@Order(7)
 	public void getRecentEventsTest() throws Exception {
 		
 		MvcResult events = mockMvc.perform(get("/evento/recentes")
@@ -239,7 +263,7 @@ public class EventoControllerTest {
 	}
 
 	@Test
-	@Order(7)
+	@Order(8)
 	public void getEventByIdTest() throws Exception {
 		
 		MvcResult event = mockMvc.perform(get("/evento/" + eventId)
@@ -253,11 +277,11 @@ public class EventoControllerTest {
 		assertEquals("New event description", eventJson.get("descricao"));
 		
 	}
-//	
-//	//ADICIONAR TESTE PARA RECURSO SEM ASSOCIAÇÃO
-//	
+	
+	//ADICIONAR TESTE PARA RECURSO SEM ASSOCIAÇÃO
+
 	@Test
-	@Order(8)
+	@Order(9)
 	public void deleteEventTest() throws Exception {
 		
 		mockMvc.perform(delete("/evento/" + eventId)
