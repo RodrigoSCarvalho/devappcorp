@@ -1,13 +1,16 @@
 package com.devappcorp.projetodevappcorp.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -99,6 +102,22 @@ public class RecursoControllerTest {
 	
 	@Test
 	@Order(2)
+	@DisplayName("Testar a busca por todos os recursos")
+	public void getAllResourcesTest() throws Exception {
+		
+		MvcResult resources = mockMvc.perform(get("/recurso")
+				.contentType("application/json"))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		JSONArray resourcesJsonArray = new JSONArray(resources.getResponse().getContentAsString());
+		
+		assertTrue(resourcesJsonArray.length() > 0);
+		
+	}
+	
+	@Test
+	@Order(3)
 	public void deleteResourceTest() throws Exception {
 		
 //		mockMvc.perform(delete("/recurso/" + resourceId)
