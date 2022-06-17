@@ -174,13 +174,13 @@ public class CursoControllerTest {
 		courseToUpdate.setTitulo("New course title");
 		courseToUpdate.setDescricao("New course description");
 		
-		MvcResult updatedCurso = mockMvc.perform(put("/curso/" + courseId)
+		MvcResult updatedCourse = mockMvc.perform(put("/curso/" + courseId)
 				.contentType("application/json")
 				.content(objectMapper.writeValueAsString(courseToUpdate)))
 		.andExpect(status().isOk())
 		.andReturn();
 		
-		JSONObject updatedCourseJson = new JSONObject(updatedCurso.getResponse().getContentAsString());
+		JSONObject updatedCourseJson = new JSONObject(updatedCourse.getResponse().getContentAsString());
 
 		assertEquals("New course title", updatedCourseJson.get("titulo"));
 		assertEquals("New course description", updatedCourseJson.get("descricao"));

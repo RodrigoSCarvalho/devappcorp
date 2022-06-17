@@ -165,31 +165,35 @@ public class EventoControllerTest {
 		
 		JSONArray resourcesJson = new JSONArray(resources.getResponse().getContentAsString());
 		
+		System.out.println(resourcesJson);
+		
 		assertTrue(resourcesJson.length() > 0);
 		
 	}
-//	
-//	@Test
-//	@Order(4)
-//	public void updateCourseTest() throws Exception {
-//		
-//		Curso courseToUpdate = new Curso();
-//		
-//		courseToUpdate.setTitulo("New course title");
-//		courseToUpdate.setDescricao("New course description");
-//		
-//		MvcResult updatedCurso = mockMvc.perform(put("/curso/" + courseId)
-//				.contentType("application/json")
-//				.content(objectMapper.writeValueAsString(courseToUpdate)))
-//		.andExpect(status().isOk())
-//		.andReturn();
-//		
-//		JSONObject updatedCourseJson = new JSONObject(updatedCurso.getResponse().getContentAsString());
-//
-//		assertEquals("New course title", updatedCourseJson.get("titulo"));
-//		assertEquals("New course description", updatedCourseJson.get("descricao"));
-//		
-//	}
+
+	@Test
+	@Order(4)
+	public void updateEventTest() throws Exception {
+		
+		Evento eventToUpdate = new Evento();
+		
+		eventToUpdate.setTitulo("New event title");
+		eventToUpdate.setDescricao("New event description");
+		
+		MvcResult updatedEvent = mockMvc.perform(put("/evento/" + eventId)
+				.contentType("application/json")
+				.content(objectMapper.writeValueAsString(eventToUpdate)))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		JSONObject updatedEventJson = new JSONObject(updatedEvent.getResponse().getContentAsString());
+
+		System.out.println(updatedEventJson);
+		
+		assertEquals("New event title", updatedEventJson.get("titulo"));
+		assertEquals("New event description", updatedEventJson.get("descricao"));
+		
+	}
 ////	
 ////	@Test
 ////	@Order(4)
