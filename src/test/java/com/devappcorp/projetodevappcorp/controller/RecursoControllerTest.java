@@ -118,6 +118,24 @@ public class RecursoControllerTest {
 	
 	@Test
 	@Order(3)
+	@DisplayName("Testar a busca por recursos recentes (últimos 5)")
+	public void getRecentResourcesTest() throws Exception {
+		
+		MvcResult resources = mockMvc.perform(get("/recurso/recentes")
+				.contentType("application/json"))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		JSONArray resourcesJsonArray = new JSONArray(resources.getResponse().getContentAsString());
+		
+		assertTrue(resourcesJsonArray.length() > 0);
+		assertTrue(resourcesJsonArray.length() <= 5);
+		
+	}
+
+	
+	@Test
+	@Order(4)
 	public void deleteResourceTest() throws Exception {
 		
 //		mockMvc.perform(delete("/recurso/" + resourceId)
