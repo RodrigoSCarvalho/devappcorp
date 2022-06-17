@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -245,6 +246,19 @@ public class CursoControllerTest {
 		assertEquals("New course title", courseJson.get("titulo"));
 		assertEquals("New course description", courseJson.get("descricao"));
 		
+	}
+	
+	//ADICIONAR TESTE PARA RECURSO SEM ASSOCIAÇÃO
+	
+	@Test
+	@Order(8)
+	public void deleteCourseTest() throws Exception {
+		
+		mockMvc.perform(delete("/curso/" + courseId)
+				.contentType("application/json"))
+		.andExpect(status().isOk())
+		.andReturn();
+
 	}
 	
 }
