@@ -256,15 +256,15 @@ public class EventoControllerTest {
 //	
 //	//ADICIONAR TESTE PARA RECURSO SEM ASSOCIAÇÃO
 //	
-//	@Test
-//	@Order(8)
-//	public void deleteCourseTest() throws Exception {
-//		
-//		mockMvc.perform(delete("/curso/" + courseId)
-//				.contentType("application/json"))
-//		.andExpect(status().isOk())
-//		.andReturn();
-//
-//	}
+	@Test
+	@Order(8)
+	public void deleteEventTest() throws Exception {
+		
+		mockMvc.perform(delete("/evento/" + eventId)
+				.contentType("application/json"))
+		.andExpect(status().isOk())
+		.andReturn();
+
+	}
 	
 }
