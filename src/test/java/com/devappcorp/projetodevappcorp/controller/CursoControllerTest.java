@@ -96,4 +96,45 @@ public class CursoControllerTest {
 
 	}
 	
+	@Test
+	public void addCourseWithExistingResourceTest() throws Exception {
+		
+		Curso course2 = new Curso();
+		
+		course2.setTitulo("Course title");
+		course2.setDescricao("Course description");
+		course2.setData_registro("16-06-2022");
+		course2.setImagem("https://miro.medium.com/max/460/1*ahIiDbsR6s9XgR45nJJ5DA.png");
+		
+		MvcResult newCourse = mockMvc.perform(post("/recurso/1/curso")
+				.contentType("application/json")
+				.content(objectMapper.writeValueAsString(course2)))
+		.andExpect(status().isCreated())
+		.andReturn();
+	
+		JSONObject newCourseJson = new JSONObject(newCourse.getResponse().getContentAsString());
+		
+		assertNotNull(newCourseJson.get("id"));
+		assertEquals("Course title", newCourseJson.get("titulo"));
+		assertEquals("Course description", newCourseJson.get("descricao"));
+		assertEquals("16-06-2022", newCourseJson.get("data_registro"));
+		assertEquals("https://miro.medium.com/max/460/1*ahIiDbsR6s9XgR45nJJ5DA.png", newCourseJson.get("imagem"));
+		
+		JSONArray courseResource = new JSONArray(newCourseJson.get("recursos").toString());
+		
+		assertTrue(courseResource.length() == 1);
+
+		for (int i = 0; i < courseResource.length(); i++) {
+			JSONObject courseResourceJson = courseResource.getJSONObject(i);
+			
+			assertNotNull(courseResourceJson.get("data_criacao"));
+			assertNotNull(courseResourceJson.get("data_registro"));
+			assertNotNull(courseResourceJson.get("titulo"));
+			assertNotNull(courseResourceJson.get("descricao"));
+			assertNotNull(courseResourceJson.get("imagem"));
+			assertNotNull(courseResourceJson.get("link"));
+		}
+
+	}
+	
 }
