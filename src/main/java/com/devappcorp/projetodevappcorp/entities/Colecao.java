@@ -1,6 +1,7 @@
 package com.devappcorp.projetodevappcorp.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Colecao implements Serializable {
 
     private static final long serialVersionUID = 1L;

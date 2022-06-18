@@ -38,10 +38,14 @@ public class CursoServiceImpl implements CursoService {
     @Override
     public void updateCurso(Long id, Curso curso) {
         cursoRepository.findById(id).map(cursoExistente -> {
-            cursoExistente.setTitulo(curso.getTitulo());
-            cursoExistente.setImagem(curso.getImagem());
-            cursoExistente.setDescricao(curso.getDescricao());
-            cursoExistente.setData_registro(curso.getData_registro());
+            if (!curso.getTitulo().isEmpty())
+                cursoExistente.setTitulo(curso.getTitulo());
+            if (curso.getImagem() != null)
+                cursoExistente.setImagem(curso.getImagem());
+            if (curso.getDescricao() != null)
+                cursoExistente.setDescricao(curso.getDescricao());
+            if (curso.getData_registro() != null)
+                cursoExistente.setData_registro(curso.getData_registro());
 
             return cursoRepository.save(cursoExistente);
         });

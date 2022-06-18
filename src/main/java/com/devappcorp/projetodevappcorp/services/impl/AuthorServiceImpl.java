@@ -34,18 +34,12 @@ public class AuthorServiceImpl implements AuthorService {
         authorRepository.findById(id).map(authorExistente -> {
             if (author.getEmail() != null)
                 authorExistente.setEmail(author.getEmail());
-            else
-                authorExistente.setEmail(authorExistente.getEmail());
             if (author.getSobrenome() != null)
                 authorExistente.setSobrenome(author.getSobrenome());
-            else
-                authorExistente.setSobrenome(authorExistente.getSobrenome());
             if (author.getAfiliacao() != null)
                 authorExistente.setAfiliacao(author.getAfiliacao());
             if (author.getNome() != null)
                 authorExistente.setNome(author.getNome());
-            else
-                authorExistente.setSobrenome(authorExistente.getNome());
             if (author.getOrcid() != null)
                 authorExistente.setOrcid(author.getOrcid());
             if (!author.getRecursos().isEmpty())
