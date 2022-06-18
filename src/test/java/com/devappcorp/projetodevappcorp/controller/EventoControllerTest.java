@@ -27,6 +27,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import com.devappcorp.projetodevappcorp.entities.Curso;
 import com.devappcorp.projetodevappcorp.entities.Evento;
 import com.devappcorp.projetodevappcorp.entities.Recurso;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -202,76 +203,6 @@ public class EventoControllerTest {
 	
 	@Test
 	@Order(5)
-	@DisplayName("Testar a atualização de um evento")
-	public void updateEventTest() throws Exception {
-		
-		Evento eventToUpdate = new Evento();
-		
-		eventToUpdate.setTitulo("New event title");
-		eventToUpdate.setDescricao("New event description");
-		
-		MvcResult updatedEvent = mockMvc.perform(put("/evento/" + eventId)
-				.contentType("application/json")
-				.content(objectMapper.writeValueAsString(eventToUpdate)))
-		.andExpect(status().isOk())
-		.andReturn();
-		
-		JSONObject updatedEventJson = new JSONObject(updatedEvent.getResponse().getContentAsString());
-
-		System.out.println(updatedEventJson);
-		
-		assertEquals("New event title", updatedEventJson.get("titulo"));
-		assertEquals("New event description", updatedEventJson.get("descricao"));
-		
-	}
-	
-//	@Test
-//	@Order(5)
-//	@DisplayName("Testar a atualização de uma curso existente adicionando um recurso existente")
-//	public void updateEventWithExistingResource() throws Exception {
-//		
-//		MvcResult updatedCollection = mockMvc.perform(put("/recurso/1/curso/" + courseId)
-//				.contentType("application/json"))
-//		.andExpect(status().isOk())
-//		.andReturn();
-//		
-//	}
-
-	@Test
-	@Order(6)
-	@DisplayName("Testar a busca por todos os eventos")
-	public void getAllEventsTest() throws Exception {
-		
-		MvcResult events = mockMvc.perform(get("/evento")
-				.contentType("application/json"))
-		.andExpect(status().isOk())
-		.andReturn();
-		
-		JSONArray eventsJsonArray = new JSONArray(events.getResponse().getContentAsString());
-		
-		assertTrue(eventsJsonArray.length() > 0);
-		
-	}
-	
-	@Test
-	@Order(7)
-	@DisplayName("Testar a busca por eventos recentes (últimos 5)")
-	public void getRecentEventsTest() throws Exception {
-		
-		MvcResult events = mockMvc.perform(get("/evento/recentes")
-				.contentType("application/json"))
-		.andExpect(status().isOk())
-		.andReturn();
-		
-		JSONArray eventsJsonArray = new JSONArray(events.getResponse().getContentAsString());
-		
-		assertTrue(eventsJsonArray.length() > 0);
-		assertTrue(eventsJsonArray.length() <= 5);
-		
-	}
-
-	@Test
-	@Order(8)
 	@DisplayName("Testar a busca por um evento")
 	public void getEventByIdTest() throws Exception {
 		
@@ -287,10 +218,86 @@ public class EventoControllerTest {
 		
 	}
 	
+	@Test
+	@Order(6)
+	@DisplayName("Testar a atualização de um evento")
+	public void updateEventTest() throws Exception {
+		
+		Evento eventToUpdate = new Evento();
+		
+		eventToUpdate.setTitulo("New event title");
+		eventToUpdate.setDescricao("New event description");
+		
+		MvcResult updatedEvent = mockMvc.perform(put("/evento/" + eventId)
+				.contentType("application/json")
+				.content(objectMapper.writeValueAsString(eventToUpdate)))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		JSONObject updatedEventJson = new JSONObject(updatedEvent.getResponse().getContentAsString());
+		
+		assertEquals("New event title", updatedEventJson.get("titulo"));
+		assertEquals("New event description", updatedEventJson.get("descricao"));
+		assertEquals("https://miro.medium.com/max/460/1*ahIiDbsR6s9XgR45nJJ5DA.png", updatedEventJson.get("imagem"));
+		
+	}
+	
+	@Test
+	@Order(7)
+	@DisplayName("Testar a atualização de um evento existente adicionando um recurso existente")
+	public void updateEventWithExistingResource() throws Exception {
+		
+		MvcResult updatedEvent = mockMvc.perform(put("/recurso/1/evento/" + eventId)
+				.contentType("application/json")
+				.content(objectMapper.writeValueAsString(new Evento())))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		JSONObject updatedEventJson = new JSONObject(updatedEvent.getResponse().getContentAsString());
+		
+		assertEquals("New event title", updatedEventJson.get("titulo"));
+		assertEquals("New event description", updatedEventJson.get("descricao"));
+		assertEquals("https://miro.medium.com/max/460/1*ahIiDbsR6s9XgR45nJJ5DA.png", updatedEventJson.get("imagem"));
+		
+	}
+
+	@Test
+	@Order(8)
+	@DisplayName("Testar a busca por todos os eventos")
+	public void getAllEventsTest() throws Exception {
+		
+		MvcResult events = mockMvc.perform(get("/evento")
+				.contentType("application/json"))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		JSONArray eventsJsonArray = new JSONArray(events.getResponse().getContentAsString());
+		
+		assertTrue(eventsJsonArray.length() > 0);
+		
+	}
+	
+	@Test
+	@Order(9)
+	@DisplayName("Testar a busca por eventos recentes (últimos 5)")
+	public void getRecentEventsTest() throws Exception {
+		
+		MvcResult events = mockMvc.perform(get("/evento/recentes")
+				.contentType("application/json"))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		JSONArray eventsJsonArray = new JSONArray(events.getResponse().getContentAsString());
+		
+		assertTrue(eventsJsonArray.length() > 0);
+		assertTrue(eventsJsonArray.length() <= 5);
+		
+	}
+	
 	//ADICIONAR TESTE PARA RECURSO SEM ASSOCIAÇÃO
 
 	@Test
-	@Order(9)
+	@Order(10)
 	@DisplayName("Testar a exclusão de um evento")
 	public void deleteEventTest() throws Exception {
 		

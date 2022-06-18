@@ -27,6 +27,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import com.devappcorp.projetodevappcorp.entities.Colecao;
 import com.devappcorp.projetodevappcorp.entities.Curso;
 import com.devappcorp.projetodevappcorp.entities.Recurso;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,6 +45,8 @@ public class CursoControllerTest {
 	private ObjectMapper objectMapper;
 	
 	private static String courseId;
+	
+	private static List<String> resourcesAssocietedWithCourse;
 
 	@Test
 	@Order(1)
@@ -96,8 +99,12 @@ public class CursoControllerTest {
 		
 		assertTrue(courseResource.length() == 1);
 
+		resourcesAssocietedWithCourse = new ArrayList<String>();
+		
 		for (int i = 0; i < courseResource.length(); i++) {
 			JSONObject courseResourceJson = courseResource.getJSONObject(i);
+			
+			resourcesAssocietedWithCourse.add(courseResourceJson.getString("id"));
 			
 			assertEquals("2022-06-15", courseResourceJson.get("data_criacao"));
 			assertEquals("2022-06-16", courseResourceJson.get("data_registro"));
@@ -190,20 +197,10 @@ public class CursoControllerTest {
 
 		assertEquals("New course title", updatedCourseJson.get("titulo"));
 		assertEquals("New course description", updatedCourseJson.get("descricao"));
+		assertEquals("16-06-2022", updatedCourseJson.get("data_registro"));
+		assertEquals("https://miro.medium.com/max/460/1*ahIiDbsR6s9XgR45nJJ5DA.png", updatedCourseJson.get("imagem"));
 		
 	}
-//	
-//	@Test
-//	@Order(4)
-//	@DisplayName("Testar a atualização de uma curso existente adicionando um recurso existente")
-//	public void updateCollectionWithExistingResource() throws Exception {
-//		
-//		MvcResult updatedCollection = mockMvc.perform(put("/recurso/1/curso/" + courseId)
-//				.contentType("application/json"))
-//		.andExpect(status().isOk())
-//		.andReturn();
-//		
-//	}
 	
 	@Test
 	@Order(5)
@@ -255,10 +252,51 @@ public class CursoControllerTest {
 		
 	}
 	
-	//ADICIONAR TESTE PARA RECURSO SEM ASSOCIAÇÃO
-	
 	@Test
 	@Order(8)
+	@DisplayName("Testar a atualização de um curso existente adicionando um recurso existente")
+	public void updateCollectionWithExistingResource() throws Exception {
+		
+		MvcResult updatedCourse = mockMvc.perform(put("/recurso/1/curso/" + courseId)
+				.contentType("application/json")
+				.content(objectMapper.writeValueAsString(new Curso())))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		JSONObject updatedCourseJson = new JSONObject(updatedCourse.getResponse().getContentAsString());
+		
+		assertEquals("New course title", updatedCourseJson.get("titulo"));
+		assertEquals("New course description", updatedCourseJson.get("descricao"));
+		assertEquals("https://miro.medium.com/max/460/1*ahIiDbsR6s9XgR45nJJ5DA.png", updatedCourseJson.get("imagem"));		
+		
+	}
+	
+	@Test
+	@Order(9)
+	@DisplayName("Testar a busca por recursos que não estão associados a coleção")
+	public void findResourceWithoutCollection() throws Exception {
+		
+		MvcResult resources = mockMvc.perform(get("/curso/recursos")
+				.contentType("application/json"))
+		.andExpect(status().isAccepted())
+		.andReturn();
+		
+		JSONArray resourcesArray = new JSONArray(resources.getResponse().getContentAsString());
+		
+		for (int i = 0; i < resourcesArray.length(); i++) {
+			
+			for (int j = 0; i < resourcesAssocietedWithCourse.size(); i++) {
+				
+				assertTrue(!resourcesArray.get(i).equals(resourcesAssocietedWithCourse.get(j)));
+				
+			}
+			
+		}
+		
+	}
+	
+	@Test
+	@Order(10)
 	@DisplayName("Testar a exclusão de um curso")
 	public void deleteCourseTest() throws Exception {
 		
