@@ -1,6 +1,7 @@
 package com.devappcorp.projetodevappcorp.entities;
 
 import com.devappcorp.projetodevappcorp.entities.Colecao;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import java.io.Serializable;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "eventoId")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Evento extends Colecao implements Serializable {
 
     private static final long serialVersionUID = 1L;
