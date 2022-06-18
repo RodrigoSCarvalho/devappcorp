@@ -1,6 +1,7 @@
 package com.devappcorp.projetodevappcorp.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+
 public class Author implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -17,15 +19,22 @@ public class Author implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Column(name = "orcid", unique = true, length = 19)
     private String orcid;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String email;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Column(length = 64)
     private String nome;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Column(length = 64)
     private String sobrenome;
     @Column(length = 256)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String afiliacao;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @ManyToMany (cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable (name = "recurso_autores",
             joinColumns = @JoinColumn(name = "author_id"),
@@ -103,5 +112,14 @@ public class Author implements Serializable {
                 ", sobrenome='" + sobrenome + '\'' +
                 ", afiliacao='" + afiliacao + '\'' +
                 '}';
+    }
+
+    public void set(Long id, Author author) {
+        this.email = author.getEmail();
+        this.nome = author.getNome();
+        this.sobrenome = author.getSobrenome();
+        this.orcid = author.getOrcid();
+        this.afiliacao = author.getAfiliacao();
+        this.recursos = author.getRecursos();
     }
 }

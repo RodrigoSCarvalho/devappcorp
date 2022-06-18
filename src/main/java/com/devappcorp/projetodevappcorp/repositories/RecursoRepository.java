@@ -31,7 +31,7 @@ public interface RecursoRepository extends JpaRepository<Recurso, Long> {
     @Query ( value = "UPDATE Recurso SET colecao_id = NULL WHERE colecao_id = :colecaoId AND id = :recursoId", nativeQuery = true)
     void disassociateRecurso(@Param("colecaoId") Long colecaoId , @Param("recursoId") Long recursoId );
 
-    @Modifying(clearAutomatically = true)
+        @Modifying(clearAutomatically = true)
     @Query ( value = "UPDATE Recurso SET colecao_id = :colecaoId WHERE id = :recursoId", nativeQuery = true)
     void associarRecurso(@Param("colecaoId") Long colecaoId , @Param("recursoId") Long recursoId );
 
