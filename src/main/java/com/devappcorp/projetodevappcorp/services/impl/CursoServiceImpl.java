@@ -38,7 +38,7 @@ public class CursoServiceImpl implements CursoService {
     @Override
     public void updateCurso(Long id, Curso curso) {
         cursoRepository.findById(id).map(cursoExistente -> {
-            if (!curso.getTitulo().isEmpty())
+            if (curso.getTitulo() != null)
                 cursoExistente.setTitulo(curso.getTitulo());
             if (curso.getImagem() != null)
                 cursoExistente.setImagem(curso.getImagem());
@@ -55,12 +55,16 @@ public class CursoServiceImpl implements CursoService {
     public void updateCursoRecurso(Long recursoId, Long cursoId, Curso curso) {
         recursoRepository.findById(recursoId).map(recurso -> {
             cursoRepository.findById(cursoId).map(cursoExistente -> {
-                recurso.setColecao(cursoExistente);
-                cursoExistente.getRecursos().add(recurso);
-                cursoExistente.setDescricao(curso.getDescricao());
-                cursoExistente.setTitulo(curso.getTitulo());
-                cursoExistente.setImagem(curso.getImagem());
-                cursoExistente.setData_registro(curso.getData_registro());
+                if(!curso.getRecursos().isEmpty())
+                    recurso.setColecao(cursoExistente);
+                if (curso.getTitulo() != null)
+                    cursoExistente.setTitulo(curso.getTitulo());
+                if (curso.getImagem() != null)
+                    cursoExistente.setImagem(curso.getImagem());
+                if (curso.getDescricao() != null)
+                    cursoExistente.setDescricao(curso.getDescricao());
+                if (curso.getData_registro() != null)
+                    cursoExistente.setData_registro(curso.getData_registro());
 
 
                 cursoRepository.save(cursoExistente);
