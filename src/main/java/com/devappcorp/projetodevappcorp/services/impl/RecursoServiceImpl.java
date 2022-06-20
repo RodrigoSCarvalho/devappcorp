@@ -62,7 +62,7 @@ public class RecursoServiceImpl implements RecursoService {
                 recursoExisente.setTitulo(recurso.getTitulo());
             if(recurso.getLink() != null)
                 recursoExisente.setLink(recurso.getLink());
-            if(!recurso.getPalavras_chave().isEmpty())
+            if(recurso.getPalavras_chave() != null)
                 recursoExisente.setPalavras_chave(recurso.getPalavras_chave());
             if(recurso.getDescricao() != null)
                 recursoExisente.setDescricao(recurso.getDescricao());
