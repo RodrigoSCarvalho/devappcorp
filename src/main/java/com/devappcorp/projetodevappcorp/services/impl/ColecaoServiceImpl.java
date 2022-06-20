@@ -19,10 +19,10 @@ public class ColecaoServiceImpl implements ColecaoService {
     RecursoRepository recursoRepository;
 
     @Override
-    public String addNewColecao(Colecao colecao) {
+    public void addNewColecao(Colecao colecao) {
 
-        colecaoRepository.save(colecao);
-        return "Salvo!";
+
+        colecaoRepository.save(colecao);;
 
     }
 
