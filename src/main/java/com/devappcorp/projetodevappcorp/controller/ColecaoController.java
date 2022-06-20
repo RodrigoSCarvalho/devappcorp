@@ -47,8 +47,9 @@ public class ColecaoController {
     })
     @PostMapping("/colecao")
     @ResponseStatus(HttpStatus.CREATED)
-    public @ResponseBody String addNewColecao(@RequestBody Colecao colecao){
-        return this.colecaoService.addNewColecao(colecao);
+    public ResponseEntity addNewColecao(@RequestBody Colecao colecao){
+        this.colecaoService.addNewColecao(colecao);
+        return new ResponseEntity<>(colecao, HttpStatus.CREATED);
     }
 
     @Operation(summary = "Salvar uma colecao associada a um recurso existente")

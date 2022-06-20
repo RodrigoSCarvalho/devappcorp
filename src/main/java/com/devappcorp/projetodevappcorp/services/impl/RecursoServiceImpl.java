@@ -33,14 +33,22 @@ public class RecursoServiceImpl implements RecursoService {
     @Override
     public void updateRecurso(Long id, Recurso recurso) {
         recursoRepository.findById(id).map(recursoExisente -> {
-            recursoExisente.setTitulo(recurso.getTitulo());
-            recursoExisente.setLink(recurso.getLink());
-            recursoExisente.setPalavras_chave(recurso.getPalavras_chave());
-            recursoExisente.setDescricao(recurso.getDescricao());
-            recursoExisente.setImagem(recurso.getImagem());
-            recursoExisente.setData_registro(recurso.getData_registro());
-            recursoExisente.setData_criacao(recurso.getData_criacao());
-            recursoExisente.setColecao(recurso.getColecao());
+            if(recurso.getTitulo() != null)
+                recursoExisente.setTitulo(recurso.getTitulo());
+            if(recurso.getLink() != null)
+                recursoExisente.setLink(recurso.getLink());
+            if(recurso.getPalavras_chave() != null)
+                recursoExisente.setPalavras_chave(recurso.getPalavras_chave());
+            if(recurso.getDescricao() != null)
+                recursoExisente.setDescricao(recurso.getDescricao());
+            if(recurso.getImagem() != null)
+                recursoExisente.setImagem(recurso.getImagem());
+            if(recurso.getData_registro() != null)
+                recursoExisente.setData_registro(recurso.getData_registro());
+            if(recurso.getData_criacao() != null)
+                recursoExisente.setData_criacao(recurso.getData_criacao());
+            if(recurso.getColecao() != null)
+                recursoExisente.setColecao(recurso.getColecao());
 
             return recursoRepository.save(recursoExisente);
 
@@ -50,18 +58,27 @@ public class RecursoServiceImpl implements RecursoService {
     @Override
     public void updateAutorRecurso(Long authorId, Long recursoId, Recurso recurso) {
         recursoRepository.findById(recursoId).map(recursoExisente -> {
-            recursoExisente.setTitulo(recurso.getTitulo());
-            recursoExisente.setLink(recurso.getLink());
-            recursoExisente.setPalavras_chave(recurso.getPalavras_chave());
-            recursoExisente.setDescricao(recurso.getDescricao());
-            recursoExisente.setImagem(recurso.getImagem());
-            recursoExisente.setData_registro(recurso.getData_registro());
-            recursoExisente.setData_criacao(recurso.getData_criacao());
-            recursoExisente.setColecao(recurso.getColecao());
+            if(recurso.getTitulo() != null)
+                recursoExisente.setTitulo(recurso.getTitulo());
+            if(recurso.getLink() != null)
+                recursoExisente.setLink(recurso.getLink());
+            if(recurso.getPalavras_chave() != null)
+                recursoExisente.setPalavras_chave(recurso.getPalavras_chave());
+            if(recurso.getDescricao() != null)
+                recursoExisente.setDescricao(recurso.getDescricao());
+            if(recurso.getImagem() != null)
+                recursoExisente.setImagem(recurso.getImagem());
+            if(recurso.getData_registro() != null)
+                recursoExisente.setData_registro(recurso.getData_registro());
+            if(recurso.getData_criacao() != null)
+                recursoExisente.setData_criacao(recurso.getData_criacao());
+            if(recurso.getColecao() != null)
+                recursoExisente.setColecao(recurso.getColecao());
 
 
             authorRepository.findById(authorId).map(author -> {
-                author.getRecursos().add(recursoExisente);
+                if(!author.getRecursos().isEmpty())
+                    author.getRecursos().add(recursoExisente);
                 return authorRepository.save(author);
             });
 

@@ -38,10 +38,15 @@ public class EventoServiceImpl implements EventoService {
     @Override
     public void updateEvento(Long id, Evento evento) {
         eventoRepository.findById(id).map(eventoExistente -> {
-            eventoExistente.setTitulo(evento.getTitulo());
-            eventoExistente.setImagem(evento.getImagem());
+            if (evento.getTitulo() != null)
+                eventoExistente.setTitulo(evento.getTitulo());
+            if (evento.getImagem() != null)
+                eventoExistente.setImagem(evento.getImagem());
+            if (evento.getDescricao() != null)
             eventoExistente.setDescricao(evento.getDescricao());
+            if (evento.getData_criacao() != null)
             eventoExistente.setData_fim(evento.getData_fim());
+            if (evento.getData_fim() != null)
             eventoExistente.setData_criacao(evento.getData_criacao());
 
             return eventoRepository.save(eventoExistente);
@@ -51,16 +56,22 @@ public class EventoServiceImpl implements EventoService {
     @Override
     public void updateEventoRecurso(Long recursoId, Long eventoId, Evento evento) {
         recursoRepository.findById(recursoId).map(recurso -> {
-            eventoRepository.findById(eventoId).map(evetoExistente -> {
-                recurso.setColecao(evetoExistente);
-                evetoExistente.getRecursos().add(recurso);
-                evetoExistente.setDescricao(evento.getDescricao());
-                evetoExistente.setTitulo(evento.getTitulo());
-                evetoExistente.setImagem(evento.getImagem());
-                evetoExistente.setData_criacao(evento.getData_criacao());
-                evetoExistente.setData_fim(evento.getData_fim());
+            eventoRepository.findById(eventoId).map(eventoExistente -> {
+                recurso.setColecao(eventoExistente);
+                if(!evento.getRecursos().isEmpty())
+                    eventoExistente.getRecursos().add(recurso);
+                if (evento.getTitulo() != null)
+                    eventoExistente.setTitulo(evento.getTitulo());
+                if (evento.getImagem() != null)
+                    eventoExistente.setImagem(evento.getImagem());
+                if (evento.getDescricao() != null)
+                    eventoExistente.setDescricao(evento.getDescricao());
+                if (evento.getData_criacao() != null)
+                    eventoExistente.setData_criacao(evento.getData_criacao());
+                if (evento.getData_fim() != null)
+                    eventoExistente.setData_fim(evento.getData_fim());
 
-                eventoRepository.save(evetoExistente);
+                eventoRepository.save(eventoExistente);
 
                 return recursoRepository.save(recurso);
             });

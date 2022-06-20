@@ -5,10 +5,12 @@ import com.devappcorp.projetodevappcorp.entities.Author;
 import com.devappcorp.projetodevappcorp.repositories.RecursoRepository;
 import com.devappcorp.projetodevappcorp.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 
 @Service
@@ -30,14 +32,22 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public void updateAuthor(Long id, Author author) {
         authorRepository.findById(id).map(authorExistente -> {
-            authorExistente.setOrcid(author.getOrcid());
-            authorExistente.setAfiliacao(author.getAfiliacao());
-            authorExistente.setNome(author.getNome());
-            authorExistente.setSobrenome(author.getSobrenome());
-            authorExistente.setEmail(author.getEmail());
-            authorExistente.setRecursos(author.getRecursos());
+            if (author.getEmail() != null)
+                authorExistente.setEmail(author.getEmail());
+            if (author.getSobrenome() != null)
+                authorExistente.setSobrenome(author.getSobrenome());
+            if (author.getAfiliacao() != null)
+                authorExistente.setAfiliacao(author.getAfiliacao());
+            if (author.getNome() != null)
+                authorExistente.setNome(author.getNome());
+            if (author.getOrcid() != null)
+                authorExistente.setOrcid(author.getOrcid());
+            if (!author.getRecursos().isEmpty())
+                authorExistente.setRecursos((author.getRecursos()));
 
-            return authorRepository.save(authorExistente);
+            authorRepository.save(authorExistente);
+
+            return ResponseEntity.noContent().build();
 
         });
     }
