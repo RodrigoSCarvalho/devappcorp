@@ -27,6 +27,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import com.devappcorp.projetodevappcorp.entities.Author;
 import com.devappcorp.projetodevappcorp.entities.Evento;
 import com.devappcorp.projetodevappcorp.entities.Recurso;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,6 +45,7 @@ public class EventoControllerTest {
 	private ObjectMapper objectMapper;
 	
 	private static String eventId;
+	private static String authorId;
 
 	@Test
 	@Order(1)
@@ -285,11 +287,87 @@ public class EventoControllerTest {
 		assertTrue(eventsJsonArray.length() <= 5);
 		
 	}
-
+	
 	@Test
 	@Order(10)
+	public void getResourcesWithoutAssociation() throws Exception {
+		
+		Author author1 = new Author();
+		
+		author1.setNome("Author name");
+		author1.setSobrenome("Author lastname");
+		author1.setEmail("author@email.com");
+		author1.setAfiliacao("Universidade Federal Fluminense");
+		author1.setOrcid("0000-0000-0000-0000");
+		
+		MvcResult newAuthor = mockMvc.perform(post("/author")
+				.contentType("application/json")
+				.content(objectMapper.writeValueAsString(author1)))
+		.andExpect(status().isCreated())
+		.andReturn();
+		
+		JSONObject newAuthorJson = new JSONObject(newAuthor.getResponse().getContentAsString());
+		
+		authorId = newAuthorJson.getString("id");
+	
+		Recurso resource1 = new Recurso();
+		
+		resource1.setTitulo("Resource title");
+		resource1.setDescricao("Resource description");
+		resource1.setData_criacao("2022-06-15");
+		resource1.setData_registro("2022-06-16");
+		resource1.setImagem("https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg");
+		resource1.setLink("https://getbootstrap.com/docs/5.0/getting-started/introduction/");
+		
+		List<String> keyWords = new ArrayList<String>();
+		
+		keyWords.add("frontend");
+		keyWords.add("html");
+		keyWords.add("css");
+		
+		resource1.setPalavras_chave(keyWords);
+		
+		MvcResult newResource = mockMvc.perform(post("/author/" + authorId + "/recurso")
+				.contentType("application/json")
+				.content(objectMapper.writeValueAsString(resource1)))
+		.andExpect(status().isCreated())
+		.andReturn();
+			
+		JSONObject newResourceJson = new JSONObject(newResource.getResponse().getContentAsString());
+		
+		String newResourceId = newResourceJson.getString("id");
+		
+		MvcResult resources = mockMvc.perform(get("/evento/recursos")
+				.contentType("application/json"))
+		.andExpect(status().isAccepted())
+		.andReturn();
+		
+		JSONArray resourcesArray = new JSONArray(resources.getResponse().getContentAsString());
+		
+		boolean resourceInArray = false;
+		
+		for (int i = 0; i < resourcesArray.length(); i++) {
+			
+			JSONObject resourceJson = resourcesArray.getJSONObject(i);
+			
+			if (resourceJson.getString("id").equals(newResourceId))
+				resourceInArray = true;
+			
+		}
+		
+		assertTrue(resourceInArray);
+		
+	}
+
+	@Test
+	@Order(11)
 	@DisplayName("Testar a exclusão de um evento")
 	public void deleteEventTest() throws Exception {
+		
+		mockMvc.perform(delete("/author/" + authorId)
+				.contentType("application/json"))
+		.andExpect(status().isOk())
+		.andReturn();
 		
 		mockMvc.perform(delete("/evento/" + eventId)
 				.contentType("application/json"))
