@@ -1,8 +1,6 @@
 package com.devappcorp.projetodevappcorp.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -12,9 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -48,6 +44,7 @@ public class RecursoControllerTest {
 	private ObjectMapper objectMapper;
 	
 	private static String authorId;
+	private static String authorId2;
 	private static String resourceId;
 	private static String courseId;
 	
@@ -99,6 +96,8 @@ public class RecursoControllerTest {
 		
 		JSONObject newResourceJson = new JSONObject(newResource.getResponse().getContentAsString());
 		
+		resourceId = newResourceJson.getString("id");
+		
 		assertTrue(!newResourceJson.getString("id").equals("null"));
 		assertEquals("2022-06-15", newResourceJson.get("data_criacao"));
 		assertEquals("2022-06-16", newResourceJson.get("data_registro"));
@@ -120,8 +119,6 @@ public class RecursoControllerTest {
 		.andReturn();
 		
 		JSONArray resourcesJsonArray = new JSONArray(resources.getResponse().getContentAsString());
-		
-		//resourceId = resourcesJsonArray.getJSONObject(0).getString("id");
 		
 		assertTrue(resourcesJsonArray.length() > 0);
 		
@@ -149,68 +146,31 @@ public class RecursoControllerTest {
 	@DisplayName("Testar a busca por cursos que não estão associados a um recurso")
 	public void getCoursesNotAssociatedWithResourceTest() throws Exception {
 		
-		Curso course1 = new Curso();
-		Curso course2 = new Curso();
-		Recurso resource1 = new Recurso();
+		Curso course = new Curso();
 		
-		course1.setTitulo("Course title 1");
-		course1.setDescricao("Course description 1");
-		course1.setData_registro("16-06-2022");
-		course1.setImagem("https://miro.medium.com/max/460/1*ahIiDbsR6s9XgR45nJJ5DA.png");
-		
-		course2.setTitulo("Course title 2");
-		course2.setDescricao("Course description 2");
-		course2.setData_registro("16-06-2022");
-		course2.setImagem("https://miro.medium.com/max/460/1*ahIiDbsR6s9XgR45nJJ5DA.png");
+		course.setTitulo("Course title");
+		course.setDescricao("Course description");
+		course.setData_registro("16-06-2022");
+		course.setImagem("https://miro.medium.com/max/460/1*ahIiDbsR6s9XgR45nJJ5DA.png");
 
-		resource1.setTitulo("Resource title");
-		resource1.setDescricao("Resource description");
-		resource1.setData_criacao("2022-06-15");
-		resource1.setData_registro("2022-06-16");
-		resource1.setImagem("https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg");
-		resource1.setLink("https://getbootstrap.com/docs/5.0/getting-started/introduction/");
-		
-		List<String> keyWords = new ArrayList<String>();
-		
-		keyWords.add("frontend");
-		keyWords.add("html");
-		keyWords.add("css");
-		
-		resource1.setPalavras_chave(keyWords);
-		
-		Set<Recurso> resources = new HashSet<Recurso>();
-		resources.add(resource1);
-		
-		course1.setRecursos(resources);
-		
-		MvcResult newCourse1 = mockMvc.perform(post("/curso")
+		MvcResult newCourse = mockMvc.perform(post("/curso")
 				.contentType("application/json")
-				.content(objectMapper.writeValueAsString(course1)))
+				.content(objectMapper.writeValueAsString(course)))
 		.andExpect(status().isCreated())
 		.andReturn();
 	
-		mockMvc.perform(post("/curso")
-				.contentType("application/json")
-				.content(objectMapper.writeValueAsString(course2)))
-		.andExpect(status().isCreated())
-		.andReturn();
-	
-		JSONObject newCourse1Json = new JSONObject(newCourse1.getResponse().getContentAsString());
+		JSONObject newCourseJson = new JSONObject(newCourse.getResponse().getContentAsString());
 		
-		String newCourse1Id = newCourse1Json.getString("id");
+		String newCourseId = newCourseJson.getString("id");
 		
 		MvcResult courses = mockMvc.perform(get("/recurso/cursos")
 				.contentType("application/json"))
 		.andExpect(status().isOk())
 		.andReturn();
 		
-		List<String> courseArray = Arrays.asList(courses.getResponse().getContentAsString().replace("[", "").replace("]", "").split(","));
-		
-		for (int i = 0; i < courseArray.size(); i++) {
+		List<String> coursesArray = Arrays.asList(courses.getResponse().getContentAsString().replace("[", "").replace("]", "").split(","));
 
-			assertTrue(!courseArray.get(i).equals(newCourse1Id));
-			
-		}
+		assertTrue(coursesArray.indexOf(newCourseId) != -1);
 		
 	}
 	
@@ -219,70 +179,32 @@ public class RecursoControllerTest {
 	@DisplayName("Testar a busca por eventos que não estão associados a um recurso")
 	public void getEventsNotAssociatedWithResourceTest() throws Exception {
 		
-		Evento event1 = new Evento();
-		Evento event2 = new Evento();
-		Recurso resource1 = new Recurso();
+		Evento event = new Evento();
 		
-		event1.setTitulo("Event title 1");
-		event1.setDescricao("Event description 1");
-		event1.setData_criacao("16-06-2022");
-		event1.setData_fim("26-06-2022");
-		event1.setImagem("https://miro.medium.com/max/460/1*ahIiDbsR6s9XgR45nJJ5DA.png");
-		
-		event2.setTitulo("Event title 2");
-		event2.setDescricao("Event description 2");
-		event2.setData_criacao("16-06-2022");
-		event2.setData_fim("26-06-2022");
-		event2.setImagem("https://miro.medium.com/max/460/1*ahIiDbsR6s9XgR45nJJ5DA.png");
+		event.setTitulo("Event title");
+		event.setDescricao("Event description");
+		event.setData_criacao("16-06-2022");
+		event.setData_fim("26-06-2022");
+		event.setImagem("https://miro.medium.com/max/460/1*ahIiDbsR6s9XgR45nJJ5DA.png");
 
-		resource1.setTitulo("Resource title");
-		resource1.setDescricao("Resource description");
-		resource1.setData_criacao("2022-06-15");
-		resource1.setData_registro("2022-06-16");
-		resource1.setImagem("https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg");
-		resource1.setLink("https://getbootstrap.com/docs/5.0/getting-started/introduction/");
-		
-		List<String> keyWords = new ArrayList<String>();
-		
-		keyWords.add("frontend");
-		keyWords.add("html");
-		keyWords.add("css");
-		
-		resource1.setPalavras_chave(keyWords);
-		
-		Set<Recurso> resources = new HashSet<Recurso>();
-		resources.add(resource1);
-		
-		event1.setRecursos(resources);
-		
-		MvcResult newEvent1 = mockMvc.perform(post("/evento")
+		MvcResult newEvent = mockMvc.perform(post("/evento")
 				.contentType("application/json")
-				.content(objectMapper.writeValueAsString(event1)))
+				.content(objectMapper.writeValueAsString(event)))
 		.andExpect(status().isCreated())
 		.andReturn();
 	
-		mockMvc.perform(post("/evento")
-				.contentType("application/json")
-				.content(objectMapper.writeValueAsString(event2)))
-		.andExpect(status().isCreated())
-		.andReturn();
-	
-		JSONObject newEvent1Json = new JSONObject(newEvent1.getResponse().getContentAsString());
+		JSONObject newEventJson = new JSONObject(newEvent.getResponse().getContentAsString());
 		
-		String newEvent1Id = newEvent1Json.getString("id");
+		String newEventId = newEventJson.getString("id");
 		
 		MvcResult events = mockMvc.perform(get("/recurso/eventos")
 				.contentType("application/json"))
 		.andExpect(status().isOk())
 		.andReturn();
 		
-		List<String> eventArray = Arrays.asList(events.getResponse().getContentAsString().replace("[", "").replace("]", "").split(","));
-		
-		for (int i = 0; i < eventArray.size(); i++) {
+		List<String> eventsArray = Arrays.asList(events.getResponse().getContentAsString().replace("[", "").replace("]", "").split(","));
 
-			assertTrue(!eventArray.get(i).equals(newEvent1Id));
-			
-		}
+		assertTrue(eventsArray.indexOf(newEventId) != -1);
 		
 	}
 	
@@ -325,20 +247,55 @@ public class RecursoControllerTest {
 		
 	}
 	
-//	@DisplayName("Testar a busca por autores sem recursos")
-//	public void getAuthorsNotAssociatedWithResourceTest() throws Exception {
-//		
-//		MvcResult resource = mockMvc.perform(get("/recurso/" +  + "/autores")
-//				.contentType("application/json"))
-//		.andExpect(status().isAccepted())
-//		.andReturn();
-//		
-//		JSONArray keyWordsArray = new JSONArray(resource.getResponse().getContentAsString());
-//		
-//	}
-	
 	@Test
 	@Order(8)
+	@DisplayName("Testar a busca por autores sem recursos")
+	public void getAuthorsNotAssociatedWithResourceTest() throws Exception {
+		
+		Author author1 = new Author();
+		
+		author1.setNome("Author name");
+		author1.setSobrenome("Author lastname");
+		author1.setEmail("author@email.com");
+		author1.setAfiliacao("Universidade Federal Fluminense");
+		author1.setOrcid("0000-0000-0000-0001");
+		
+		MvcResult newAuthor = mockMvc.perform(post("/author")
+				.contentType("application/json")
+				.content(objectMapper.writeValueAsString(author1)))
+		.andExpect(status().isCreated())
+		.andReturn();
+		
+		JSONObject newAuthorJson = new JSONObject(newAuthor.getResponse().getContentAsString());
+		
+		authorId2 = newAuthorJson.getString("id");
+		
+		String newAuthorId = newAuthorJson.getString("id");
+		
+		MvcResult authors = mockMvc.perform(get("/recurso/" + resourceId  + "/autores")
+				.contentType("application/json"))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		JSONArray authorsArray = new JSONArray(authors.getResponse().getContentAsString());
+		
+		boolean authorInArray = false;
+		
+		for (int i = 0; i < authorsArray.length(); i++) {
+			
+			JSONObject authorJson = authorsArray.getJSONObject(i);
+			
+			if (authorJson.getString("id").equals(newAuthorId))
+				authorInArray = true;
+			
+		}
+		
+		assertTrue(authorInArray);
+		
+	}
+	
+	@Test
+	@Order(9)
 	@DisplayName("Testar a atualização de um recurso")
 	public void updateResourceTest() throws Exception {
 		
@@ -357,13 +314,11 @@ public class RecursoControllerTest {
 	
 		assertEquals("New resource title", updatedResourceJson.get("titulo"));
 		assertEquals("New resource description", updatedResourceJson.get("descricao"));
-		assertEquals("2022-06-15", updatedResourceJson.get("data_criacao"));
-		assertEquals("2022-06-16", updatedResourceJson.get("data_registro"));
 		
 	}
 
 	@Test
-	@Order(9)
+	@Order(10)
 	@DisplayName("Testar a associação de um recurso a uma coleção")
 	public void associatedCollectionResourceTest() throws Exception {
 		
@@ -392,7 +347,7 @@ public class RecursoControllerTest {
 	}
 	
 	@Test
-	@Order(10)
+	@Order(11)
 	@DisplayName("Testar a desassociação de um recurso de uma coleção")
 	public void unassociatedCollectionResourceTest() throws Exception {
 		
@@ -402,38 +357,31 @@ public class RecursoControllerTest {
 		.andReturn();
 		
 	}
-	
+
 	@Test
-	@Order(11)
-	@DisplayName("Testar a desassociação de um recurso de uma coleção")
+	@Order(12)
+	@DisplayName("Testar atualização de recurso existente com autor existente")
 	public void updateAuthorResourceTest() throws Exception {
 		
-		Recurso resourceToUpdate = new Recurso();
-		
-		resourceToUpdate.setTitulo("New resource title");
-		resourceToUpdate.setDescricao("New resource description");
-		
-		MvcResult updatedResource = mockMvc.perform(post("/author/" + authorId + "/recurso/" + resourceId)
+		mockMvc.perform(put("/author/" + authorId + "/recurso/" + resourceId)
 				.contentType("application/json")
-				.content(objectMapper.writeValueAsString(resourceToUpdate)))
+				.content(objectMapper.writeValueAsString(new Recurso())))
 		.andExpect(status().isOk())
 		.andReturn();
 		
-		JSONObject updatedResourceJson = new JSONObject(updatedResource.getResponse().getContentAsString());
-		
-		assertEquals("New resource title", updatedResourceJson.get("titulo"));
-		assertEquals("New resource description", updatedResourceJson.get("descricao"));
-		assertEquals("2022-06-15", updatedResourceJson.get("data_criacao"));
-		assertEquals("2022-06-16", updatedResourceJson.get("data_registro"));
-		
 	}
-	
+
 	@Test
-	@Order(12)
+	@Order(13)
 	@DisplayName("Testar a exclusão de um recurso")
 	public void deleteResourceTest() throws Exception {
 		
 		mockMvc.perform(delete("/author/" + authorId)
+				.contentType("application/json"))
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		mockMvc.perform(delete("/author/" + authorId2)
 				.contentType("application/json"))
 		.andExpect(status().isOk())
 		.andReturn();

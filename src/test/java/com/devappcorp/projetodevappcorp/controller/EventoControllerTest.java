@@ -285,8 +285,6 @@ public class EventoControllerTest {
 		assertTrue(eventsJsonArray.length() <= 5);
 		
 	}
-	
-	//ADICIONAR TESTE PARA RECURSO SEM ASSOCIAÇÃO
 
 	@Test
 	@Order(10)
