@@ -44,7 +44,7 @@ public class AuthorController {
     })
     @PutMapping("{id}") // Map ONLY POST Requests
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity updateAuthor(@PathVariable Long id, @RequestBody Author author){
+    public ResponseEntity<Author> updateAuthor(@PathVariable Long id, @RequestBody Author author){
 
         this.authorService.updateAuthor(id, author);
         return new ResponseEntity<>(author, HttpStatus.OK);

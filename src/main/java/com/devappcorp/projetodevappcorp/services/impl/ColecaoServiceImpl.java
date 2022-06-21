@@ -19,10 +19,10 @@ public class ColecaoServiceImpl implements ColecaoService {
     RecursoRepository recursoRepository;
 
     @Override
-    public String addNewColecao(Colecao colecao) {
+    public void addNewColecao(Colecao colecao) {
 
-        colecaoRepository.save(colecao);
-        return "Salvo!";
+
+        colecaoRepository.save(colecao);;
 
     }
 
@@ -43,10 +43,14 @@ public class ColecaoServiceImpl implements ColecaoService {
             colecaoRepository.findById(colecaoId).map(colecaoExistente -> {
                 System.out.println("=====COLECAO EXISTENTE =====" + colecaoExistente);
                 recurso.setColecao(colecaoExistente);
-                colecaoExistente.getRecursos().add(recurso);
-                colecaoExistente.setDescricao(colecao.getDescricao());
-                colecaoExistente.setTitulo(colecao.getTitulo());
-                colecaoExistente.setImagem(colecao.getImagem());
+                if(!colecao.getRecursos().isEmpty())
+                    colecaoExistente.getRecursos().add(recurso);
+                if(colecao.getTitulo() != null)
+                    colecaoExistente.setTitulo(colecao.getTitulo());
+                if(colecao.getImagem() != null)
+                    colecaoExistente.setImagem(colecao.getImagem());
+                if(colecao.getDescricao() != null)
+                    colecaoExistente.setDescricao(colecao.getDescricao());
 
 
                 colecaoRepository.save(colecaoExistente);
@@ -63,9 +67,12 @@ public class ColecaoServiceImpl implements ColecaoService {
     @Override
     public void updateColecao(Long id, Colecao colecao) {
         colecaoRepository.findById(id).map(colecaoExistente -> {
-            colecaoExistente.setTitulo(colecao.getTitulo());
-            colecaoExistente.setImagem(colecao.getImagem());
-            colecaoExistente.setDescricao(colecao.getDescricao());
+            if(colecao.getTitulo() != null)
+                colecaoExistente.setTitulo(colecao.getTitulo());
+            if(colecao.getImagem() != null)
+                colecaoExistente.setImagem(colecao.getImagem());
+            if(colecao.getDescricao() != null)
+                colecaoExistente.setDescricao(colecao.getDescricao());
 
             return colecaoRepository.save(colecaoExistente);
         });
