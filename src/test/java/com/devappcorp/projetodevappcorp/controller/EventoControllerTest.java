@@ -290,6 +290,7 @@ public class EventoControllerTest {
 	
 	@Test
 	@Order(10)
+	@DisplayName("Testar a busca por recursos sem associação")
 	public void getResourcesWithoutAssociation() throws Exception {
 		
 		Author author1 = new Author();
