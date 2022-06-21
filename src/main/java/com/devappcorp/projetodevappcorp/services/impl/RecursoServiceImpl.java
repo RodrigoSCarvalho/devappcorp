@@ -106,11 +106,11 @@ public class RecursoServiceImpl implements RecursoService {
     public void addNewRecurso(Recurso recurso, Long authorId) {
         authorRepository.findById(authorId).map(authorExistente -> {
             recurso.getAutores().add(authorExistente);
-            authorExistente.getRecursos().add(recurso);
+            recursoRepository.save(recurso);
 
-            return authorRepository.save(authorExistente);
-            //return recursoRepository.save(recurso);
-        });
+            return authorExistente.getRecursos().add(recurso);
+        }
+        );
     }
 
     @Override
