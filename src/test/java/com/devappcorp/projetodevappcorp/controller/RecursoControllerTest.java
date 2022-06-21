@@ -99,8 +99,6 @@ public class RecursoControllerTest {
 		
 		JSONObject newResourceJson = new JSONObject(newResource.getResponse().getContentAsString());
 		
-		resourceId = newResourceJson.getString("id");
-		
 		assertTrue(!newResourceJson.getString("id").equals("null"));
 		assertEquals("2022-06-15", newResourceJson.get("data_criacao"));
 		assertEquals("2022-06-16", newResourceJson.get("data_registro"));
@@ -123,6 +121,8 @@ public class RecursoControllerTest {
 		
 		JSONArray resourcesJsonArray = new JSONArray(resources.getResponse().getContentAsString());
 		
+		//resourceId = resourcesJsonArray.getJSONObject(0).getString("id");
+		
 		assertTrue(resourcesJsonArray.length() > 0);
 		
 	}
@@ -144,7 +144,6 @@ public class RecursoControllerTest {
 		
 	}
 
-//  ISSUE 10
 	@Test
 	@Order(4)
 	@DisplayName("Testar a busca por cursos que não estão associados a um recurso")
@@ -215,7 +214,6 @@ public class RecursoControllerTest {
 		
 	}
 	
-//	ISSUE 11
 	@Test
 	@Order(5)
 	@DisplayName("Testar a busca por eventos que não estão associados a um recurso")

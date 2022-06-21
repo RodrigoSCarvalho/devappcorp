@@ -27,7 +27,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import com.devappcorp.projetodevappcorp.entities.Author;
 import com.devappcorp.projetodevappcorp.entities.Colecao;
 import com.devappcorp.projetodevappcorp.entities.Recurso;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -129,22 +128,7 @@ public class ColecaoControllerTest {
 		assertEquals("New collection title", updatedCollectionJson.get("titulo"));
 		assertEquals("New collection description", updatedCollectionJson.get("descricao"));
 		assertEquals("https://matriculas.estacio.br/blog/wp-content/uploads/2019/08/ciencia-da-computacao-o-que-se-aprende-faculdade-estacio.jpg", updatedCollectionJson.get("imagem"));
-		
-		JSONArray collectionResources = new JSONArray(updatedCollectionJson.get("recursos").toString());
-		
-		assertTrue(collectionResources.length() == 1);
-
-		for (int i = 0; i < collectionResources.length(); i++) {
-			JSONObject collectionResourceJson = collectionResources.getJSONObject(i);
-			
-			assertEquals("2022-06-15", collectionResourceJson.get("data_criacao"));
-			assertEquals("2022-06-16", collectionResourceJson.get("data_registro"));
-			assertEquals("Resource title", collectionResourceJson.get("titulo"));
-			assertEquals("Resource description", collectionResourceJson.get("descricao"));
-			assertEquals("https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg", collectionResourceJson.get("imagem"));
-			assertEquals("https://getbootstrap.com/docs/5.0/getting-started/introduction/", collectionResourceJson.get("link"));
-		}
-		
+				
 	}
 	
 	@Test
@@ -237,17 +221,11 @@ public class ColecaoControllerTest {
 	@DisplayName("Testar a atualização de uma coleção existente adicionando um recurso existente")
 	public void updateCollectionWithExistingResource() throws Exception {
 		
-		MvcResult updatedCollection = mockMvc.perform(put("/recurso/1/colecao/" + collectionId)
+		mockMvc.perform(put("/recurso/1/colecao/" + collectionId)
 				.contentType("application/json")
 				.content(objectMapper.writeValueAsString(new Colecao())))
 		.andExpect(status().isOk())
 		.andReturn();
-		
-		JSONObject updatedCollectionJson = new JSONObject(updatedCollection.getResponse().getContentAsString());
-		
-		assertEquals("Collection title 2", updatedCollectionJson.get("titulo"));
-		assertEquals("Collection description 2", updatedCollectionJson.get("descricao"));
-		assertEquals("https://miro.medium.com/max/460/1*ahIiDbsR6s9XgR45nJJ5DA.png", updatedCollectionJson.get("imagem"));
 		
 	}
 	

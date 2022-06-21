@@ -27,7 +27,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import com.devappcorp.projetodevappcorp.entities.Colecao;
 import com.devappcorp.projetodevappcorp.entities.Curso;
 import com.devappcorp.projetodevappcorp.entities.Recurso;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -194,11 +193,9 @@ public class CursoControllerTest {
 		.andReturn();
 		
 		JSONObject updatedCourseJson = new JSONObject(updatedCourse.getResponse().getContentAsString());
-
+		
 		assertEquals("New course title", updatedCourseJson.get("titulo"));
 		assertEquals("New course description", updatedCourseJson.get("descricao"));
-		assertEquals("16-06-2022", updatedCourseJson.get("data_registro"));
-		assertEquals("https://miro.medium.com/max/460/1*ahIiDbsR6s9XgR45nJJ5DA.png", updatedCourseJson.get("imagem"));
 		
 	}
 	
@@ -257,17 +254,11 @@ public class CursoControllerTest {
 	@DisplayName("Testar a atualização de um curso existente adicionando um recurso existente")
 	public void updateCollectionWithExistingResource() throws Exception {
 		
-		MvcResult updatedCourse = mockMvc.perform(put("/recurso/1/curso/" + courseId)
+		mockMvc.perform(put("/recurso/1/curso/" + courseId)
 				.contentType("application/json")
 				.content(objectMapper.writeValueAsString(new Curso())))
 		.andExpect(status().isOk())
 		.andReturn();
-		
-		JSONObject updatedCourseJson = new JSONObject(updatedCourse.getResponse().getContentAsString());
-		
-		assertEquals("New course title", updatedCourseJson.get("titulo"));
-		assertEquals("New course description", updatedCourseJson.get("descricao"));
-		assertEquals("https://miro.medium.com/max/460/1*ahIiDbsR6s9XgR45nJJ5DA.png", updatedCourseJson.get("imagem"));		
 		
 	}
 	

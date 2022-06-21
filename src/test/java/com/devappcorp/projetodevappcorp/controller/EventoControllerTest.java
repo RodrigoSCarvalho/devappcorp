@@ -27,7 +27,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import com.devappcorp.projetodevappcorp.entities.Curso;
 import com.devappcorp.projetodevappcorp.entities.Evento;
 import com.devappcorp.projetodevappcorp.entities.Recurso;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -213,8 +212,8 @@ public class EventoControllerTest {
 		
 		JSONObject eventJson = new JSONObject(event.getResponse().getContentAsString());
 		
-		assertEquals("New event title", eventJson.get("titulo"));
-		assertEquals("New event description", eventJson.get("descricao"));
+		assertEquals("Event title", eventJson.get("titulo"));
+		assertEquals("Event description", eventJson.get("descricao"));
 		
 	}
 	
@@ -238,7 +237,6 @@ public class EventoControllerTest {
 		
 		assertEquals("New event title", updatedEventJson.get("titulo"));
 		assertEquals("New event description", updatedEventJson.get("descricao"));
-		assertEquals("https://miro.medium.com/max/460/1*ahIiDbsR6s9XgR45nJJ5DA.png", updatedEventJson.get("imagem"));
 		
 	}
 	
@@ -247,17 +245,11 @@ public class EventoControllerTest {
 	@DisplayName("Testar a atualização de um evento existente adicionando um recurso existente")
 	public void updateEventWithExistingResource() throws Exception {
 		
-		MvcResult updatedEvent = mockMvc.perform(put("/recurso/1/evento/" + eventId)
+		mockMvc.perform(put("/recurso/1/evento/" + eventId)
 				.contentType("application/json")
 				.content(objectMapper.writeValueAsString(new Evento())))
 		.andExpect(status().isOk())
 		.andReturn();
-		
-		JSONObject updatedEventJson = new JSONObject(updatedEvent.getResponse().getContentAsString());
-		
-		assertEquals("New event title", updatedEventJson.get("titulo"));
-		assertEquals("New event description", updatedEventJson.get("descricao"));
-		assertEquals("https://miro.medium.com/max/460/1*ahIiDbsR6s9XgR45nJJ5DA.png", updatedEventJson.get("imagem"));
 		
 	}
 
