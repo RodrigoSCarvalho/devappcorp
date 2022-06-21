@@ -34,6 +34,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestMethodOrder(OrderAnnotation.class)
+@DisplayName("Testar ColecaoController")
 public class ColecaoControllerTest {
 
 	@Autowired
