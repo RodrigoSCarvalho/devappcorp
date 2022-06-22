@@ -169,9 +169,9 @@ public class AuthorControllerTest {
 	@DisplayName("Testar a busca por autores pelo seu sobrenome")
 	public void findAuthorByLastNameTest() throws Exception {
 		
-		MvcResult author = mockMvc.perform(get("/author?sn=lastname")
+		MvcResult author = mockMvc.perform(get("/author/sn?sobrenome=lastname")
 				.contentType("application/json"))
-		.andExpect(status().isOk())
+		.andExpect(status().isAccepted())
 		.andReturn();
 		
 		JSONArray authorsJsonArray = new JSONArray(author.getResponse().getContentAsString());
