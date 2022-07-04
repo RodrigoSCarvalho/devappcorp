@@ -26,6 +26,6 @@ public class AutorService {
         a.setEmail("klone");
         Author autor = _authorRepository.save(a);
         System.out.println(autor.getEmail());
-        assertEquals("ddd", autor.getEmail());
+        assertEquals("klone", autor.getEmail());
     }
 }
