@@ -21,11 +21,11 @@ public class AutorService {
     AuthorRepository _authorRepository;
 
     @Test
-    public void countRows(){
+    public void setEmail(){
         Author a = new Author();
-        a.setEmail("klone");
+        a.setEmail("klone@gmail.com");
         Author autor = _authorRepository.save(a);
         System.out.println(autor.getEmail());
-        assertEquals("klone", autor.getEmail());
+        assertEquals("klone@gmail.com", autor.getEmail());
     }
 }

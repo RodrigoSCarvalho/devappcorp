@@ -24,6 +24,7 @@ public class Author implements Serializable {
     @Column(name = "orcid", unique = true, length = 19)
     private String orcid;
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @Column(unique = true)
     private String email;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @Column(length = 64)
@@ -35,8 +36,8 @@ public class Author implements Serializable {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String afiliacao;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    @ManyToMany (cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable (name = "recurso_autores",
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(name = "recurso_autores",
             joinColumns = @JoinColumn(name = "author_id"),
             inverseJoinColumns = @JoinColumn(name = "recurso_id"))
     //@JsonIgnore
@@ -64,7 +65,25 @@ public class Author implements Serializable {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+
+        String arroba = "@";
+        int caracter = 0;
+        boolean tamanho = false;
+
+
+        if (email.length() > 3) {
+            tamanho = true;
+        }
+
+        for (int i = 0; i < email.length(); i++) {
+            if ('@' == email.charAt(i)) {
+                caracter +=1;
+            }
+        }
+
+
+        if (tamanho==true && caracter == 1)
+            this.email = email;
     }
 
     public String getSobrenome() {
