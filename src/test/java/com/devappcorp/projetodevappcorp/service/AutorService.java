@@ -40,6 +40,6 @@ public class AutorService {
         Author autor = _authorService.addNewAuthor(a);
         System.out.println(autor.getOrcid());
         System.out.println(autor);
-        assertEquals("zx", autor.getOrcid());
+        assertEquals("122", autor.getOrcid());
     }
 }
