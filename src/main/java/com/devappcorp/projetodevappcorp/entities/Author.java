@@ -2,6 +2,8 @@ package com.devappcorp.projetodevappcorp.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -64,25 +66,11 @@ public class Author implements Serializable {
         return email;
     }
 
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     public void setEmail(String email) {
 
-        String arroba = "@";
-        int caracter = 0;
-        boolean tamanho = false;
 
 
-        if (email.length() > 3) {
-            tamanho = true;
-        }
-
-        for (int i = 0; i < email.length(); i++) {
-            if ('@' == email.charAt(i)) {
-                caracter +=1;
-            }
-        }
-
-
-        if (tamanho==true && caracter == 1)
             this.email = email;
     }
 

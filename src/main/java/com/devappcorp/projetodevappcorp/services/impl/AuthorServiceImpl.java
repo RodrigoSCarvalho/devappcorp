@@ -1,4 +1,5 @@
 package com.devappcorp.projetodevappcorp.services.impl;
+
 import com.devappcorp.projetodevappcorp.entities.Recurso;
 import com.devappcorp.projetodevappcorp.repositories.AuthorRepository;
 import com.devappcorp.projetodevappcorp.entities.Author;
@@ -24,8 +25,30 @@ public class AuthorServiceImpl implements AuthorService {
 
 
     @Override
-    public void addNewAuthor(Author author) {
-        authorRepository.save(author);
+    public Author addNewAuthor(Author author) {
+
+        int caracter = 0;
+        boolean tamanho = false;
+
+        if (author.getEmail() != null) {
+            if (author.getEmail().length() > 3) {
+                tamanho = true;
+            }
+            for (int i = 0; i < author.getEmail().length(); i++) {
+                if ('@' == author.getEmail().charAt(i)) {
+                    caracter += 1;
+                }
+            }
+
+
+            if (tamanho == true && caracter == 1)
+                return authorRepository.save(author);
+            else {
+                return null;
+            }
+        } else {
+            return authorRepository.save(author);
+        }
     }
 
 

@@ -8,7 +8,7 @@ import java.util.Optional;
 
 
 public interface AuthorService {
-    void addNewAuthor(Author author);
+    Author addNewAuthor(Author author);
 
     void updateAuthor(Long id, Author author);
 

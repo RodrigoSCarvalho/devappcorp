@@ -20,12 +20,26 @@ public class AutorService {
     @Autowired
     AuthorRepository _authorRepository;
 
+    @Autowired
+    AuthorServiceImpl _authorService;
+
     @Test
     public void setEmail(){
         Author a = new Author();
-        a.setEmail("klone@gmail.com");
-        Author autor = _authorRepository.save(a);
+        a.setEmail("klone1@gmail.com");
+        Author autor = _authorService.addNewAuthor(a);
         System.out.println(autor.getEmail());
-        assertEquals("klone@gmail.com", autor.getEmail());
+        System.out.println(autor);
+        assertEquals("klone1@gmail.com", autor.getEmail());
+    }
+
+    @Test
+    public void setOrcid(){
+        Author a = new Author();
+        a.setOrcid("122");
+        Author autor = _authorService.addNewAuthor(a);
+        System.out.println(autor.getOrcid());
+        System.out.println(autor);
+        assertEquals("zx", autor.getOrcid());
     }
 }
