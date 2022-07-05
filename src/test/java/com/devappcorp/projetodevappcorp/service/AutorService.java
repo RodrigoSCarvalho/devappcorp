@@ -36,10 +36,10 @@ public class AutorService {
     @Test
     public void setOrcid(){
         Author a = new Author();
-        a.setOrcid("122");
+        a.setOrcid("0000-0000-0000-0025");
         Author autor = _authorService.addNewAuthor(a);
         System.out.println(autor.getOrcid());
         System.out.println(autor);
-        assertEquals("122", autor.getOrcid());
+        assertEquals("0000-0000-0000-0025", autor.getOrcid());
     }
 }
