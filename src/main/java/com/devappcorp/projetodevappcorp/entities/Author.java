@@ -2,6 +2,8 @@ package com.devappcorp.projetodevappcorp.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -24,6 +26,7 @@ public class Author implements Serializable {
     @Column(name = "orcid", unique = true, length = 19)
     private String orcid;
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @Column(unique = true)
     private String email;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @Column(length = 64)
@@ -35,8 +38,8 @@ public class Author implements Serializable {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String afiliacao;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    @ManyToMany (cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable (name = "recurso_autores",
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(name = "recurso_autores",
             joinColumns = @JoinColumn(name = "author_id"),
             inverseJoinColumns = @JoinColumn(name = "recurso_id"))
     //@JsonIgnore
@@ -63,8 +66,12 @@ public class Author implements Serializable {
         return email;
     }
 
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     public void setEmail(String email) {
-        this.email = email;
+
+
+
+            this.email = email;
     }
 
     public String getSobrenome() {

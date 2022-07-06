@@ -82,8 +82,8 @@ public class RecursoServiceImpl implements RecursoService {
                 return authorRepository.save(author);
             });
 
-
-            return recursoRepository.save(recursoExisente);
+            recursoRepository.save(recursoExisente);
+            return recursoRepository.findById(recursoId);
         });
     }
 
