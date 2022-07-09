@@ -31,8 +31,16 @@ public class CursoServiceImpl implements CursoService {
     }
 
     @Override
-    public void addCurso(Curso curso) {
+    public Curso addCurso(Curso curso) {
+
+        if (curso.getData_registro() != null) {
+            if (curso.getData_registro().length() != 8  &&  curso.getData_registro().length() != 10) {
+                return null;
+            }
+        }
+
         cursoRepository.save(curso);
+        return curso;
     }
 
     @Override
