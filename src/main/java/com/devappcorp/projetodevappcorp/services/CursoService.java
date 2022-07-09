@@ -10,7 +10,7 @@ public interface CursoService {
 
     void addNewCurso (Curso curso, Long recursoId);
 
-    void addCurso(Curso curso);
+    Curso addCurso(Curso curso);
 
     void updateCurso(Long id, Curso curso);
 

@@ -1,6 +1,7 @@
 package com.devappcorp.projetodevappcorp.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -98,7 +99,7 @@ public class RecursoControllerTest {
 		
 		resourceId = newResourceJson.getString("id");
 		
-		assertTrue(!newResourceJson.getString("id").equals("null"));
+		assertNotEquals(newResourceJson.getString("id"), "null");
 		assertEquals("2022-06-15", newResourceJson.get("data_criacao"));
 		assertEquals("2022-06-16", newResourceJson.get("data_registro"));
 		assertEquals("Resource title", newResourceJson.get("titulo"));
@@ -170,7 +171,7 @@ public class RecursoControllerTest {
 		
 		List<String> coursesArray = Arrays.asList(courses.getResponse().getContentAsString().replace("[", "").replace("]", "").split(","));
 
-		assertTrue(coursesArray.indexOf(newCourseId) != -1);
+		assertNotEquals(coursesArray.indexOf(newCourseId), -1);
 		
 	}
 	
@@ -204,7 +205,7 @@ public class RecursoControllerTest {
 		
 		List<String> eventsArray = Arrays.asList(events.getResponse().getContentAsString().replace("[", "").replace("]", "").split(","));
 
-		assertTrue(eventsArray.indexOf(newEventId) != -1);
+		assertNotEquals(eventsArray.indexOf(newEventId), -1);
 		
 	}
 	
@@ -241,9 +242,9 @@ public class RecursoControllerTest {
 		
 		JSONArray keyWordsArray = new JSONArray(resource.getResponse().getContentAsString());
 		
-		assertEquals(keyWordsArray.get(0), "frontend");
-		assertEquals(keyWordsArray.get(1), "html");
-		assertEquals(keyWordsArray.get(2), "css");
+		assertEquals("frontend", keyWordsArray.get(0));
+		assertEquals("html", keyWordsArray.get(1));
+		assertEquals("css", keyWordsArray.get(2));
 		
 	}
 	

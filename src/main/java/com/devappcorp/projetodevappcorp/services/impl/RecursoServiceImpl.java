@@ -2,7 +2,6 @@ package com.devappcorp.projetodevappcorp.services.impl;
 
 import com.devappcorp.projetodevappcorp.entities.*;
 import com.devappcorp.projetodevappcorp.repositories.*;
-import com.devappcorp.projetodevappcorp.services.AuthorService;
 import com.devappcorp.projetodevappcorp.services.RecursoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,9 +19,6 @@ public class RecursoServiceImpl implements RecursoService {
 
     @Autowired
     private AuthorRepository authorRepository;
-
-    @Autowired
-    private AuthorService authorService;
 
     @Autowired
     private CursoRepository cursoRepository;
@@ -82,8 +78,8 @@ public class RecursoServiceImpl implements RecursoService {
                 return authorRepository.save(author);
             });
 
-
-            return recursoRepository.save(recursoExisente);
+            recursoRepository.save(recursoExisente);
+            return recursoRepository.findById(recursoId);
         });
     }
 
@@ -105,6 +101,30 @@ public class RecursoServiceImpl implements RecursoService {
     @Override
     public void addNewRecurso(Recurso recurso, Long authorId) {
         authorRepository.findById(authorId).map(authorExistente -> {
+
+                    if (recurso.getData_criacao() != null && recurso.getData_registro() != null) {
+                        String registro =  recurso.getData_registro();
+                        String criacao = recurso.getData_criacao();
+
+                        registro = registro.replace("-", "");
+                        criacao = criacao.replace("-", "");
+                        if (Integer.parseInt(registro) < Integer.parseInt(criacao)) {
+                            return null;
+                        }
+                    }
+                    if (recurso.getData_registro() != null) {
+                        if (recurso.getData_registro().length() != 8  &&  recurso.getData_registro().length() != 10) {
+                            return null;
+                        }
+                    }
+
+
+                    if (recurso.getData_criacao() != null) {
+                        if (recurso.getData_criacao().length() != 8 && recurso.getData_criacao().length() != 10) {
+                            return null;
+                        }
+                    }
+
             recurso.getAutores().add(authorExistente);
             recursoRepository.save(recurso);
 
@@ -126,7 +146,7 @@ public class RecursoServiceImpl implements RecursoService {
 
     @Override
     public List<Recurso> getAllRecursoPeloTitulo(String titulo) {
-        return (List<Recurso>) recursoRepository.findAllByTitulo(titulo);
+        return recursoRepository.findAllByTitulo(titulo);
     }
 
     @Override

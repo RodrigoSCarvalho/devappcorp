@@ -11,7 +11,7 @@ public interface EventoService {
 
     void addNewEvento (Evento evento, Long recursoId);
 
-    void addEvento(Evento evento);
+    Evento addEvento(Evento evento);
 
     void updateEvento(Long id, Evento evento);
 

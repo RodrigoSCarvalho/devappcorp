@@ -23,7 +23,7 @@ public class Colecao implements Serializable {
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "colecao")
     @OrderBy("titulo")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private Set<Recurso> recursos = new HashSet<Recurso>();;
+    private Set<Recurso> recursos = new HashSet<>();
     @Column(length = 1024)
     private String titulo;
     @Column(length = 4096)

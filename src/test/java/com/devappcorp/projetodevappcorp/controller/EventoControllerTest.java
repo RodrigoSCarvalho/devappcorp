@@ -98,7 +98,7 @@ public class EventoControllerTest {
 		
 		JSONArray eventResource = new JSONArray(newEventJson.get("recursos").toString());
 		
-		assertTrue(eventResource.length() == 1);
+		assertEquals(1, eventResource.length());
 
 		for (int i = 0; i < eventResource.length(); i++) {
 			JSONObject eventResourceJson = eventResource.getJSONObject(i);
@@ -145,7 +145,7 @@ public class EventoControllerTest {
 		
 		JSONArray eventResource = new JSONArray(newEventJson.get("recursos").toString());
 		
-		assertTrue(eventResource.length() == 1);
+		assertEquals(1, eventResource.length());
 
 		for (int i = 0; i < eventResource.length(); i++) {
 			JSONObject eventResourceJson = eventResource.getJSONObject(i);
@@ -181,7 +181,7 @@ public class EventoControllerTest {
 	@DisplayName("Testar a busca por eventos em período de tempo")
 	public void getEventByPeriod() throws Exception {
 	
-		MvcResult event = mockMvc.perform(get("/evento/20220616/20220626")
+		MvcResult event = mockMvc.perform(get("/evento/2022-06-16/2022-06-26")
 				.contentType("application/json"))
 		.andExpect(status().isAccepted())
 		.andReturn();

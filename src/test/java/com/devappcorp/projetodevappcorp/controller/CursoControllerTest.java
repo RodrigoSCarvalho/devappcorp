@@ -1,6 +1,7 @@
 package com.devappcorp.projetodevappcorp.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -96,7 +97,7 @@ public class CursoControllerTest {
 		
 		JSONArray courseResource = new JSONArray(newCourseJson.get("recursos").toString());
 		
-		assertTrue(courseResource.length() == 1);
+		assertEquals(1, courseResource.length());
 
 		resourcesAssocietedWithCourse = new ArrayList<String>();
 		
@@ -145,7 +146,7 @@ public class CursoControllerTest {
 		
 		JSONArray courseResource = new JSONArray(newCourseJson.get("recursos").toString());
 		
-		assertTrue(courseResource.length() == 1);
+		assertEquals(1, courseResource.length());
 
 		for (int i = 0; i < courseResource.length(); i++) {
 			JSONObject courseResourceJson = courseResource.getJSONObject(i);
@@ -278,7 +279,7 @@ public class CursoControllerTest {
 			
 			for (int j = 0; i < resourcesAssocietedWithCourse.size(); i++) {
 				
-				assertTrue(!resourcesArray.get(i).equals(resourcesAssocietedWithCourse.get(j)));
+				assertNotEquals(resourcesArray.get(i), resourcesAssocietedWithCourse.get(j));
 				
 			}
 			

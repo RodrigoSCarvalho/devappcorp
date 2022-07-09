@@ -100,7 +100,7 @@ public class AuthorControllerTest {
 		
 		JSONArray authorResources = new JSONArray(newAuthorJson.get("recursos").toString());
 		
-		assertTrue(authorResources.length() == 1);
+		assertEquals(1, authorResources.length());
 
 		for (int i = 0; i < authorResources.length(); i++) {
 			JSONObject authorResourceJson = authorResources.getJSONObject(i);

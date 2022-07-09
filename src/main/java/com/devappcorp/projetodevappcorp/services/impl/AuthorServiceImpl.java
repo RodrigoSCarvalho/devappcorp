@@ -1,4 +1,5 @@
 package com.devappcorp.projetodevappcorp.services.impl;
+
 import com.devappcorp.projetodevappcorp.entities.Recurso;
 import com.devappcorp.projetodevappcorp.repositories.AuthorRepository;
 import com.devappcorp.projetodevappcorp.entities.Author;
@@ -11,6 +12,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static java.lang.Character.isDigit;
 
 
 @Service
@@ -24,8 +29,39 @@ public class AuthorServiceImpl implements AuthorService {
 
 
     @Override
-    public void addNewAuthor(Author author) {
-        authorRepository.save(author);
+    public Author addNewAuthor(Author author) {
+
+        int caracter = 0;
+        boolean tamanho = false;
+        String regex = "^\\d{4}-\\d{4}-\\d{4}-(\\d{3}X|\\d{4})$";
+        Pattern p = Pattern.compile(regex);
+
+        if (author.getEmail() != null) {
+            if (author.getEmail().length() > 3) {
+                tamanho = true;
+            }
+            for (int i = 0; i < author.getEmail().length(); i++) {
+                if ('@' == author.getEmail().charAt(i)) {
+                    caracter += 1;
+                }
+            }
+
+
+            if (tamanho == true && caracter == 1)
+                return authorRepository.save(author);
+            else {
+                return null;
+            }
+        } else if (author.getOrcid() != null) {
+            if (author.getOrcid().length() >= 15 && author.getOrcid().length() <= 19) {
+                return authorRepository.save(author);
+            } else {
+                return null;
+            }
+        } else {
+            return authorRepository.save(author);
+        }
+
     }
 
 
@@ -56,7 +92,7 @@ public class AuthorServiceImpl implements AuthorService {
     public void deleteAuthor(Long id) {
         authorRepository.findById(id).map(authorExistente -> {
             List<Integer> recursos = authorRepository.findRecursoIds(id);
-            if (recursos.size() > 0) {
+            if (!recursos.isEmpty()) {
                 for (int i = 0; i < recursos.size(); i++) {
                     recursoRepository.findById(Long.valueOf(recursos.get(i))).map(recursoExistente -> {
                         for (Author author : recursoExistente.getAutores()) {
@@ -82,12 +118,12 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public List<Author> findSobrenome(String sobrenome) {
-        return (List<Author>) authorRepository.findAllBySobrenomeOrderByNome(sobrenome);
+        return authorRepository.findAllBySobrenomeOrderByNome(sobrenome);
     }
 
     @Override
     public List<Recurso> findAuthorRecusos(Long id) {
-        return (List<Recurso>) authorRepository.findAuthorRecursos(id);
+        return authorRepository.findAuthorRecursos(id);
     }
 
     @Override
