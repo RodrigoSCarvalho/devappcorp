@@ -31,8 +31,9 @@ public class EventoServiceImpl implements EventoService {
     }
 
     @Override
-    public void addEvento(Evento evento) {
+    public Evento addEvento(Evento evento) {
         eventoRepository.save(evento);
+        return evento;
     }
 
     @Override
