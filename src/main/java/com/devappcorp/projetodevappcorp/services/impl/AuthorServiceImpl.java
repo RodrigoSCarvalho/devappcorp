@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static java.lang.Character.isDigit;
 
@@ -33,8 +31,7 @@ public class AuthorServiceImpl implements AuthorService {
 
         int caracter = 0;
         boolean tamanho = false;
-        String regex = "^\\d{4}-\\d{4}-\\d{4}-(\\d{3}X|\\d{4})$";
-        Pattern p = Pattern.compile(regex);
+
 
         if (author.getEmail() != null) {
             if (author.getEmail().length() > 3) {
