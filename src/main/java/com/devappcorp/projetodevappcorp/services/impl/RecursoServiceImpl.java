@@ -2,7 +2,6 @@ package com.devappcorp.projetodevappcorp.services.impl;
 
 import com.devappcorp.projetodevappcorp.entities.*;
 import com.devappcorp.projetodevappcorp.repositories.*;
-import com.devappcorp.projetodevappcorp.services.AuthorService;
 import com.devappcorp.projetodevappcorp.services.RecursoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,9 +19,6 @@ public class RecursoServiceImpl implements RecursoService {
 
     @Autowired
     private AuthorRepository authorRepository;
-
-    @Autowired
-    private AuthorService authorService;
 
     @Autowired
     private CursoRepository cursoRepository;
@@ -150,7 +146,7 @@ public class RecursoServiceImpl implements RecursoService {
 
     @Override
     public List<Recurso> getAllRecursoPeloTitulo(String titulo) {
-        return (List<Recurso>) recursoRepository.findAllByTitulo(titulo);
+        return recursoRepository.findAllByTitulo(titulo);
     }
 
     @Override

@@ -121,7 +121,7 @@ public class Author implements Serializable {
                 '}';
     }
 
-    public void set(Long id, Author author) {
+    public void set(Author author) {
         this.email = author.getEmail();
         this.nome = author.getNome();
         this.sobrenome = author.getSobrenome();

@@ -92,7 +92,7 @@ public class ColecaoControllerTest {
 		
 		JSONArray collectionResources = new JSONArray(newCollectionJson.get("recursos").toString());
 		
-		assertTrue(collectionResources.length() == 1);
+		assertEquals(1, collectionResources.length());
 
 		for (int i = 0; i < collectionResources.length(); i++) {
 			JSONObject collectionResourceJson = collectionResources.getJSONObject(i);
@@ -175,7 +175,7 @@ public class ColecaoControllerTest {
 		
 		JSONArray collectionResources = new JSONArray(newCollectionJson.get("recursos").toString());
 		
-		assertTrue(collectionResources.length() == 1);
+		assertEquals(1, collectionResources.length());
 
 		for (int i = 0; i < collectionResources.length(); i++) {
 			JSONObject collectionResourceJson = collectionResources.getJSONObject(i);

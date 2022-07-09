@@ -70,11 +70,11 @@ public class EventoServiceImpl implements EventoService {
             if (evento.getImagem() != null)
                 eventoExistente.setImagem(evento.getImagem());
             if (evento.getDescricao() != null)
-                eventoExistente.setDescricao(evento.getDescricao());
+            	eventoExistente.setDescricao(evento.getDescricao());
             if (evento.getData_criacao() != null)
-                eventoExistente.setData_fim(evento.getData_fim());
+            	eventoExistente.setData_criacao(evento.getData_criacao());
             if (evento.getData_fim() != null)
-                eventoExistente.setData_criacao(evento.getData_criacao());
+            	eventoExistente.setData_fim(evento.getData_fim());
 
             return eventoRepository.save(eventoExistente);
         });

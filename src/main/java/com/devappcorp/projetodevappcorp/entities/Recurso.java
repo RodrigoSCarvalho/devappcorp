@@ -30,7 +30,7 @@ public class Recurso implements Serializable {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @ManyToMany(mappedBy = "recursos")
     @JsonIgnore
-    private Set<Author> autores = new HashSet<Author>();
+    private Set<Author> autores = new HashSet<>();
 
 
     public Recurso() {}

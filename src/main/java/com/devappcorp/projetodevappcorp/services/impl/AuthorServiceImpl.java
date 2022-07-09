@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import static java.lang.Character.isDigit;
 
 import static java.lang.Character.isDigit;
 
@@ -33,8 +33,6 @@ public class AuthorServiceImpl implements AuthorService {
 
         int caracter = 0;
         boolean tamanho = false;
-        String regex = "^\\d{4}-\\d{4}-\\d{4}-(\\d{3}X|\\d{4})$";
-        Pattern p = Pattern.compile(regex);
 
         if (author.getEmail() != null) {
             if (author.getEmail().length() > 3) {
@@ -92,7 +90,7 @@ public class AuthorServiceImpl implements AuthorService {
     public void deleteAuthor(Long id) {
         authorRepository.findById(id).map(authorExistente -> {
             List<Integer> recursos = authorRepository.findRecursoIds(id);
-            if (recursos.size() > 0) {
+            if (!recursos.isEmpty()) {
                 for (int i = 0; i < recursos.size(); i++) {
                     recursoRepository.findById(Long.valueOf(recursos.get(i))).map(recursoExistente -> {
                         for (Author author : recursoExistente.getAutores()) {
@@ -118,12 +116,12 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public List<Author> findSobrenome(String sobrenome) {
-        return (List<Author>) authorRepository.findAllBySobrenomeOrderByNome(sobrenome);
+        return authorRepository.findAllBySobrenomeOrderByNome(sobrenome);
     }
 
     @Override
     public List<Recurso> findAuthorRecusos(Long id) {
-        return (List<Recurso>) authorRepository.findAuthorRecursos(id);
+        return authorRepository.findAuthorRecursos(id);
     }
 
     @Override
