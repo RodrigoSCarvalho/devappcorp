@@ -32,8 +32,34 @@ public class EventoServiceImpl implements EventoService {
 
     @Override
     public Evento addEvento(Evento evento) {
+        if (evento.getData_fim() != null && evento.getData_criacao() != null) {
+            String fim = evento.getData_fim();
+            String criacao = evento.getData_criacao();
+
+            fim = fim.replace("-", "");
+            criacao = criacao.replace("-", "");
+            System.out.println("Criacao: " + criacao + " Fim: " + fim);
+            if (Integer.parseInt(fim) < Integer.parseInt(criacao)) {
+                return null;
+            }
+        }
+        if (evento.getData_fim() != null) {
+            if (evento.getData_criacao().length() != 8  &&  evento.getData_criacao().length() != 10) {
+                return null;
+            }
+        }
+
+
+        if (evento.getData_fim() != null) {
+            if (evento.getData_fim().length() != 8 && evento.getData_fim().length() != 10) {
+                return null;
+            }
+        }
+
         eventoRepository.save(evento);
         return evento;
+
+
     }
 
     @Override
@@ -44,11 +70,11 @@ public class EventoServiceImpl implements EventoService {
             if (evento.getImagem() != null)
                 eventoExistente.setImagem(evento.getImagem());
             if (evento.getDescricao() != null)
-            eventoExistente.setDescricao(evento.getDescricao());
+                eventoExistente.setDescricao(evento.getDescricao());
             if (evento.getData_criacao() != null)
-            eventoExistente.setData_fim(evento.getData_fim());
+                eventoExistente.setData_fim(evento.getData_fim());
             if (evento.getData_fim() != null)
-            eventoExistente.setData_criacao(evento.getData_criacao());
+                eventoExistente.setData_criacao(evento.getData_criacao());
 
             return eventoRepository.save(eventoExistente);
         });
@@ -59,7 +85,7 @@ public class EventoServiceImpl implements EventoService {
         recursoRepository.findById(recursoId).map(recurso -> {
             eventoRepository.findById(eventoId).map(eventoExistente -> {
                 recurso.setColecao(eventoExistente);
-                if(!evento.getRecursos().isEmpty())
+                if (!evento.getRecursos().isEmpty())
                     eventoExistente.getRecursos().add(recurso);
                 if (evento.getTitulo() != null)
                     eventoExistente.setTitulo(evento.getTitulo());
@@ -86,7 +112,7 @@ public class EventoServiceImpl implements EventoService {
     @Override
     public void deleteEvento(Long id) {
         eventoRepository.findById(id).map(evento -> {
-            for (Recurso recurso : evento.getRecursos()){
+            for (Recurso recurso : evento.getRecursos()) {
                 recurso.setColecao(null);
                 recursoRepository.save(recurso);
             }

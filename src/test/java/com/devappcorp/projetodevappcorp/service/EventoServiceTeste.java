@@ -16,7 +16,7 @@ public class EventoServiceTeste {
     @Test
     public void setDatas(){
         Evento e = new Evento();
-        e.setData_criacao("2022-03-01");
+        e.setData_criacao("2022-03-12");
         e.setData_fim("2022-04-01");
         Evento evento = _eventoService.addEvento(e);
         Assertions.assertNotNull(evento);
