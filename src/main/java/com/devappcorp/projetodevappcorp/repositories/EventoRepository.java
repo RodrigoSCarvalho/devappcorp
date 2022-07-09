@@ -15,7 +15,7 @@ public interface EventoRepository extends JpaRepository<Evento, Long> {
     @Query("SELECT e.recursos FROM Evento e WHERE e.id = :id")
     List<Recurso> findEventoRecursos(@Param("id") Long id);
 
-    @Query("SELECT e FROM Evento e WHERE e.data_criacao <= :data_criacao and e.data_fim <= :data_fim")
+    @Query("SELECT e FROM Evento e WHERE e.data_criacao >= :data_criacao and e.data_fim <= :data_fim")
     List<Evento> findEventoByDatas(@Param("data_criacao") String data_criacao, @Param("data_fim") String data_fim);
 
     List<Evento> findTop5ByOrderByIdDesc();

@@ -15,6 +15,8 @@ import java.util.Set;
 
 import static java.lang.Character.isDigit;
 
+import static java.lang.Character.isDigit;
+
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
@@ -31,7 +33,6 @@ public class AuthorServiceImpl implements AuthorService {
 
         int caracter = 0;
         boolean tamanho = false;
-
 
         if (author.getEmail() != null) {
             if (author.getEmail().length() > 3) {
