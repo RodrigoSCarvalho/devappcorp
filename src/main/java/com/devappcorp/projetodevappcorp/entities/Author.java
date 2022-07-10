@@ -1,132 +1,135 @@
 package com.devappcorp.projetodevappcorp.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
+/** Author class. */
 @Entity
-
 public class Author implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id", nullable = false)
+  private Long id;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @Column(name = "orcid", unique = true, length = 19)
-    private String orcid;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @Column(unique = true)
-    private String email;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @Column(length = 64)
-    private String nome;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @Column(length = 64)
-    private String sobrenome;
-    @Column(length = 256)
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private String afiliacao;
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "recurso_autores",
-            joinColumns = @JoinColumn(name = "author_id"),
-            inverseJoinColumns = @JoinColumn(name = "recurso_id"))
-    //@JsonIgnore
-    private Set<Recurso> recursos = new HashSet<Recurso>();
-
-
-    public Set<Recurso> getRecursos() {
-        return recursos;
-    }
-
-    public void setRecursos(Set<Recurso> recursos) {
-        this.recursos = recursos;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public void setEmail(String email) {
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  @Column(name = "orcid", unique = true, length = 19)
+  private String orcid;
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  @Column(unique = true)
+  private String email;
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  @Column(length = 64)
+  private String nome;
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  @Column(length = 64)
+  private String sobrenome;
+  @Column(length = 256)
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  private String afiliacao;
+  @JsonInclude(JsonInclude.Include.NON_EMPTY)
+  @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+  @JoinTable(name = "recurso_autores",
+      joinColumns = @JoinColumn(name = "author_id"),
+      inverseJoinColumns = @JoinColumn(name = "recurso_id"))
+  //@JsonIgnore
+  private Set<Recurso> recursos = new HashSet<>();
 
 
+  public Set<Recurso> getRecursos() {
+    return recursos;
+  }
 
-            this.email = email;
-    }
+  public void setRecursos(Set<Recurso> recursos) {
+    this.recursos = recursos;
+  }
 
-    public String getSobrenome() {
-        return sobrenome;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public void setSobrenome(String sobrenome) {
-        this.sobrenome = sobrenome;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    public String getAfiliacao() {
-        return afiliacao;
-    }
+  public String getEmail() {
+    return email;
+  }
 
-    public void setAfiliacao(String afiliacao) {
-        this.afiliacao = afiliacao;
-    }
+  @ExceptionHandler(MethodArgumentNotValidException.class)
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
-    public String getNome() {
-        return nome;
-    }
+  public String getSobrenome() {
+    return sobrenome;
+  }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+  public void setSobrenome(String sobrenome) {
+    this.sobrenome = sobrenome;
+  }
 
-    public String getOrcid() {
-        return orcid;
-    }
+  public String getAfiliacao() {
+    return afiliacao;
+  }
 
-    public void setOrcid(String orcid) {
-        this.orcid = orcid;
-    }
+  public void setAfiliacao(String afiliacao) {
+    this.afiliacao = afiliacao;
+  }
 
-    public Author() {
-    }
+  public String getNome() {
+    return nome;
+  }
 
-    @Override
-    public String toString() {
-        return "Author{" +
-                "id=" + id +
-                ", orcid='" + orcid + '\'' +
-                ", email='" + email + '\'' +
-                ", nome='" + nome + '\'' +
-                ", sobrenome='" + sobrenome + '\'' +
-                ", afiliacao='" + afiliacao + '\'' +
-                '}';
-    }
+  public void setNome(String nome) {
+    this.nome = nome;
+  }
 
-    public void set(Author author) {
-        this.email = author.getEmail();
-        this.nome = author.getNome();
-        this.sobrenome = author.getSobrenome();
-        this.orcid = author.getOrcid();
-        this.afiliacao = author.getAfiliacao();
-        this.recursos = author.getRecursos();
-    }
+  public String getOrcid() {
+    return orcid;
+  }
+
+  public void setOrcid(String orcid) {
+    this.orcid = orcid;
+  }
+
+  public Author() {
+  }
+
+  @Override
+  public String toString() {
+    return "Author{"
+        + "id=" + id
+        + ", orcid='" + orcid + '\''
+        + ", email='" + email + '\''
+        + ", nome='" + nome + '\''
+        + ", sobrenome='" + sobrenome + '\''
+        + ", afiliacao='" + afiliacao + '\''
+        + '}';
+  }
+
+  /** Set method. */
+  public void set(Author author) {
+    this.email = author.getEmail();
+    this.nome = author.getNome();
+    this.sobrenome = author.getSobrenome();
+    this.orcid = author.getOrcid();
+    this.afiliacao = author.getAfiliacao();
+    this.recursos = author.getRecursos();
+  }
 }
