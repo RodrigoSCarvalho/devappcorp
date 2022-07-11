@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
@@ -42,9 +43,13 @@ public class Recurso implements Serializable {
     private String descricao;
     private String link;
     private String imagem;
+
     @Column (length=10)
+    @Pattern(regexp = "([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))", message="O formato da data está incoreta ")
     private String data_criacao;
+
     @Column (length=10)
+    @Pattern(regexp = "([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))", message="O formato da data está incoreta ")
     private String data_registro;
 
     @ManyToOne(cascade = CascadeType.REMOVE)

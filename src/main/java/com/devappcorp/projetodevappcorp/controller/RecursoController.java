@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -111,7 +112,7 @@ public class RecursoController {
     })
     @PostMapping("/author/{authorId}/recurso")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity addNewRecurso(@PathVariable(value= "authorId") Long authorId, @RequestBody Recurso recurso){
+    public ResponseEntity addNewRecurso(@Valid @PathVariable(value= "authorId") Long authorId, @RequestBody Recurso recurso){
         this.recursoService.addNewRecurso(recurso, authorId);
         return new ResponseEntity(recurso, HttpStatus.CREATED);
     }
@@ -123,7 +124,7 @@ public class RecursoController {
     })
     @PutMapping("/recurso/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ResponseEntity updateRecurso(@RequestBody Recurso recurso, @PathVariable Long id){
+    public ResponseEntity updateRecurso(@Valid @RequestBody Recurso recurso, @PathVariable Long id){
         this.recursoService.updateRecurso(id, recurso);
         return new ResponseEntity(recurso, HttpStatus.OK);
     }
@@ -157,7 +158,7 @@ public class RecursoController {
     })
     @PutMapping("/author/{authorId}/recurso/{recursoId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ResponseEntity updateAutorRecurso(@RequestBody Recurso recurso, @PathVariable Long authorId, @PathVariable Long recursoId){
+    public ResponseEntity updateAutorRecurso(@Valid @RequestBody Recurso recurso, @PathVariable Long authorId, @PathVariable Long recursoId){
         this.recursoService.updateAutorRecurso(authorId,  recursoId, recurso);
         return new ResponseEntity(recurso, HttpStatus.OK);
     }

@@ -38,21 +38,20 @@ public class EventoServiceImpl implements EventoService {
 
             fim = fim.replace("-", "");
             criacao = criacao.replace("-", "");
-            System.out.println("Criacao: " + criacao + " Fim: " + fim);
             if (Integer.parseInt(fim) < Integer.parseInt(criacao)) {
-                return null;
+                throw new Error();
             }
         }
-        if (evento.getData_fim() != null) {
-            if (evento.getData_criacao().length() != 8  &&  evento.getData_criacao().length() != 10) {
-                return null;
+        if (evento.getData_criacao() != null) {
+            if (evento.getData_criacao().length() != 8 && evento.getData_criacao().length() != 10) {
+                throw new Error();
             }
         }
 
 
         if (evento.getData_fim() != null) {
             if (evento.getData_fim().length() != 8 && evento.getData_fim().length() != 10) {
-                return null;
+                throw new Error();
             }
         }
 
@@ -72,9 +71,15 @@ public class EventoServiceImpl implements EventoService {
             if (evento.getDescricao() != null)
                 eventoExistente.setDescricao(evento.getDescricao());
             if (evento.getData_criacao() != null)
-                eventoExistente.setData_fim(evento.getData_fim());
+                if (evento.getData_fim().length() != 8 && evento.getData_fim().length() != 10) {
+                    throw new Error();
+                } else
+                    eventoExistente.setData_fim(evento.getData_fim());
             if (evento.getData_fim() != null)
-                eventoExistente.setData_criacao(evento.getData_criacao());
+                if (evento.getData_fim().length() != 8 && evento.getData_fim().length() != 10) {
+                    throw new Error();
+                } else
+                    eventoExistente.setData_criacao(evento.getData_criacao());
 
             return eventoRepository.save(eventoExistente);
         });
@@ -94,9 +99,15 @@ public class EventoServiceImpl implements EventoService {
                 if (evento.getDescricao() != null)
                     eventoExistente.setDescricao(evento.getDescricao());
                 if (evento.getData_criacao() != null)
-                    eventoExistente.setData_criacao(evento.getData_criacao());
+                    if (evento.getData_fim().length() != 8 && evento.getData_fim().length() != 10) {
+                        throw new Error();
+                    } else
+                        eventoExistente.setData_fim(evento.getData_fim());
                 if (evento.getData_fim() != null)
-                    eventoExistente.setData_fim(evento.getData_fim());
+                    if (evento.getData_fim().length() != 8 && evento.getData_fim().length() != 10) {
+                        throw new Error();
+                    } else
+                        eventoExistente.setData_criacao(evento.getData_criacao());
 
                 eventoRepository.save(eventoExistente);
 

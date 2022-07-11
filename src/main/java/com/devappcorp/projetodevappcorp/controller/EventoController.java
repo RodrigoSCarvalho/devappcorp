@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,7 +51,7 @@ public class EventoController {
     })
     @PostMapping("/recurso/{recursoId}/evento")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity addNewEvento(@RequestBody Evento evento, @PathVariable Long recursoId){
+    public ResponseEntity addNewEvento(@Valid @RequestBody Evento evento, @PathVariable Long recursoId){
         this.eventoService.addNewEvento(evento, recursoId);
         return new ResponseEntity(evento, HttpStatus.CREATED);
     }
@@ -62,7 +63,7 @@ public class EventoController {
     })
     @PostMapping("/evento")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity addEvento(@RequestBody Evento evento) {
+    public ResponseEntity addEvento(@Valid @RequestBody Evento evento) {
         this.eventoService.addEvento(evento);
         return new ResponseEntity(evento, HttpStatus.CREATED);
     }
@@ -74,7 +75,7 @@ public class EventoController {
     })
     @PutMapping("/evento/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity updateEvento(@PathVariable Long id, @RequestBody Evento evento){
+    public ResponseEntity updateEvento(@Valid @PathVariable Long id, @RequestBody Evento evento){
         this.eventoService.updateEvento(id, evento);
         return new ResponseEntity(evento, HttpStatus.OK);
     }
@@ -86,7 +87,7 @@ public class EventoController {
     })
     @PutMapping("/recurso/{recursoId}/evento/{eventoId}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity updateEventoRecurso(@PathVariable Long recursoId, @PathVariable Long eventoId, @RequestBody Evento evento){
+    public ResponseEntity updateEventoRecurso(@Valid @PathVariable Long recursoId, @PathVariable Long eventoId, @RequestBody Evento evento){
         this.eventoService.updateEventoRecurso(recursoId, eventoId, evento);
         return new ResponseEntity(evento, HttpStatus.OK);
     }

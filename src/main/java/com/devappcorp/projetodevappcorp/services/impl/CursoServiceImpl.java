@@ -34,8 +34,8 @@ public class CursoServiceImpl implements CursoService {
     public Curso addCurso(Curso curso) {
 
         if (curso.getData_registro() != null) {
-            if (curso.getData_registro().length() != 8  &&  curso.getData_registro().length() != 10) {
-                return null;
+            if (curso.getData_registro().length() != 8 && curso.getData_registro().length() != 10) {
+                throw new Error();
             }
         }
 
@@ -53,7 +53,10 @@ public class CursoServiceImpl implements CursoService {
             if (curso.getDescricao() != null)
                 cursoExistente.setDescricao(curso.getDescricao());
             if (curso.getData_registro() != null)
-                cursoExistente.setData_registro(curso.getData_registro());
+                if (curso.getData_registro().length() != 8 && curso.getData_registro().length() != 10) {
+                    throw new Error();
+                } else
+                    cursoExistente.setData_registro(curso.getData_registro());
 
             return cursoRepository.save(cursoExistente);
         });
@@ -63,7 +66,7 @@ public class CursoServiceImpl implements CursoService {
     public void updateCursoRecurso(Long recursoId, Long cursoId, Curso curso) {
         recursoRepository.findById(recursoId).map(recurso -> {
             cursoRepository.findById(cursoId).map(cursoExistente -> {
-                if(!curso.getRecursos().isEmpty())
+                if (!curso.getRecursos().isEmpty())
                     recurso.setColecao(cursoExistente);
                 if (curso.getTitulo() != null)
                     cursoExistente.setTitulo(curso.getTitulo());
@@ -72,7 +75,10 @@ public class CursoServiceImpl implements CursoService {
                 if (curso.getDescricao() != null)
                     cursoExistente.setDescricao(curso.getDescricao());
                 if (curso.getData_registro() != null)
-                    cursoExistente.setData_registro(curso.getData_registro());
+                    if (curso.getData_registro().length() != 8 && curso.getData_registro().length() != 10) {
+                        throw new Error();
+                    } else
+                        cursoExistente.setData_registro(curso.getData_registro());
 
 
                 cursoRepository.save(cursoExistente);
@@ -88,7 +94,7 @@ public class CursoServiceImpl implements CursoService {
     @Override
     public void deleteCurso(Long id) {
         cursoRepository.findById(id).map(curso -> {
-            for (Recurso recurso : curso.getRecursos()){
+            for (Recurso recurso : curso.getRecursos()) {
                 recurso.setColecao(null);
                 recursoRepository.save(recurso);
             }

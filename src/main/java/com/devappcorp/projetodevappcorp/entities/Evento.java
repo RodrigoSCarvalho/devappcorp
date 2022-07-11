@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 @Entity
@@ -15,8 +16,11 @@ public class Evento extends Colecao implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Pattern(regexp = "([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))", message="O formato da data está incoreta ")
     @Column (length=10)
     private String data_criacao;
+
+    @Pattern(regexp = "([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))", message="O formato da data está incoreta ")
     @Column(length=10)
     private String data_fim;
 

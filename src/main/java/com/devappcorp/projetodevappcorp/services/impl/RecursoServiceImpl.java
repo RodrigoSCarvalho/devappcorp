@@ -33,21 +33,28 @@ public class RecursoServiceImpl implements RecursoService {
     @Override
     public void updateRecurso(Long id, Recurso recurso) {
         recursoRepository.findById(id).map(recursoExisente -> {
-            if(recurso.getTitulo() != null)
+            if (recurso.getTitulo() != null)
                 recursoExisente.setTitulo(recurso.getTitulo());
-            if(recurso.getLink() != null)
+            if (recurso.getLink() != null)
                 recursoExisente.setLink(recurso.getLink());
-            if(recurso.getPalavras_chave() != null)
+            if (recurso.getPalavras_chave() != null)
                 recursoExisente.setPalavras_chave(recurso.getPalavras_chave());
-            if(recurso.getDescricao() != null)
+            if (recurso.getDescricao() != null)
                 recursoExisente.setDescricao(recurso.getDescricao());
-            if(recurso.getImagem() != null)
+            if (recurso.getImagem() != null)
                 recursoExisente.setImagem(recurso.getImagem());
-            if(recurso.getData_registro() != null)
-                recursoExisente.setData_registro(recurso.getData_registro());
-            if(recurso.getData_criacao() != null)
-                recursoExisente.setData_criacao(recurso.getData_criacao());
-            if(recurso.getColecao() != null)
+            if (recurso.getData_registro() != null)
+                if (recurso.getData_registro().length() != 8 && recurso.getData_registro().length() != 10) {
+                    throw new Error();
+                } else
+                    recursoExisente.setData_registro(recurso.getData_registro());
+            if (recurso.getData_criacao() != null)
+                if (recurso.getData_criacao().length() != 8 && recurso.getData_criacao().length() != 10) {
+                    throw new Error();
+                } else
+                    recursoExisente.setData_criacao(recurso.getData_criacao());
+
+            if (recurso.getColecao() != null)
                 recursoExisente.setColecao(recurso.getColecao());
 
             return recursoRepository.save(recursoExisente);
@@ -58,26 +65,32 @@ public class RecursoServiceImpl implements RecursoService {
     @Override
     public void updateAutorRecurso(Long authorId, Long recursoId, Recurso recurso) {
         recursoRepository.findById(recursoId).map(recursoExisente -> {
-            if(recurso.getTitulo() != null)
+            if (recurso.getTitulo() != null)
                 recursoExisente.setTitulo(recurso.getTitulo());
-            if(recurso.getLink() != null)
+            if (recurso.getLink() != null)
                 recursoExisente.setLink(recurso.getLink());
-            if(recurso.getPalavras_chave() != null)
+            if (recurso.getPalavras_chave() != null)
                 recursoExisente.setPalavras_chave(recurso.getPalavras_chave());
-            if(recurso.getDescricao() != null)
+            if (recurso.getDescricao() != null)
                 recursoExisente.setDescricao(recurso.getDescricao());
-            if(recurso.getImagem() != null)
+            if (recurso.getImagem() != null)
                 recursoExisente.setImagem(recurso.getImagem());
-            if(recurso.getData_registro() != null)
-                recursoExisente.setData_registro(recurso.getData_registro());
-            if(recurso.getData_criacao() != null)
-                recursoExisente.setData_criacao(recurso.getData_criacao());
-            if(recurso.getColecao() != null)
+            if (recurso.getData_registro() != null)
+                if (recurso.getData_registro().length() != 8 && recurso.getData_registro().length() != 10) {
+                    throw new Error();
+                } else
+                    recursoExisente.setData_registro(recurso.getData_registro());
+            if (recurso.getData_criacao() != null)
+                if (recurso.getData_criacao().length() != 8 && recurso.getData_criacao().length() != 10) {
+                    throw new Error();
+                } else
+                    recursoExisente.setData_criacao(recurso.getData_criacao());
+            if (recurso.getColecao() != null)
                 recursoExisente.setColecao(recurso.getColecao());
 
 
             authorRepository.findById(authorId).map(author -> {
-                if(!author.getRecursos().isEmpty())
+                if (!author.getRecursos().isEmpty())
                     author.getRecursos().add(recursoExisente);
                 return authorRepository.save(author);
             });
@@ -91,14 +104,13 @@ public class RecursoServiceImpl implements RecursoService {
     public void deleteRecurso(Long id) {
 
 
-
         recursoRepository.findById(id).map(recursoExistente -> {
-                for (Author author : recursoExistente.getAutores()) {
-                    author.getRecursos().remove(recursoExistente);
-                    authorRepository.save(author);
-                }
-                recursoRepository.delete(recursoExistente);
-                return recursoExistente;
+            for (Author author : recursoExistente.getAutores()) {
+                author.getRecursos().remove(recursoExistente);
+                authorRepository.save(author);
+            }
+            recursoRepository.delete(recursoExistente);
+            return recursoExistente;
         });
     }
 
@@ -107,33 +119,33 @@ public class RecursoServiceImpl implements RecursoService {
         authorRepository.findById(authorId).map(authorExistente -> {
 
                     if (recurso.getData_criacao() != null && recurso.getData_registro() != null) {
-                        String registro =  recurso.getData_registro();
+                        String registro = recurso.getData_registro();
                         String criacao = recurso.getData_criacao();
 
                         registro = registro.replace("-", "");
                         criacao = criacao.replace("-", "");
                         if (Integer.parseInt(registro) < Integer.parseInt(criacao)) {
-                            return null;
+                            throw new Error();
                         }
                     }
                     if (recurso.getData_registro() != null) {
-                        if (recurso.getData_registro().length() != 8  &&  recurso.getData_registro().length() != 10) {
-                            return null;
+                        if (recurso.getData_registro().length() != 8 && recurso.getData_registro().length() != 10) {
+                            throw new Error();
                         }
                     }
 
 
                     if (recurso.getData_criacao() != null) {
                         if (recurso.getData_criacao().length() != 8 && recurso.getData_criacao().length() != 10) {
-                            return null;
+                            throw new Error();
                         }
                     }
 
-            recurso.getAutores().add(authorExistente);
-            recursoRepository.save(recurso);
+                    recurso.getAutores().add(authorExistente);
+                    recursoRepository.save(recurso);
 
-            return authorExistente.getRecursos().add(recurso);
-        }
+                    return authorExistente.getRecursos().add(recurso);
+                }
         );
     }
 

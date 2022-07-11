@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +30,7 @@ public class AuthorController {
     })
     @PostMapping // Map ONLY POST Requests
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity addNewAuthor(@RequestBody Author author ) {
+    public ResponseEntity addNewAuthor( @Valid @RequestBody  Author author ) {
 
         this.authorService.addNewAuthor(author);
         return new ResponseEntity<>(author, HttpStatus.CREATED);
@@ -44,7 +45,7 @@ public class AuthorController {
     })
     @PutMapping("{id}") // Map ONLY POST Requests
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Author> updateAuthor(@PathVariable Long id, @RequestBody Author author){
+    public ResponseEntity<Author> updateAuthor( @Valid @PathVariable Long id, @RequestBody Author author){
 
         this.authorService.updateAuthor(id, author);
         return new ResponseEntity<>(author, HttpStatus.OK);

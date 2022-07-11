@@ -16,6 +16,7 @@ import java.util.Set;
 public class Colecao implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

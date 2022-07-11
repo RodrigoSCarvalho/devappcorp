@@ -1,8 +1,8 @@
 package com.devappcorp.projetodevappcorp.services.impl;
 
+import com.devappcorp.projetodevappcorp.entities.Author;
 import com.devappcorp.projetodevappcorp.entities.Recurso;
 import com.devappcorp.projetodevappcorp.repositories.AuthorRepository;
-import com.devappcorp.projetodevappcorp.entities.Author;
 import com.devappcorp.projetodevappcorp.repositories.RecursoRepository;
 import com.devappcorp.projetodevappcorp.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static java.lang.Character.isDigit;
 
 
 @Service
@@ -33,8 +28,6 @@ public class AuthorServiceImpl implements AuthorService {
 
         int caracter = 0;
         boolean tamanho = false;
-        String regex = "^\\d{4}-\\d{4}-\\d{4}-(\\d{3}X|\\d{4})$";
-        Pattern p = Pattern.compile(regex);
 
         if (author.getEmail() != null) {
             if (author.getEmail().length() > 3) {
@@ -47,29 +40,46 @@ public class AuthorServiceImpl implements AuthorService {
             }
 
 
-            if (tamanho == true && caracter == 1)
-                return authorRepository.save(author);
-            else {
-                return null;
-            }
-        } else if (author.getOrcid() != null) {
-            if (author.getOrcid().length() >= 15 && author.getOrcid().length() <= 19) {
-                return authorRepository.save(author);
-            } else {
-                return null;
-            }
-        } else {
-            return authorRepository.save(author);
+            if (tamanho != true || caracter != 1)
+                throw new Error();
         }
+
+
+        if (author.getOrcid() != null) {
+            if (author.getOrcid().length() < 15 || author.getOrcid().length() > 19) {
+                throw new Error();
+            }
+        }
+
+        return authorRepository.save(author);
+
 
     }
 
 
     @Override
     public void updateAuthor(Long id, Author author) {
+
+
         authorRepository.findById(id).map(authorExistente -> {
-            if (author.getEmail() != null)
-                authorExistente.setEmail(author.getEmail());
+            if (author.getEmail() != null) {
+                int caracter = 0;
+                boolean tamanho = false;
+                if (author.getEmail().length() > 3) {
+                    tamanho = true;
+                }
+                for (int i = 0; i < author.getEmail().length(); i++) {
+                    if ('@' == author.getEmail().charAt(i)) {
+                        caracter += 1;
+                    }
+                }
+
+
+                if (tamanho != true || caracter != 1)
+                    throw new Error();
+                else
+                    authorExistente.setEmail(author.getEmail());
+            }
             if (author.getSobrenome() != null)
                 authorExistente.setSobrenome(author.getSobrenome());
             if (author.getAfiliacao() != null)
@@ -77,7 +87,10 @@ public class AuthorServiceImpl implements AuthorService {
             if (author.getNome() != null)
                 authorExistente.setNome(author.getNome());
             if (author.getOrcid() != null)
-                authorExistente.setOrcid(author.getOrcid());
+                if (author.getOrcid().length() < 15 || author.getOrcid().length() > 19) {
+                    throw new Error();
+                } else
+                    authorExistente.setOrcid(author.getOrcid());
             if (!author.getRecursos().isEmpty())
                 authorExistente.setRecursos((author.getRecursos()));
 

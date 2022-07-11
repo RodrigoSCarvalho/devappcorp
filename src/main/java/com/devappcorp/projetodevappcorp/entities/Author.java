@@ -6,6 +6,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
@@ -24,10 +26,14 @@ public class Author implements Serializable {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @Column(name = "orcid", unique = true, length = 19)
+    @Pattern(regexp = "^\\d{4}-\\d{4}-\\d{4}-(\\d{3}X|\\d{4})$", message="O formato do ORCID está incoreto ")
     private String orcid;
     @JsonInclude(JsonInclude.Include.NON_NULL)
+
     @Column(unique = true)
+    @Email
     private String email;
+
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @Column(length = 64)
     private String nome;

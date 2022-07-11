@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 
@@ -19,6 +20,7 @@ public class Curso extends Colecao implements Serializable {
     @Column(length=10)
     private String data_registro;
 
+    @Pattern(regexp = "([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))", message="O formato da data está incoreta ")
     public String getData_registro() {
         return data_registro;
     }
