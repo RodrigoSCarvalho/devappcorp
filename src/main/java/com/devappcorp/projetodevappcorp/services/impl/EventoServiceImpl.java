@@ -5,29 +5,55 @@ import com.devappcorp.projetodevappcorp.entities.Recurso;
 import com.devappcorp.projetodevappcorp.repositories.EventoRepository;
 import com.devappcorp.projetodevappcorp.repositories.RecursoRepository;
 import com.devappcorp.projetodevappcorp.services.EventoService;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-
+/** EventoServiceImpl class. */
 @Service
 public class EventoServiceImpl implements EventoService {
 
-    @Autowired
-    EventoRepository eventoRepository;
+  @Autowired
+  EventoRepository eventoRepository;
 
-    @Autowired
-    RecursoRepository recursoRepository;
+  @Autowired
+  RecursoRepository recursoRepository;
 
-    @Override
-    public void addNewEvento(Evento evento, Long recursoId) {
-        recursoRepository.findById(recursoId).map(recurso -> {
-            recurso.setColecao(evento);
-            evento.getRecursos().add(recurso);
-            eventoRepository.save(evento);
-            return recursoRepository.save(recurso);
-        });
+  @Override
+  public void addNewEvento(Evento evento, Long recursoId) {
+    recursoRepository.findById(recursoId).map(recurso -> {
+      recurso.setColecao(evento);
+      evento.getRecursos().add(recurso);
+      eventoRepository.save(evento);
+      return recursoRepository.save(recurso);
+    });
+  }
+
+  @Override
+  public Evento addEvento(Evento evento) {
+    if (evento.getData_fim() != null && evento.getData_criacao() != null) {
+      String fim = evento.getData_fim();
+      String criacao = evento.getData_criacao();
+
+      fim = fim.replace("-", "");
+      criacao = criacao.replace("-", "");
+      System.out.println("Criacao: " + criacao + " Fim: " + fim);
+      if (Integer.parseInt(fim) < Integer.parseInt(criacao)) {
+        return null;
+      }
+    }
+    if (evento.getData_fim() != null) {
+      if (evento.getData_criacao().length() != 8  &&  evento.getData_criacao().length() != 10) {
+        return null;
+      }
+    }
+
+
+    if (evento.getData_fim() != null) {
+      if (evento.getData_fim().length() != 8 && evento.getData_fim().length() != 10) {
+        return null;
+      }
     }
 
     @Override
@@ -46,10 +72,10 @@ public class EventoServiceImpl implements EventoService {
             if (evento.getData_criacao().length() != 8 && evento.getData_criacao().length() != 10) {
                 throw new Error();
             }
+
         }
-
-
         if (evento.getData_fim() != null) {
+
             if (evento.getData_fim().length() != 8 && evento.getData_fim().length() != 10) {
                 throw new Error();
             }
@@ -161,4 +187,5 @@ public class EventoServiceImpl implements EventoService {
     public Optional<Evento> findEventoById(Long id) {
         return eventoRepository.findById(id);
     }
+
 }

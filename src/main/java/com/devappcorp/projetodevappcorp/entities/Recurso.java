@@ -3,38 +3,53 @@ package com.devappcorp.projetodevappcorp.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
+/** Recurso class. */
 @Entity
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Recurso implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+  private static final long serialVersionUID = 1L;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id", nullable = false)
+  private Long id;
 
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    @ElementCollection
-    @CollectionTable (name = "recurso_palavras_chave",
-            joinColumns = @JoinColumn(name = "recurso_id"))
-    @Column (name = "palavras_chave")
+  @JsonInclude(JsonInclude.Include.NON_EMPTY)
+  @ElementCollection
+  @CollectionTable (name = "recurso_palavras_chave",
+      joinColumns = @JoinColumn(name = "recurso_id"))
+  @Column (name = "palavras_chave")
 
-    private List<String> palavras_chave;
+  private List<String> palavras_chave;
 
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    @ManyToMany(mappedBy = "recursos")
-    @JsonIgnore
-    private Set<Author> autores = new HashSet<Author>();
+  @JsonInclude(JsonInclude.Include.NON_EMPTY)
+  @ManyToMany(mappedBy = "recursos")
+  @JsonIgnore
+  private Set<Author> autores = new HashSet<>();
 
 
-    public Recurso() {}
+  public Recurso() {}
+
 
 
     @Column (length=1024)
@@ -136,17 +151,17 @@ public class Recurso implements Serializable {
 
 
 
-    @Override
-    public String toString() {
-        return "Recurso{" +
-                "autores=" + autores +
-                ", palavras_chave=" + palavras_chave +
-                ", titulo='" + titulo + '\'' +
-                ", descricao='" + descricao + '\'' +
-                ", link='" + link + '\'' +
-                ", imagem='" + imagem + '\'' +
-                ", data_criacao='" + data_criacao + '\'' +
-                ", data_registro='" + data_registro + '\'' +
-                '}';
-    }
+  @Override
+  public String toString() {
+    return "Recurso{"
+        + "autores=" + autores
+        + ", palavras_chave=" + palavras_chave
+        + ", titulo='" + titulo + '\''
+        + ", descricao='" + descricao + '\''
+        + ", link='" + link + '\''
+        + ", imagem='" + imagem + '\''
+        + ", data_criacao='" + data_criacao + '\''
+        + ", data_registro='" + data_registro + '\''
+        + '}';
+  }
 }

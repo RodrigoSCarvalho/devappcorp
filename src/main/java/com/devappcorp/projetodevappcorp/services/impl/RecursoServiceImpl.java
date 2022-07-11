@@ -1,17 +1,19 @@
 package com.devappcorp.projetodevappcorp.services.impl;
 
-import com.devappcorp.projetodevappcorp.entities.*;
-import com.devappcorp.projetodevappcorp.repositories.*;
-import com.devappcorp.projetodevappcorp.services.AuthorService;
+import com.devappcorp.projetodevappcorp.entities.Author;
+import com.devappcorp.projetodevappcorp.entities.Recurso;
+import com.devappcorp.projetodevappcorp.repositories.AuthorRepository;
+import com.devappcorp.projetodevappcorp.repositories.CursoRepository;
+import com.devappcorp.projetodevappcorp.repositories.EventoRepository;
+import com.devappcorp.projetodevappcorp.repositories.RecursoRepository;
 import com.devappcorp.projetodevappcorp.services.RecursoService;
+import java.util.List;
+import java.util.Optional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Optional;
-
-
+/** EventoServiceImpl class. */
 @Service
 public class RecursoServiceImpl implements RecursoService {
 
@@ -203,4 +205,5 @@ public class RecursoServiceImpl implements RecursoService {
     public List<Integer> findEventoLivre() {
         return eventoRepository.findEventoLivre();
     }
+
 }

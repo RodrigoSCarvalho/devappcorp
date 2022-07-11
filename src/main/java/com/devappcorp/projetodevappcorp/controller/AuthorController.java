@@ -1,25 +1,31 @@
 package com.devappcorp.projetodevappcorp.controller;
 
 
+
 import com.devappcorp.projetodevappcorp.entities.Author;
 import com.devappcorp.projetodevappcorp.entities.Recurso;
 import com.devappcorp.projetodevappcorp.services.AuthorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
+
 @CrossOrigin
 @RestController
 @RequestMapping("/author") // endpoint direto
 public class AuthorController {
+
     @Autowired
     private AuthorService authorService;
 
@@ -91,18 +97,18 @@ public class AuthorController {
     @GetMapping("{id}/recursos")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public List<Recurso> findAuthorRecusos(@PathVariable Long id){
+
     return this.authorService.findAuthorRecusos(id);
+  }
 
-    }
-    @Operation(summary = "Recuperar autor pelo id")
-    @ApiResponses(value ={
-            @ApiResponse(responseCode = "400", description = "Erro de validação.")
-    })
-    @GetMapping("{id}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public Optional<Author> findAuthorById(@PathVariable Long id){
-        return this.authorService.findAuthorById(id);
-
-    }
+  @Operation(summary = "Recuperar autor pelo id")
+  @ApiResponses(value = {
+    @ApiResponse(responseCode = "400", description = "Erro de validação.")
+  })
+  @GetMapping("{id}")
+  @ResponseStatus(HttpStatus.ACCEPTED)
+  public Optional<Author> findAuthorById(@PathVariable Long id) {
+    return this.authorService.findAuthorById(id);
+  }
 
 }

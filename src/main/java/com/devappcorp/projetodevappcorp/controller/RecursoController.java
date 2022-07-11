@@ -1,10 +1,13 @@
 package com.devappcorp.projetodevappcorp.controller;
 
-import com.devappcorp.projetodevappcorp.entities.*;
+import com.devappcorp.projetodevappcorp.entities.Author;
+import com.devappcorp.projetodevappcorp.entities.Recurso;
 import com.devappcorp.projetodevappcorp.services.RecursoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -174,4 +177,5 @@ public class RecursoController {
         this.recursoService.deleteRecurso(id);
         return new ResponseEntity(HttpStatus.OK);
     }
+
 }

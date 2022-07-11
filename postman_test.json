@@ -1,0 +1,1854 @@
+{
+	"id": "f05e7580-a100-4e94-bf64-777eeebdf337",
+	"name": "RecursosEducacionais",
+	"timestamp": "2022-07-09T23:54:12.174Z",
+	"collection_id": "18752427-d98fe59b-13ff-4fbd-8c1b-dc462c6b28ae",
+	"folder_id": 0,
+	"environment_id": "18752427-7c6890c0-855e-439b-a3b1-37977f65aa75",
+	"totalPass": 106,
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "2865653e-06dd-4c6a-8f6a-8f339e2469cb",
+			"name": "postRecurso",
+			"url": "http://localhost:8080/author/11/recurso",
+			"time": 22,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Titulo do recurso": true,
+				"Response time is less than 500ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Titulo do recurso": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 500ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				22
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Titulo do recurso": true,
+					"Response time is less than 500ms": true
+				}
+			]
+		},
+		{
+			"id": "e0a7c1d4-0e43-4bf1-91dc-9921fd4f7f18",
+			"name": "getRecursos",
+			"url": "http://localhost:8080/recurso",
+			"time": 13,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				13
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "a92c305c-24d9-4400-ab5f-940696c21034",
+			"name": "getPalavrasChavesDoRecurso",
+			"url": "http://localhost:8080/recurso/53/palavraschave",
+			"time": 5,
+			"responseCode": {
+				"code": 202,
+				"name": "Accepted"
+			},
+			"tests": {
+				"Status code is 202": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 202": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 202": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "0693c2a0-5cf9-431a-bf98-ba252148ca4f",
+			"name": "getAutoresQueNaoEstaoAssociadosAoRecurso",
+			"url": "http://localhost:8080/recurso/54/autores",
+			"time": 23,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response time is less than 200ms": true,
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				23
+			],
+			"allTests": [
+				{
+					"Response time is less than 200ms": true,
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "4908ee56-4447-4407-b5ed-a24591009a50",
+			"name": "getRecursosRecentes",
+			"url": "http://localhost:8080/recurso/recentes",
+			"time": 7,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true,
+				"Quantidade de itens": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Quantidade de itens": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true,
+					"Quantidade de itens": true
+				}
+			]
+		},
+		{
+			"id": "c21b214d-ea1e-40b3-b388-5d476808f1e3",
+			"name": "getCursosQueNaoEstaoAssociadosARecursos",
+			"url": "http://localhost:8080/recurso/cursos",
+			"time": 8,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				8
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "2c0fff42-3193-4d10-ab44-af99d6dec688",
+			"name": "getEventosQueNaoEstaoAssociadosARecursos",
+			"url": "http://localhost:8080/recurso/eventos",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "271ff032-10f3-460f-b3f1-3bc2a7d822ad",
+			"name": "getAssociandoRecursoAColecao",
+			"url": "http://localhost:8080/associar/19/recurso/49",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "f794d02e-804d-4976-b464-2e2d06d702ea",
+			"name": "getDesassociandoRecursoAColecao",
+			"url": "http://localhost:8080/desassociar/19/recurso/49",
+			"time": 8,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				8
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "fbdf74d5-2d7b-46f7-889f-9881ea23d02d",
+			"name": "getRecursoById",
+			"url": "http://localhost:8080/recurso/42",
+			"time": 6,
+			"responseCode": {
+				"code": 202,
+				"name": "Accepted"
+			},
+			"tests": {
+				"Body matches string": true,
+				"Status code is 202": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Body matches string": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status code is 202": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Body matches string": true,
+					"Status code is 202": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "9d01bc7e-8573-45e5-8f5a-5ba7f626aeb5",
+			"name": "putRecurso",
+			"url": "http://localhost:8080/recurso/42",
+			"time": 12,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Successful PUT request": true
+			},
+			"testPassFailCounts": {
+				"Successful PUT request": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				12
+			],
+			"allTests": [
+				{
+					"Successful PUT request": true
+				}
+			]
+		},
+		{
+			"id": "2247776d-90a0-475f-903b-cdfea6550382",
+			"name": "putRecursoAssociandoOutroAutor",
+			"url": "http://localhost:8080/author/9/recurso/42",
+			"time": 11,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Successful PUT request": true
+			},
+			"testPassFailCounts": {
+				"Successful PUT request": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"Successful PUT request": true
+				}
+			]
+		},
+		{
+			"id": "a13c3a9f-c97c-4e0c-9b3a-0b1106b11361",
+			"name": "deleteRecurso",
+			"url": "http://localhost:8080/recurso/62",
+			"time": 13,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response time is less than 200ms for delete a resource": true,
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Response time is less than 200ms for delete a resource": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				13
+			],
+			"allTests": [
+				{
+					"Response time is less than 200ms for delete a resource": true,
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "de9cc1ea-25fa-4ace-a694-05e9257bdb1f",
+			"name": "postColecao",
+			"url": "http://localhost:8080/colecao",
+			"time": 6,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Titulo do curso": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Titulo do curso": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Titulo do curso": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "630d1897-3e96-4e7b-9515-700336763980",
+			"name": "postColecaoAssociandoRecurso",
+			"url": "http://localhost:8080/recurso/53/colecao",
+			"time": 8,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Titulo do curso": true,
+				"Response time is less than 200ms": true,
+				"ID recurso retornado": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Titulo do curso": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"ID recurso retornado": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				8
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Titulo do curso": true,
+					"Response time is less than 200ms": true,
+					"ID recurso retornado": true
+				}
+			]
+		},
+		{
+			"id": "9fc1431a-fec8-4588-990e-49d16dcc9fbd",
+			"name": "getColecao",
+			"url": "http://localhost:8080/colecao",
+			"time": 15,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				15
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "fbb81f21-4b80-4c77-b450-ab0390851034",
+			"name": "getRecursosDaColecao",
+			"url": "http://localhost:8080/colecao/22/recursos",
+			"time": 6,
+			"responseCode": {
+				"code": 202,
+				"name": "Accepted"
+			},
+			"tests": {
+				"Status code is 202": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 202": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 202": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "7c71472a-d92d-4765-a227-0baad4cd231a",
+			"name": "putColecaoAssociandoUmRecurso",
+			"url": "http://localhost:8080/recurso/51/colecao/24",
+			"time": 13,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				13
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "b5de7bdf-bf6d-488f-b09a-252236d37055",
+			"name": "putColecao",
+			"url": "http://localhost:8080/colecao/37",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "938a61c2-7d94-4dd0-b2f6-4e889c682bbe",
+			"name": "deleteColecao",
+			"url": "http://localhost:8080/colecao/48",
+			"time": 8,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response time is less than 200ms for delete a resource": true,
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Response time is less than 200ms for delete a resource": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				8
+			],
+			"allTests": [
+				{
+					"Response time is less than 200ms for delete a resource": true,
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "7de77e8c-eb9f-4012-b39a-68f29490a24a",
+			"name": "postCurso",
+			"url": "http://localhost:8080/curso",
+			"time": 6,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Titulo do curso": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Titulo do curso": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Titulo do curso": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "e7bc9d9b-07a6-48eb-ba4b-ebeb3fef0a06",
+			"name": "postCursoAssociandoRecurso",
+			"url": "http://localhost:8080/recurso/59/curso",
+			"time": 10,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Titulo do curso": true,
+				"Response time is less than 200ms": true,
+				"ID recurso retornado": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Titulo do curso": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"ID recurso retornado": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				10
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Titulo do curso": true,
+					"Response time is less than 200ms": true,
+					"ID recurso retornado": true
+				}
+			]
+		},
+		{
+			"id": "1e5959c7-0962-49d7-a4b3-9c33ec9675fc",
+			"name": "getCurso",
+			"url": "http://localhost:8080/curso",
+			"time": 9,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				9
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "45f766e6-13a7-4b3d-88f4-d2a7a5d3994a",
+			"name": "getCursoById",
+			"url": "http://localhost:8080/curso/24",
+			"time": 6,
+			"responseCode": {
+				"code": 202,
+				"name": "Accepted"
+			},
+			"tests": {
+				"ID retornado": true,
+				"Status code is 202": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"ID retornado": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status code is 202": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"ID retornado": true,
+					"Status code is 202": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "81b954c8-81bd-4c63-8f33-6419435dc807",
+			"name": "getCursosRecentes",
+			"url": "http://localhost:8080/curso/recentes",
+			"time": 8,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true,
+				"Quantidade de itens": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Quantidade de itens": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				8
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true,
+					"Quantidade de itens": true
+				}
+			]
+		},
+		{
+			"id": "c1b45339-90bb-42c5-ad43-defc29af0986",
+			"name": "getRecursosDoCurso",
+			"url": "http://localhost:8080/curso/17/recursos",
+			"time": 6,
+			"responseCode": {
+				"code": 202,
+				"name": "Accepted"
+			},
+			"tests": {
+				"Status code is 202": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 202": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 202": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "a2def0ca-5fcf-4016-bfe6-cf34fe25f7eb",
+			"name": "getRecursosQueNaoEstaoAssociadosAoCurso",
+			"url": "http://localhost:8080/curso/recursos",
+			"time": 7,
+			"responseCode": {
+				"code": 202,
+				"name": "Accepted"
+			},
+			"tests": {
+				"Status code is 202": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 202": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 202": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "7dc59800-c7c0-4e68-b5b3-ca74f5edca86",
+			"name": "putCursoAssociandoUmRecurso",
+			"url": "http://localhost:8080/recurso/51/curso/24",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "2a9e2eab-7303-4a1d-baf0-52f887ff2e4e",
+			"name": "putCurso",
+			"url": "http://localhost:8080/curso/24",
+			"time": 8,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				8
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "c5dd3a53-6762-4e0f-9c1d-440519836d1b",
+			"name": "deleteCurso",
+			"url": "http://localhost:8080/curso/54",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response time is less than 200ms for delete a resource": true,
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Response time is less than 200ms for delete a resource": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Response time is less than 200ms for delete a resource": true,
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "3fe4f89e-8f27-4ada-b4cb-1f9121768070",
+			"name": "postEvento",
+			"url": "http://localhost:8080/evento",
+			"time": 7,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Titulo do curso": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Titulo do curso": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Titulo do curso": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "020794f0-f73d-47a1-861e-e22ff5b35777",
+			"name": "postEventoAssociandoRecurso",
+			"url": "http://localhost:8080/recurso/56/evento",
+			"time": 15,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Titulo do curso": true,
+				"Response time is less than 200ms": true,
+				"ID recurso retornado": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Titulo do curso": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"ID recurso retornado": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				15
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Titulo do curso": true,
+					"Response time is less than 200ms": true,
+					"ID recurso retornado": true
+				}
+			]
+		},
+		{
+			"id": "f4ec4330-a7d6-4c33-b218-274f1de4d692",
+			"name": "getEvento",
+			"url": "http://localhost:8080/evento",
+			"time": 9,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				9
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "958aa576-bf43-483a-b04f-0189d7cb0e9a",
+			"name": "getEventoById",
+			"url": "http://localhost:8080/evento/19",
+			"time": 9,
+			"responseCode": {
+				"code": 202,
+				"name": "Accepted"
+			},
+			"tests": {
+				"ID retornado": true,
+				"Status code is 202": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"ID retornado": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status code is 202": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				9
+			],
+			"allTests": [
+				{
+					"ID retornado": true,
+					"Status code is 202": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "d6fbe7a7-cbef-48ef-9380-a698d56eceda",
+			"name": "getEventosRecentes",
+			"url": "http://localhost:8080/evento/recentes",
+			"time": 9,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true,
+				"Quantidade de itens": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Quantidade de itens": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				9
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true,
+					"Quantidade de itens": true
+				}
+			]
+		},
+		{
+			"id": "f8c66938-c5e5-4057-99bc-5e6a9adea39a",
+			"name": "getRecursoDoEvento",
+			"url": "http://localhost:8080/evento/19/recursos",
+			"time": 6,
+			"responseCode": {
+				"code": 202,
+				"name": "Accepted"
+			},
+			"tests": {
+				"Status code is 202": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 202": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 202": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "4f5403f0-b264-4ce9-a0f2-9181e8d3c810",
+			"name": "getEventosDentroDeUmPeriodo",
+			"url": "http://localhost:8080/evento/2021-12-31/2022-06-31",
+			"time": 16,
+			"responseCode": {
+				"code": 202,
+				"name": "Accepted"
+			},
+			"tests": {
+				"Status code is 202": true,
+				"Response time is less than 500ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 202": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 500ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				16
+			],
+			"allTests": [
+				{
+					"Status code is 202": true,
+					"Response time is less than 500ms": true
+				}
+			]
+		},
+		{
+			"id": "d8efb2bf-bac1-4f8b-be95-3826b458309b",
+			"name": "getRecursosQueNaoEstaoAssociadosAEventos",
+			"url": "http://localhost:8080/evento/recursos",
+			"time": 6,
+			"responseCode": {
+				"code": 202,
+				"name": "Accepted"
+			},
+			"tests": {
+				"Status code is 202": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 202": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 202": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "ba2a03a8-e13f-4eb3-a915-b6b457db9715",
+			"name": "putEventoAssociandoUmRecurso",
+			"url": "http://localhost:8080/recurso/51/evento/16",
+			"time": 12,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				12
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "9dddf354-7f22-4f1b-9817-71c9ab092614",
+			"name": "putEvento",
+			"url": "http://localhost:8080/evento/19",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "53be969a-e3be-40e1-93b1-cc3699f1d5d9",
+			"name": "deleteEvento",
+			"url": "http://localhost:8080/evento/56",
+			"time": 10,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response time is less than 200ms for delete a resource": true,
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Response time is less than 200ms for delete a resource": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				10
+			],
+			"allTests": [
+				{
+					"Response time is less than 200ms for delete a resource": true,
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "0e74ec88-bc3e-4cd6-98c8-627b4839548a",
+			"name": "getAutor",
+			"url": "http://localhost:8080/author",
+			"time": 19,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				19
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "29ff7ec5-308e-4b3e-be09-2c36f19ab0e0",
+			"name": "getAutorById",
+			"url": "http://localhost:8080/author/6",
+			"time": 7,
+			"responseCode": {
+				"code": 202,
+				"name": "Accepted"
+			},
+			"tests": {
+				"ID retornado": true,
+				"Status code is 202": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"ID retornado": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status code is 202": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"ID retornado": true,
+					"Status code is 202": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "839db364-a0e9-4ce7-abe9-40bd92d48ca3",
+			"name": "getRecursosDoAutor",
+			"url": "http://localhost:8080/author/6/recursos",
+			"time": 6,
+			"responseCode": {
+				"code": 202,
+				"name": "Accepted"
+			},
+			"tests": {
+				"Status code is 202": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 202": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 202": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "eb104c09-b3be-4039-8cb2-3abfa0718e75",
+			"name": "getAutoresComDeterminadoSobrenome",
+			"url": "http://localhost:8080/author/sn?sobrenome=Pereira",
+			"time": 6,
+			"responseCode": {
+				"code": 202,
+				"name": "Accepted"
+			},
+			"tests": {
+				"Status code is 202": true,
+				"Sobrenome retornado": true
+			},
+			"testPassFailCounts": {
+				"Status code is 202": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Sobrenome retornado": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 202": true,
+					"Sobrenome retornado": true
+				}
+			]
+		},
+		{
+			"id": "c0360176-2ff4-420c-a414-43fef8ab37fb",
+			"name": "putAutor",
+			"url": "http://localhost:8080/author/9",
+			"time": 9,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				9
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "3b30409a-92ba-44d6-87f1-77b3dbc3ad75",
+			"name": "postAutor",
+			"url": "http://localhost:8080/author",
+			"time": 6,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Nome do autor": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Nome do autor": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Nome do autor": true
+				}
+			]
+		},
+		{
+			"id": "ceb7c7c7-d8d5-4cb8-9596-6ae9994b1b48",
+			"name": "deleteAutor",
+			"url": "http://localhost:8080/author/19",
+			"time": 10,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				10
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 441,
+	"collection": {
+		"requests": [
+			{
+				"id": "2865653e-06dd-4c6a-8f6a-8f339e2469cb",
+				"method": "POST"
+			},
+			{
+				"id": "e0a7c1d4-0e43-4bf1-91dc-9921fd4f7f18",
+				"method": "GET"
+			},
+			{
+				"id": "a92c305c-24d9-4400-ab5f-940696c21034",
+				"method": "GET"
+			},
+			{
+				"id": "0693c2a0-5cf9-431a-bf98-ba252148ca4f",
+				"method": "GET"
+			},
+			{
+				"id": "4908ee56-4447-4407-b5ed-a24591009a50",
+				"method": "GET"
+			},
+			{
+				"id": "c21b214d-ea1e-40b3-b388-5d476808f1e3",
+				"method": "GET"
+			},
+			{
+				"id": "2c0fff42-3193-4d10-ab44-af99d6dec688",
+				"method": "GET"
+			},
+			{
+				"id": "271ff032-10f3-460f-b3f1-3bc2a7d822ad",
+				"method": "GET"
+			},
+			{
+				"id": "f794d02e-804d-4976-b464-2e2d06d702ea",
+				"method": "GET"
+			},
+			{
+				"id": "fbdf74d5-2d7b-46f7-889f-9881ea23d02d",
+				"method": "GET"
+			},
+			{
+				"id": "9d01bc7e-8573-45e5-8f5a-5ba7f626aeb5",
+				"method": "PUT"
+			},
+			{
+				"id": "2247776d-90a0-475f-903b-cdfea6550382",
+				"method": "PUT"
+			},
+			{
+				"id": "a13c3a9f-c97c-4e0c-9b3a-0b1106b11361",
+				"method": "DELETE"
+			},
+			{
+				"id": "de9cc1ea-25fa-4ace-a694-05e9257bdb1f",
+				"method": "POST"
+			},
+			{
+				"id": "630d1897-3e96-4e7b-9515-700336763980",
+				"method": "POST"
+			},
+			{
+				"id": "9fc1431a-fec8-4588-990e-49d16dcc9fbd",
+				"method": "GET"
+			},
+			{
+				"id": "fbb81f21-4b80-4c77-b450-ab0390851034",
+				"method": "GET"
+			},
+			{
+				"id": "7c71472a-d92d-4765-a227-0baad4cd231a",
+				"method": "PUT"
+			},
+			{
+				"id": "b5de7bdf-bf6d-488f-b09a-252236d37055",
+				"method": "PUT"
+			},
+			{
+				"id": "938a61c2-7d94-4dd0-b2f6-4e889c682bbe",
+				"method": "DELETE"
+			},
+			{
+				"id": "7de77e8c-eb9f-4012-b39a-68f29490a24a",
+				"method": "POST"
+			},
+			{
+				"id": "e7bc9d9b-07a6-48eb-ba4b-ebeb3fef0a06",
+				"method": "POST"
+			},
+			{
+				"id": "1e5959c7-0962-49d7-a4b3-9c33ec9675fc",
+				"method": "GET"
+			},
+			{
+				"id": "45f766e6-13a7-4b3d-88f4-d2a7a5d3994a",
+				"method": "GET"
+			},
+			{
+				"id": "81b954c8-81bd-4c63-8f33-6419435dc807",
+				"method": "GET"
+			},
+			{
+				"id": "c1b45339-90bb-42c5-ad43-defc29af0986",
+				"method": "GET"
+			},
+			{
+				"id": "a2def0ca-5fcf-4016-bfe6-cf34fe25f7eb",
+				"method": "GET"
+			},
+			{
+				"id": "7dc59800-c7c0-4e68-b5b3-ca74f5edca86",
+				"method": "PUT"
+			},
+			{
+				"id": "2a9e2eab-7303-4a1d-baf0-52f887ff2e4e",
+				"method": "PUT"
+			},
+			{
+				"id": "c5dd3a53-6762-4e0f-9c1d-440519836d1b",
+				"method": "DELETE"
+			},
+			{
+				"id": "3fe4f89e-8f27-4ada-b4cb-1f9121768070",
+				"method": "POST"
+			},
+			{
+				"id": "020794f0-f73d-47a1-861e-e22ff5b35777",
+				"method": "POST"
+			},
+			{
+				"id": "f4ec4330-a7d6-4c33-b218-274f1de4d692",
+				"method": "GET"
+			},
+			{
+				"id": "958aa576-bf43-483a-b04f-0189d7cb0e9a",
+				"method": "GET"
+			},
+			{
+				"id": "d6fbe7a7-cbef-48ef-9380-a698d56eceda",
+				"method": "GET"
+			},
+			{
+				"id": "f8c66938-c5e5-4057-99bc-5e6a9adea39a",
+				"method": "GET"
+			},
+			{
+				"id": "4f5403f0-b264-4ce9-a0f2-9181e8d3c810",
+				"method": "GET"
+			},
+			{
+				"id": "d8efb2bf-bac1-4f8b-be95-3826b458309b",
+				"method": "GET"
+			},
+			{
+				"id": "ba2a03a8-e13f-4eb3-a915-b6b457db9715",
+				"method": "PUT"
+			},
+			{
+				"id": "9dddf354-7f22-4f1b-9817-71c9ab092614",
+				"method": "PUT"
+			},
+			{
+				"id": "53be969a-e3be-40e1-93b1-cc3699f1d5d9",
+				"method": "DELETE"
+			},
+			{
+				"id": "0e74ec88-bc3e-4cd6-98c8-627b4839548a",
+				"method": "GET"
+			},
+			{
+				"id": "29ff7ec5-308e-4b3e-be09-2c36f19ab0e0",
+				"method": "GET"
+			},
+			{
+				"id": "839db364-a0e9-4ce7-abe9-40bd92d48ca3",
+				"method": "GET"
+			},
+			{
+				"id": "eb104c09-b3be-4039-8cb2-3abfa0718e75",
+				"method": "GET"
+			},
+			{
+				"id": "c0360176-2ff4-420c-a414-43fef8ab37fb",
+				"method": "PUT"
+			},
+			{
+				"id": "3b30409a-92ba-44d6-87f1-77b3dbc3ad75",
+				"method": "POST"
+			},
+			{
+				"id": "ceb7c7c7-d8d5-4cb8-9596-6ae9994b1b48",
+				"method": "DELETE"
+			}
+		]
+	}
+}
