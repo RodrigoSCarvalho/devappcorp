@@ -6,6 +6,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 
+import javax.validation.constraints.Pattern;
+import java.io.Serializable;
+
+
 /** Evento class. */
 @Entity
 @PrimaryKeyJoinColumn(name = "eventoId")
@@ -14,10 +18,14 @@ public class Evento extends Colecao implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  @Column (length = 10)
-  private String data_criacao;
-  @Column(length = 10)
-  private String data_fim;
+    @Pattern(regexp = "([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))", message="O formato da data está incoreta ")
+    @Column (length=10)
+    private String data_criacao;
+
+    @Pattern(regexp = "([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))", message="O formato da data está incoreta ")
+    @Column(length=10)
+    private String data_fim;
+
 
   public String getData_criacao() {
     return data_criacao;
