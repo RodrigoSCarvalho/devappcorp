@@ -24,7 +24,7 @@ public class RecursoServiceImpl implements RecursoService {
     private AuthorRepository authorRepository;
 
     @Autowired
-    private AuthorService authorService;
+    private AuthorServiceImpl authorService;
 
     @Autowired
     private CursoRepository cursoRepository;

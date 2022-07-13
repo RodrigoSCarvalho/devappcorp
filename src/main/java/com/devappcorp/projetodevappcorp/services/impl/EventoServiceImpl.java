@@ -30,31 +30,31 @@ public class EventoServiceImpl implements EventoService {
     });
   }
 
-  @Override
-  public Evento addEvento(Evento evento) {
-    if (evento.getData_fim() != null && evento.getData_criacao() != null) {
-      String fim = evento.getData_fim();
-      String criacao = evento.getData_criacao();
-
-      fim = fim.replace("-", "");
-      criacao = criacao.replace("-", "");
-      System.out.println("Criacao: " + criacao + " Fim: " + fim);
-      if (Integer.parseInt(fim) < Integer.parseInt(criacao)) {
-        return null;
-      }
-    }
-    if (evento.getData_fim() != null) {
-      if (evento.getData_criacao().length() != 8  &&  evento.getData_criacao().length() != 10) {
-        return null;
-      }
-    }
-
-
-    if (evento.getData_fim() != null) {
-      if (evento.getData_fim().length() != 8 && evento.getData_fim().length() != 10) {
-        return null;
-      }
-    }
+//  @Override
+//  public Evento addEvento(Evento evento) {
+//    if (evento.getData_fim() != null && evento.getData_criacao() != null) {
+//      String fim = evento.getData_fim();
+//      String criacao = evento.getData_criacao();
+//
+//      fim = fim.replace("-", "");
+//      criacao = criacao.replace("-", "");
+//      System.out.println("Criacao: " + criacao + " Fim: " + fim);
+//      if (Integer.parseInt(fim) < Integer.parseInt(criacao)) {
+//        return null;
+//      }
+//    }
+//    if (evento.getData_fim() != null) {
+//      if (evento.getData_criacao().length() != 8  &&  evento.getData_criacao().length() != 10) {
+//        return null;
+//      }
+//    }
+//
+//
+//    if (evento.getData_fim() != null) {
+//      if (evento.getData_fim().length() != 8 && evento.getData_fim().length() != 10) {
+//        return null;
+//      }
+//    }
 
     @Override
     public Evento addEvento(Evento evento) {

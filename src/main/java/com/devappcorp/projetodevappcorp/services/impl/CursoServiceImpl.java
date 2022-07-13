@@ -63,51 +63,54 @@ public class CursoServiceImpl implements CursoService {
     });
   }
 
-  @Override
-  public void updateCursoRecurso(Long recursoId, Long cursoId, Curso curso) {
-    recursoRepository.findById(recursoId).map(recurso -> {
-      cursoRepository.findById(cursoId).map(cursoExistente -> {
-        if (!curso.getRecursos().isEmpty()) {
-          recurso.setColecao(cursoExistente);
-        }
-        if (curso.getTitulo() != null) {
-          cursoExistente.setTitulo(curso.getTitulo());
-        }
-        if (curso.getImagem() != null) {
-          cursoExistente.setImagem(curso.getImagem());
-        }
-        if (curso.getDescricao() != null) {
-          cursoExistente.setDescricao(curso.getDescricao());
-        }
-        if (curso.getData_registro() != null) {
+//  @Override
+//  public void updateCursoRecurso(Long recursoId, Long cursoId, Curso curso) {
+//      recursoRepository.findById(recursoId).map(recurso -> {
+//          cursoRepository.findById(cursoId).map(cursoExistente -> {
+//              if (!curso.getRecursos().isEmpty()) {
+//                  recurso.setColecao(cursoExistente);
+//              }
+//              if (curso.getTitulo() != null) {
+//                  cursoExistente.setTitulo(curso.getTitulo());
+//              }
+//              if (curso.getImagem() != null) {
+//                  cursoExistente.setImagem(curso.getImagem());
+//              }
+//              if (curso.getDescricao() != null) {
+//                  cursoExistente.setDescricao(curso.getDescricao());
+//              }
+//              if (curso.getData_registro() != null) {
+//
+//                  if (curso.getData_registro().length() != 8 && curso.getData_registro().length() != 10) {
+//                      throw new Error();
+//                  }
+//              }
+//
+//              cursoRepository.save(curso);
+//              return curso;
+//          });
+//      });
+//  }
 
-            if (curso.getData_registro().length() != 8 && curso.getData_registro().length() != 10) {
-                throw new Error();
-            }
-        }
 
-        cursoRepository.save(curso);
-        return curso;
-    }
-
-    @Override
-    public void updateCurso(Long id, Curso curso) {
-        cursoRepository.findById(id).map(cursoExistente -> {
-            if (curso.getTitulo() != null)
-                cursoExistente.setTitulo(curso.getTitulo());
-            if (curso.getImagem() != null)
-                cursoExistente.setImagem(curso.getImagem());
-            if (curso.getDescricao() != null)
-                cursoExistente.setDescricao(curso.getDescricao());
-            if (curso.getData_registro() != null)
-                if (curso.getData_registro().length() != 8 && curso.getData_registro().length() != 10) {
-                    throw new Error();
-                } else
-                    cursoExistente.setData_registro(curso.getData_registro());
-
-            return cursoRepository.save(cursoExistente);
-        });
-    }
+//      @Override
+//    public void updateCurso(Long id, Curso curso) {
+//        cursoRepository.findById(id).map(cursoExistente -> {
+//            if (curso.getTitulo() != null)
+//                cursoExistente.setTitulo(curso.getTitulo());
+//            if (curso.getImagem() != null)
+//                cursoExistente.setImagem(curso.getImagem());
+//            if (curso.getDescricao() != null)
+//                cursoExistente.setDescricao(curso.getDescricao());
+//            if (curso.getData_registro() != null)
+//                if (curso.getData_registro().length() != 8 && curso.getData_registro().length() != 10) {
+//                    throw new Error();
+//                } else
+//                    cursoExistente.setData_registro(curso.getData_registro());
+//
+//            return cursoRepository.save(cursoExistente);
+//        });
+//    }
 
     @Override
     public void updateCursoRecurso(Long recursoId, Long cursoId, Curso curso) {
